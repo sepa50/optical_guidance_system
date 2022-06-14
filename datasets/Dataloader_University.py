@@ -14,7 +14,7 @@ class Dataloader_University(Dataset):
         self.transforms_satellite = transforms['satellite']
         self.root = root
         self.names =  names
-        #获取所有图片的相对路径分别放到对应的类别中
+        #Get the relative paths of all pictures in the corresponding category (Translated)
         #{satelite:{0839:[0839.jpg],0840:[0840.jpg]}}
         dict_path = {}
         for name in names:
@@ -26,7 +26,7 @@ class Dataloader_University(Dataset):
             dict_path[name] = dict_
             # dict_path[name+"/"+cls_name] = img_path_list
 
-        #获取设置名字与索引之间的镜像
+        #Get the mirror between the setting name and the index (Translated)
         cls_names = os.listdir(os.path.join(root,names[0]))
         cls_names.sort()
         map_dict={i:cls_names[i] for i in range(len(cls_names))}
@@ -36,7 +36,7 @@ class Dataloader_University(Dataset):
         self.dict_path = dict_path
         self.index_cls_nums = 2
 
-    #从对应的类别中抽一张出来
+    #Pump out of the corresponding category (Translated)
     def sample_from_cls(self,name,cls_num):
         img_path = self.dict_path[name][cls_num]
         img_path = np.random.choice(img_path,1)[0]
@@ -89,7 +89,7 @@ class Sampler_University(object):
 
 def train_collate_fn(batch):
     """
-    # collate_fn这个函数的输入就是一个list，list的长度是一个batch size，list中的每个元素都是__getitem__得到的结果
+    # The input of this function of collate_fn is a list, the length of the list is a batch size. Each element in the list is the result of __getITEM____ (Translated)
     """
     img_s,img_st,img_d,ids = zip(*batch)
     ids = torch.tensor(ids,dtype=torch.int64)
@@ -106,10 +106,12 @@ if __name__ == '__main__':
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]
 
+    
+    transform_train_list ={"satellite": transforms.Compose(transform_train_list), "train":transforms.Compose(transform_train_list)}
 
-    transform_train_list ={"satellite": transforms.Compose(transform_train_list),
-                            "train":transforms.Compose(transform_train_list)}
+    #Potential bug
     datasets = Dataloader_University(root="/home/dmmm/University-Release/train",transforms=transform_train_list,names=['satellite','drone'])
+
     samper = Sampler_University(datasets,8)
     dataloader = DataLoader(datasets,batch_size=8,num_workers=0,sampler=samper,collate_fn=train_collate_fn)
     for data_s,data_d in dataloader:

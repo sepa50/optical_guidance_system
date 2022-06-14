@@ -51,3 +51,6 @@ docs/_build/
 
 #Pre-trained model
 pretrain_model/vit_small_p16_224-15ec54c9.pth
+
+#removing checkpoints folder
+checkpoints/*
