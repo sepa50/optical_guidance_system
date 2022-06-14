@@ -1,0 +1,16 @@
+torch.Size([701, 2048])
+torch.Size([51355, 2048])
+514
+Recall@1:87.59 Recall@5:92.15 Recall@10:93.30 Recall@top1:98.57 AP:81.11
+torch.Size([37855, 2048])
+torch.Size([951, 2048])
+10
+Recall@1:82.25 Recall@5:93.59 Recall@10:95.69 Recall@top1:95.92 AP:84.80
+torch.Size([701, 2048])
+torch.Size([51355, 2048])
+514
+Recall@1:87.59 Recall@5:92.15 Recall@10:93.30 Recall@top1:98.57 AP:81.11
+torch.Size([37855, 2048])
+torch.Size([951, 2048])
+10
+Recall@1:82.25 Recall@5:93.59 Recall@10:95.69 Recall@top1:95.92 AP:84.80
