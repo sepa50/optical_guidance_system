@@ -15,7 +15,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 parser = argparse.ArgumentParser(description='Training')
 import math
 
-parser.add_argument('--data_dir',default='/home/dmmm/University-Release/test',type=str, help='./test_data')
+parser.add_argument('--data_dir',default='C:/_UNI_Programming_folder/GitHub/University1652-Baseline/data/University-Release/test',type=str, help='./test_data')
 parser.add_argument('--name', default='from_transreid_256_4B_small_lr005_kl', type=str, help='save model path')
 parser.add_argument('--batchsize', default=1, type=int, help='batchsize')
 parser.add_argument('--checkpoint',default="net_119.pth", help='weights' )
@@ -23,16 +23,16 @@ opt = parser.parse_args()
 
 config_path = 'opts.yaml'
 with open(config_path, 'r') as stream:
-    config = yaml.load(stream)
-opt.stride = config['stride']
+    config = yaml.safe_load(stream)
+#opt.stride = config['stride']
 opt.views = config['views']
-opt.transformer = config['transformer']
-opt.pool = config['pool']
-opt.LPN = config['LPN']
+#opt.transformer = config['transformer']
+#opt.pool = config['pool']
+#opt.LPN = config['LPN']
 opt.block = config['block']
 opt.nclasses = config['nclasses']
-opt.droprate = config['droprate']
-opt.share = config['share']
+#opt.droprate = config['droprate']
+#opt.share = config['share']
 
 if 'h' in config:
     opt.h = config['h']
