@@ -7,11 +7,12 @@ from torchvision import datasets
 import matplotlib
 #matplotlib.use('agg')
 import matplotlib.pyplot as plt
+from shutil import copyfile
 #######################################################################
 # Evaluate
 parser = argparse.ArgumentParser(description='Demo')
 parser.add_argument('--query_index', default=0, type=int, help='test_image_index')
-parser.add_argument('--test_dir',default='./data/test',type=str, help='./test_data')
+parser.add_argument('--test_dir',default='C:/_UNI_Programming_folder/GitHub/University1652-Baseline/data/University-Release/test',type=str, help='./test_data')
 opts = parser.parse_args()
 
 
@@ -86,8 +87,9 @@ print(query_path)
 print('Top 10 images are as follow:')
 save_folder = 'image_show/%02d'%opts.query_index
 if not os.path.isdir(save_folder):
-    os.mkdir(save_folder)
-os.system('cp %s %s/query.jpg'%(query_path, save_folder))
+    os.makedirs(save_folder)
+copyfile(query_path, save_folder + "/query.jpg")
+#os.system('cp %s %s/query.jpg'%(query_path, save_folder))
 
 try: # Visualize Ranking Result 
     # Graphical User Interface is needed
@@ -102,13 +104,14 @@ try: # Visualize Ranking Result
         label = gallery_label[index[i]]
         print(label)
         imshow(img_path)
-        os.system('cp %s %s/s%02d.jpg'%(img_path, save_folder, i))
+        #os.system('cp %s %s/s%02d.jpg'%(img_path, save_folder, i))
+        copyfile(img_path, save_folder + "/s" + str(i) + ".jpg")
         if label == query_label:
             ax.set_title('%d'%(i+1), color='green')
         else:
             ax.set_title('%d'%(i+1), color='red')
         print(img_path)
-    #plt.pause(100)  # pause a bit so that plots are updated
+    plt.pause(100)  # pause a bit so that plots are updated
 except RuntimeError:
     for i in range(10):
         img_path = image_datasets.imgs[index[i]]
