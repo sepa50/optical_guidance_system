@@ -21,7 +21,7 @@ for((i=119;i<=$num_epochs;i+=10));
 do
   for((p = 0;p<=$pad;p+=10));
   do
-    for ((j = 1; j < 3; j++));
+    for((j = 1; j < 3; j++));
     do
         python test_server.py --test_dir $test_dir --checkpoint net_$i.pth --mode $j --gpu_ids $gpu_ids --num_worker $num_worker --pad $pad
     done
