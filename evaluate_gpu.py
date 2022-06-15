@@ -57,11 +57,16 @@ def compute_mAP(index, good_index, junk_index):
     return ap, cmc
 
 ######################################################################
+#Load results
 result = scipy.io.loadmat('pytorch_result.mat')
+#get the query feature and label
 query_feature = torch.FloatTensor(result['query_f'])
 query_label = result['query_label'][0]
+#get the gallery feature and label
 gallery_feature = torch.FloatTensor(result['gallery_f'])
 gallery_label = result['gallery_label'][0]
+
+#this will fail for now
 multi = os.path.isfile('multi_query.mat')
 
 if multi:
@@ -69,6 +74,7 @@ if multi:
     mquery_feature = torch.FloatTensor(m_result['mquery_f'])
     mquery_label = m_result['mquery_label'][0]
     mquery_feature = mquery_feature.cuda()
+
 
 query_feature = query_feature.cuda(0)
 gallery_feature = gallery_feature.cuda(0)

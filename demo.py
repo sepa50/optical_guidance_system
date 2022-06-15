@@ -22,6 +22,7 @@ query_name = 'query_drone'
 #query_name = 'query_satellite'
 
 data_dir = opts.test_dir
+#Gets the datasets as gallery and query.
 image_datasets = {x: datasets.ImageFolder( os.path.join(data_dir,x) ) for x in [gallery_name, query_name]}
 
 #####################################################################
@@ -35,6 +36,7 @@ def imshow(path, title=None):
     plt.pause(0.1)  # pause a bit so that plots are updated
 
 ######################################################################
+#Instead of actually performing the inference here its getting the values from the pre-calucated .mat
 result = scipy.io.loadmat('pytorch_result.mat')
 query_feature = torch.FloatTensor(result['query_f'])
 query_label = result['query_label'][0]

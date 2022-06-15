@@ -24,13 +24,16 @@ opt = parser.parse_args()
 config_path = 'opts.yaml'
 with open(config_path, 'r') as stream:
     config = yaml.safe_load(stream)
-#opt.stride = config['stride']
+
 opt.views = config['views']
+opt.block = config['block']
+opt.nclasses = config['nclasses']
+
+#These appear to be old code. They are not used in the project anymore
+#opt.stride = config['stride']
 #opt.transformer = config['transformer']
 #opt.pool = config['pool']
 #opt.LPN = config['LPN']
-opt.block = config['block']
-opt.nclasses = config['nclasses']
 #opt.droprate = config['droprate']
 #opt.share = config['share']
 

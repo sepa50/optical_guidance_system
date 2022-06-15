@@ -51,9 +51,18 @@ docs/_build/
 
 #Pre-trained model
 pretrain_model/vit_small_p16_224-15ec54c9.pth
-checkpoints/FSRA/net_119.pth
-checkpoints/FSRA/pytorch_result.mat
+checkpoints/*/net_119.pth
+checkpoints/*/*.mat
 
 #removing checkpoints folder
 #checkpoints/*
 data/University-Release/*
+
+#data/Custom-Data/test/*
+data/Custom-Data/test/gallery_drone/*
+data/Custom-Data/test/gallery_satellite/*
+data/Custom-Data/test/query_drone/*
+data/Custom-Data/test/query_satellite/*
+!data/Custom-Data/test/gallery_satellite/0000
+!data/Custom-Data/test/query_satellite/0000
+checkpoints/*/image_show/*
