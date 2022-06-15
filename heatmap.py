@@ -15,7 +15,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 parser = argparse.ArgumentParser(description='Training')
 import math
 
-parser.add_argument('--data_dir',default='C:/_UNI_Programming_folder/GitHub/University1652-Baseline/data/University-Release/test',type=str, help='./test_data')
+parser.add_argument('--data_dir',default='C:\_UNI_Programming_folder\GitHub\optical_guidance_system\data\Custom-Data\test\gallery_drone\0000',type=str, help='./test_data')
 parser.add_argument('--name', default='from_transreid_256_4B_small_lr005_kl', type=str, help='save model path')
 parser.add_argument('--batchsize', default=1, type=int, help='batchsize')
 parser.add_argument('--checkpoint',default="net_119.pth", help='weights' )
@@ -73,10 +73,10 @@ def normalization(data):
 model = load_network(opt)
 
 print(opt.data_dir)
-for i in ["0009","0013","0015","0016","0018","0035","0039","0116","0130"]:
+for i in ["0000"]:
     print(i)
     imgpath = os.path.join(opt.data_dir,"gallery_drone/"+i)
-    imgpath = os.path.join(imgpath, "image-28.jpeg")
+    imgpath = os.path.join(imgpath, "image-01.png")
     print(imgpath)
     img = Image.open(imgpath)
     img = data_transforms(img)
