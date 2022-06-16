@@ -64,6 +64,7 @@ data/Custom-Data/test/gallery_satellite/*
 data/Custom-Data/test/query_drone/*
 data/Custom-Data/test/query_satellite/*
 data/Custom-Data/raw/*
+data/Custom-Data/raw.zip
 !data/Custom-Data/test/gallery_satellite/0000
 !data/Custom-Data/test/query_satellite/0000
 checkpoints/*/image_show/*
