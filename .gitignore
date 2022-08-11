@@ -68,3 +68,5 @@ data/Custom-Data/raw.zip
 !data/Custom-Data/test/gallery_satellite/0000
 !data/Custom-Data/test/query_satellite/0000
 checkpoints/*/image_show/*
+
+other_scripts/image_folder/*
