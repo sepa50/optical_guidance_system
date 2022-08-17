@@ -1,6 +1,3 @@
-from encodings import search_function
-from os import path
-
 from lxml import etree
 from pykml.factory import GX_ElementMaker as GX
 from pykml.factory import KML_ElementMaker as KML
@@ -9,52 +6,32 @@ from pykml.parser import Schema
 import latlon
 import numpy as np
 from gradient_free_optimizers import HillClimbingOptimizer
-
+import argparse
+import decimal
+import shelve
 #Based loosely on
 #from https://pythonhosted.org/pykml/examples/tour_examples.html#circle-around-locations
-gxns = '{' + nsmap['gx'] + '}'
-
-#Create KML doc
-tour_doc = KML.kml(
-    KML.Document(
-      GX.Tour(
-        KML.name("Test 01"),
-        GX.Playlist(),
-      ),
-      KML.Folder(
-        KML.name('Features'),
-        id='features',
-      ),
-    )
-)
 
 #Add visualization pins
-def AddPin(aLat, aLon, aName, aDesc):
+def AddPin(aLat, aLon, aName, aAlt):
   tour_doc.Document.Folder.append(
       KML.Placemark(
-        KML.name("?"),
-        #KML.description(
-        #    "<h1>{name}</h1><br/>{desc}".format(
-        #            name=aName,
-        #            desc=aDesc,
-        #    )
-        #),
+        KML.name(aName),
         KML.Point(
           KML.extrude(1),
           KML.altitudeMode("relativeToGround"),
           KML.coordinates("{lon},{lat},{alt}".format(
                   lon=aLon,
                   lat=aLat,
-                  alt=150,
+                  alt=aAlt,
               )
           )
-        ),
-        id=aName.replace(' ','_')
+        )
       )
     )
 
 #add tour locations
-def AddLocation(lat, lon):
+def AddLocation(lat, lon, alt):
   tour_doc.Document[gxns+"Tour"].Playlist.append(
       GX.FlyTo(
         GX.duration(0.25),
@@ -62,7 +39,7 @@ def AddLocation(lat, lon):
         KML.LookAt(
           KML.longitude(lon),
           KML.latitude(lat),
-          KML.altitude(300),
+          KML.altitude(alt),
           KML.heading(0),
           KML.tilt(0),
           KML.range(0),
@@ -70,8 +47,7 @@ def AddLocation(lat, lon):
         )
       ),
     )
-  tour_doc.Document[gxns+"Tour"].Playlist.append(GX.Wait(GX.duration(10.0)))
-import tensorflow as tf
+  tour_doc.Document[gxns+"Tour"].Playlist.append(GX.Wait(GX.duration(opt.duration)))
 
 #Calcualte the lat and lon offset
 #The earth isn't a sphere which makes this really hard
@@ -79,7 +55,7 @@ import tensorflow as tf
 #This uses a library that calculates the difference between two lat lon coods
 #Then it performs hill climbing to find the optimal offset that produces the correct distance
 def CalculateOffset(lat, lon, meters):
-  l = latlon.LatLon(lat, lon)
+  l = latlon.LatLon(float(lat), float(lon))
 
   search_space = {
     "x": np.arange(-0.1, 0.1, 0.000001),
@@ -89,44 +65,104 @@ def CalculateOffset(lat, lon, meters):
   opt_lat = HillClimbingOptimizer(search_space)
 
   def objective_lat(x):
-    #print(x)
-    return abs(meters-(l.distance(latlon.LatLon(lat + x["x"], lon))*1000))*-1
-
+    return abs(meters-(l.distance(latlon.LatLon(float(lat) + x["x"], float(lon)))*1000))*-1
+  
   def objective_lon(x):
-    #print(x)
-    return abs(meters-(l.distance(latlon.LatLon(lat, lon + x["x"]))*1000))*-1
-
-  opt_lon.search(objective_function=objective_lon, n_iter=10000, max_score=-1)
-  opt_lat.search(objective_function=objective_lat, n_iter=10000, max_score=-1)
-
-  #opt_lon.search(objective_function=objective_lon, n_iter=10000, verbosity="print_results", max_score=-1)
-  #opt_lat.search(objective_function=objective_lat, n_iter=10000, verbosity="print_results", max_score=-1)
+    return abs(meters-(l.distance(latlon.LatLon(float(lat), float(lon) + x["x"]))*1000))*-1
+  
+  if opt.verbose:
+    opt_lon.search(objective_function=objective_lon, n_iter=10000)
+    opt_lat.search(objective_function=objective_lat, n_iter=10000)
+    #opt_lon.search(objective_function=objective_lon, n_iter=10000, verbosity="print_results", max_score=-1)
+    #opt_lat.search(objective_function=objective_lat, n_iter=10000, verbosity="print_results", max_score=-1)
+  else:
+    opt_lon.search(objective_function=objective_lon, n_iter=10000, verbosity=False)
+    opt_lat.search(objective_function=objective_lat, n_iter=10000, verbosity=False)
 
   return (opt_lat.best_para["x"], opt_lon.best_para["x"])
 
 #Creates the full grid of locations centered on lat lon coordinate
-def AddGrid(lat, lon, width, height, offsetlat, offsetlon):
-  a = ""
-  for w in range((int)(-width/2), (int)(width/2)):
-    for h in range((int)(-height/2), (int)(height/2)):
-      AddLocation(lat + w*offsetlat, lon + h*offsetlon)
-      a += "a"
-      AddPin(lat + w*offsetlat, lon + h*offsetlon, a, "")
+def AddGrid(lat, lon, width, height, meters, alt, precompute):
 
-#Input variables
-lat = 53.61712500
-lon = -2.24064722
-meters = 400
-width = 8
-height = width
+  #Gets precomputed data, saves time when running script regularly
+  key = str(lat)+"|"+str(lon)+"|"+str(meters)
+  if precompute:
+    data = shelve.open('precomputed')
+    if not key in data.keys():
+      print("Data was not in shelve, generating data")
+      offsetlat, offsetlon = CalculateOffset(float(lat), float(lon), meters)
+      offsetlat = decimal.Decimal(offsetlat)
+      offsetlon = decimal.Decimal(offsetlon)
+      data[key] = {"offsetlat": str(offsetlat), "offsetlon": str(offsetlon)}
+    else:
+      offsetlat = decimal.Decimal(data[key]["offsetlat"])
+      offsetlon = decimal.Decimal(data[key]["offsetlon"])
+    data.close()
+  else:
+    print("Generating Data...")
+    offsetlat, offsetlon = CalculateOffset(float(lat), float(lon), meters)
+    offsetlat = decimal.Decimal(offsetlat)
+    offsetlon = decimal.Decimal(offsetlon)
+    data = shelve.open('precomputed')
+    data[key] = {"offsetlat": str(offsetlat), "offsetlon": str(offsetlon)}
+    data.close()
 
-offsetlat, offsetlon = CalculateOffset(lat, lon, meters)
-AddGrid(lat, lon, width, height, offsetlat, offsetlon)
-# check that the KML document is valid using the Google Extension XML Schema
+  #main generation loop
+  for w in range(-width, width+1):
+    for h in range(-height, height+1):
+      adjusted_lat = decimal.Decimal(w)*offsetlat + decimal.Decimal(lat)
+      adjusted_lon = decimal.Decimal(h)*offsetlon + decimal.Decimal(lon)
+      AddLocation(adjusted_lat, adjusted_lon, alt)
+      AddPin(aLat=adjusted_lat, aLon=adjusted_lon, aName=str(w)+", "+str(h), aAlt=alt)
+      if opt.debug:
+        if w == width and h == height:
+          print(adjusted_lat)
+          print(adjusted_lon)
+
+#parser is used to allow command line running
+#for automation of running this script use a bash file
+parser = argparse.ArgumentParser(description="image generation")
+
+parser.add_argument('--lat',default='53.61712500', help='latitude', type=str)
+parser.add_argument('--lon',default='-2.24064722', help='longitude', type=str)
+parser.add_argument('--distance',default=400, help='distance between points', type=int)
+parser.add_argument('--width',default=9, help='grid width', type=int)
+parser.add_argument('--height',default=9, help='grid height', type=int)
+parser.add_argument('--altitude',default=300, help='altitude above ground', type=int)
+parser.add_argument('--name',default="default-drone", help='filename', type=str)
+parser.add_argument('--precompute', action=argparse.BooleanOptionalAction)
+parser.add_argument('--verbose', action=argparse.BooleanOptionalAction)
+parser.add_argument('--debug', action=argparse.BooleanOptionalAction)
+parser.add_argument('--duration',default=10, help='time at each point', type=int)
+opt = parser.parse_args()
+
+#Google link thing
+gxns = '{' + nsmap['gx'] + '}'
+
+#Create KML doc
+tour_doc = KML.kml(
+    KML.Document(
+      GX.Tour(
+        KML.name(opt.name + " Tour"),
+        GX.Playlist(),
+      ),
+      KML.Folder(
+        KML.name(opt.name + " Points"),
+        id='features',
+      )
+    )
+)
+
+#create grid
+AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.distance, opt.altitude, opt.precompute)
+
+#Print grid for debugging
+if opt.debug:
+  print(etree.tostring(tour_doc, pretty_print=True))
+
+#Verify Schema
 assert(Schema("kml22gx.xsd").validate(tour_doc))
 
-#print(etree.tostring(tour_doc, pretty_print=True))
-
-# output a KML file (named based on the Python script)
-outfile = open(__file__.rstrip('.py')+'.kml','wb')
+#Output a KML file (named based on the Python script)
+outfile = open(opt.name+'.kml','wb')
 outfile.write(etree.tostring(tour_doc, pretty_print=True))

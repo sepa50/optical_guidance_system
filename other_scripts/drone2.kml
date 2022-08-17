@@ -1,14 +1,14 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2">
   <Document>
     <gx:Tour>
-      <name>Test 01</name>
+      <name>drone2 Tour</name>
       <gx:Playlist>
         <gx:FlyTo>
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -23,8 +23,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -39,8 +39,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -55,8 +55,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -71,8 +71,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -87,8 +87,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -103,8 +103,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -119,8 +119,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.60272099999959</latitude>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -135,8 +135,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.31762355999961435592155112</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -151,8 +151,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -167,8 +167,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -183,8 +183,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -199,8 +199,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -215,8 +215,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -231,8 +231,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -247,8 +247,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.60632199999969</latitude>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -263,8 +263,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -279,8 +279,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.31403155999971076694116334</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -295,8 +295,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -311,8 +311,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -327,8 +327,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -343,8 +343,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -359,8 +359,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -375,8 +375,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.609922999999796</latitude>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -391,8 +391,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -407,8 +407,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -423,8 +423,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.31043955999980717796077556</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -439,8 +439,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -455,8 +455,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -471,8 +471,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -487,8 +487,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -503,8 +503,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.6135239999999</latitude>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -519,8 +519,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -535,8 +535,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -551,8 +551,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -567,8 +567,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.30684755999990358898038778</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -583,8 +583,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -599,8 +599,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -615,8 +615,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -631,8 +631,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.617125</latitude>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -647,8 +647,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -663,8 +663,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -679,8 +679,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -695,8 +695,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -711,8 +711,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.30325556000000000000000000</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -727,8 +727,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -743,8 +743,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -759,8 +759,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.620726000000104</latitude>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -775,8 +775,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -791,8 +791,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -807,8 +807,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -823,8 +823,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -839,8 +839,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -855,8 +855,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.29966356000009641101961222</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -871,8 +871,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -887,8 +887,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.62432700000021</latitude>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -903,8 +903,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.216527220000376</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -919,8 +919,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.222557220000282</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -935,8 +935,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.228587220000188</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -951,8 +951,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.234617220000094</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -967,8 +967,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.24064722</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -983,8 +983,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.246677219999906</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -999,8 +999,8 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.252707219999812</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.29607156000019282203922444</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -1015,8 +1015,280 @@
           <gx:duration>0.25</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>-2.258737219999718</longitude>
-            <latitude>53.62792800000031</latitude>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.29247956000028923305883666</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.278660780000376019222869672</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.284658780000282014417152254</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.290656780000188009611434836</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.296654780000094004805717418</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.302652780000000000000000000</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.308650779999905995194282582</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.314648779999811990388565164</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.320646779999717985582847746</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
+            <altitude>300</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>0</range>
+            <altitudeMode>relativeToGround</altitudeMode>
+          </LookAt>
+        </gx:FlyTo>
+        <gx:Wait>
+          <gx:duration>10.0</gx:duration>
+        </gx:Wait>
+        <gx:FlyTo>
+          <gx:duration>0.25</gx:duration>
+          <gx:flyToMode>bounce</gx:flyToMode>
+          <LookAt>
+            <longitude>-2.326644779999623980777130328</longitude>
+            <latitude>53.28888756000038564407844888</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -1030,517 +1302,653 @@
       </gx:Playlist>
     </gx:Tour>
     <Folder id="features">
-      <name>Features</name>
-      <Placemark id="a">
-        <name>?</name>
+      <name>drone2 Points</name>
+      <Placemark>
+        <name>-4, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.60272099999959,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, -3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.60272099999959,150</coordinates>
+          <coordinates>-2.284658780000282014417152254,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, -2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.60272099999959,150</coordinates>
+          <coordinates>-2.290656780000188009611434836,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, -1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.60272099999959,150</coordinates>
+          <coordinates>-2.296654780000094004805717418,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, 0</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.60272099999959,150</coordinates>
+          <coordinates>-2.302652780000000000000000000,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, 1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.60272099999959,150</coordinates>
+          <coordinates>-2.308650779999905995194282582,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, 2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.60272099999959,150</coordinates>
+          <coordinates>-2.314648779999811990388565164,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, 3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.60272099999959,150</coordinates>
+          <coordinates>-2.320646779999717985582847746,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-4, 4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.60632199999969,150</coordinates>
+          <coordinates>-2.326644779999623980777130328,53.31762355999961435592155112,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.60632199999969,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, -3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.60632199999969,150</coordinates>
+          <coordinates>-2.284658780000282014417152254,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, -2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.60632199999969,150</coordinates>
+          <coordinates>-2.290656780000188009611434836,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, -1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.60632199999969,150</coordinates>
+          <coordinates>-2.296654780000094004805717418,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, 0</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.60632199999969,150</coordinates>
+          <coordinates>-2.302652780000000000000000000,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, 1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.60632199999969,150</coordinates>
+          <coordinates>-2.308650779999905995194282582,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, 2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.60632199999969,150</coordinates>
+          <coordinates>-2.314648779999811990388565164,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, 3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.609922999999796,150</coordinates>
+          <coordinates>-2.320646779999717985582847746,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-3, 4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.609922999999796,150</coordinates>
+          <coordinates>-2.326644779999623980777130328,53.31403155999971076694116334,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.609922999999796,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, -3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.609922999999796,150</coordinates>
+          <coordinates>-2.284658780000282014417152254,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, -2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.609922999999796,150</coordinates>
+          <coordinates>-2.290656780000188009611434836,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, -1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.609922999999796,150</coordinates>
+          <coordinates>-2.296654780000094004805717418,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, 0</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.609922999999796,150</coordinates>
+          <coordinates>-2.302652780000000000000000000,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, 1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.609922999999796,150</coordinates>
+          <coordinates>-2.308650779999905995194282582,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, 2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.6135239999999,150</coordinates>
+          <coordinates>-2.314648779999811990388565164,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, 3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.6135239999999,150</coordinates>
+          <coordinates>-2.320646779999717985582847746,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-2, 4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.6135239999999,150</coordinates>
+          <coordinates>-2.326644779999623980777130328,53.31043955999980717796077556,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.6135239999999,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, -3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.6135239999999,150</coordinates>
+          <coordinates>-2.284658780000282014417152254,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, -2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.6135239999999,150</coordinates>
+          <coordinates>-2.290656780000188009611434836,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, -1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.6135239999999,150</coordinates>
+          <coordinates>-2.296654780000094004805717418,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, 0</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.6135239999999,150</coordinates>
+          <coordinates>-2.302652780000000000000000000,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, 1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.617125,150</coordinates>
+          <coordinates>-2.308650779999905995194282582,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, 2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.617125,150</coordinates>
+          <coordinates>-2.314648779999811990388565164,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, 3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.617125,150</coordinates>
+          <coordinates>-2.320646779999717985582847746,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>-1, 4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.617125,150</coordinates>
+          <coordinates>-2.326644779999623980777130328,53.30684755999990358898038778,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.617125,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, -3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.617125,150</coordinates>
+          <coordinates>-2.284658780000282014417152254,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, -2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.617125,150</coordinates>
+          <coordinates>-2.290656780000188009611434836,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, -1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.617125,150</coordinates>
+          <coordinates>-2.296654780000094004805717418,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, 0</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.620726000000104,150</coordinates>
+          <coordinates>-2.302652780000000000000000000,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, 1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.620726000000104,150</coordinates>
+          <coordinates>-2.308650779999905995194282582,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, 2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.620726000000104,150</coordinates>
+          <coordinates>-2.314648779999811990388565164,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, 3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.620726000000104,150</coordinates>
+          <coordinates>-2.320646779999717985582847746,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>0, 4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.620726000000104,150</coordinates>
+          <coordinates>-2.326644779999623980777130328,53.30325556000000000000000000,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.620726000000104,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, -3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.620726000000104,150</coordinates>
+          <coordinates>-2.284658780000282014417152254,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, -2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.620726000000104,150</coordinates>
+          <coordinates>-2.290656780000188009611434836,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, -1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.62432700000021,150</coordinates>
+          <coordinates>-2.296654780000094004805717418,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, 0</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.62432700000021,150</coordinates>
+          <coordinates>-2.302652780000000000000000000,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, 1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.62432700000021,150</coordinates>
+          <coordinates>-2.308650779999905995194282582,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, 2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.62432700000021,150</coordinates>
+          <coordinates>-2.314648779999811990388565164,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, 3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.62432700000021,150</coordinates>
+          <coordinates>-2.320646779999717985582847746,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>1, 4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.62432700000021,150</coordinates>
+          <coordinates>-2.326644779999623980777130328,53.29966356000009641101961222,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.62432700000021,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, -3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.62432700000021,150</coordinates>
+          <coordinates>-2.284658780000282014417152254,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, -2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.216527220000376,53.62792800000031,150</coordinates>
+          <coordinates>-2.290656780000188009611434836,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, -1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.222557220000282,53.62792800000031,150</coordinates>
+          <coordinates>-2.296654780000094004805717418,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, 0</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.228587220000188,53.62792800000031,150</coordinates>
+          <coordinates>-2.302652780000000000000000000,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, 1</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.234617220000094,53.62792800000031,150</coordinates>
+          <coordinates>-2.308650779999905995194282582,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, 2</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.24064722,53.62792800000031,150</coordinates>
+          <coordinates>-2.314648779999811990388565164,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, 3</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.246677219999906,53.62792800000031,150</coordinates>
+          <coordinates>-2.320646779999717985582847746,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>2, 4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.252707219999812,53.62792800000031,150</coordinates>
+          <coordinates>-2.326644779999623980777130328,53.29607156000019282203922444,300</coordinates>
         </Point>
       </Placemark>
-      <Placemark id="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-        <name>?</name>
+      <Placemark>
+        <name>3, -4</name>
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>-2.258737219999718,53.62792800000031,150</coordinates>
+          <coordinates>-2.278660780000376019222869672,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, -3</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.284658780000282014417152254,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, -2</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.290656780000188009611434836,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, -1</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.296654780000094004805717418,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, 0</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.302652780000000000000000000,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, 1</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.308650779999905995194282582,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, 2</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.314648779999811990388565164,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, 3</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.320646779999717985582847746,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>3, 4</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.326644779999623980777130328,53.29247956000028923305883666,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, -4</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.278660780000376019222869672,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, -3</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.284658780000282014417152254,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, -2</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.290656780000188009611434836,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, -1</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.296654780000094004805717418,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, 0</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.302652780000000000000000000,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, 1</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.308650779999905995194282582,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, 2</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.314648779999811990388565164,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, 3</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.320646779999717985582847746,53.28888756000038564407844888,300</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>4, 4</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>-2.326644779999623980777130328,53.28888756000038564407844888,300</coordinates>
         </Point>
       </Placemark>
     </Folder>
