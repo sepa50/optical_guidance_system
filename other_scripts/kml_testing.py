@@ -9,6 +9,7 @@ from gradient_free_optimizers import HillClimbingOptimizer
 import argparse
 import decimal
 import shelve
+import math
 #Based loosely on
 #from https://pythonhosted.org/pykml/examples/tour_examples.html#circle-around-locations
 
@@ -134,6 +135,7 @@ parser.add_argument('--precompute', action=argparse.BooleanOptionalAction)
 parser.add_argument('--verbose', action=argparse.BooleanOptionalAction)
 parser.add_argument('--debug', action=argparse.BooleanOptionalAction)
 parser.add_argument('--duration',default=10, help='time at each point', type=int)
+parser.add_argument('--autoheight', action=argparse.BooleanOptionalAction)
 opt = parser.parse_args()
 
 #Google link thing
@@ -152,10 +154,14 @@ tour_doc = KML.kml(
       )
     )
 )
-
+#print(opt.altitude * math.tan(30.019 * (math.pi/180)))
 #create grid
-AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.distance, opt.altitude, opt.precompute)
-
+if opt.autoheight:
+  if opt.verbose:
+    print("Minimum ground distance calculated as: " + str(opt.altitude * math.tan(30.019 * (math.pi/180))) + " Altitude: " + str(opt.altitude))
+  AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.altitude * math.tan(30.019 * (math.pi/180)), opt.altitude, opt.precompute)
+else:
+  AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.distance, opt.altitude, opt.precompute)
 #Print grid for debugging
 if opt.debug:
   print(etree.tostring(tour_doc, pretty_print=True))
