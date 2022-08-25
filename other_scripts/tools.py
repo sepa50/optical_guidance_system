@@ -106,7 +106,11 @@ if opt.sizeslim:
     diff_arr = [{"name": eval_arr[i]["name"],"diff": abs(eval_arr[i+1]["size"]-eval_arr[i]["size"])} for i in range(len(eval_arr)-1)]
     for d in diff_arr:
         if (d["diff"] < 1000):
-            print(d["name"])
+            if (d["diff"] == 0):
+                os.remove(dir_path_out + "\\" + d["name"])
+                print(d["name"] + " - 0 (Auto Removed)")
+            else:
+                print(d["name"] + " - " + str(d["diff"]))
     print("Smallest differences:")
     count = len(eval_arr)
     print(sorted(raw_arr)[:round(count/10)])
