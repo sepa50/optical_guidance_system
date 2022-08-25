@@ -1,8 +1,5 @@
-#TODO:
-
 import numpy
 from PIL import Image
-
 import json
 
 #adds data to the json dictionary
