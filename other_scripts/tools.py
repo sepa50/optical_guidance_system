@@ -8,19 +8,18 @@ import statistics
 
 parser = argparse.ArgumentParser(description="useful image tools")
 
-parser.add_argument('--dir', default=r'.\image_folder\in', help="modified directiory", type=str)
-parser.add_argument('--outdir', default="", help="output directory", type=str)
-parser.add_argument('--namenum', action=argparse.BooleanOptionalAction)
-parser.add_argument('--modulo', action=argparse.BooleanOptionalAction)
-parser.add_argument('--count', action=argparse.BooleanOptionalAction)
-parser.add_argument('--autoslim', action=argparse.BooleanOptionalAction)
+parser.add_argument('--dir', default=r'.\image_folder\in', help="input directiory", type=str)
+parser.add_argument('--outdir', default=r'.\image_folder\out', help="output directory", type=str)
+group = parser.add_mutually_exclusive_group()
+group.add_argument('--namenum', action=argparse.BooleanOptionalAction, help="shortens name to only the associated number")
+group.add_argument('--moduloslim', action=argparse.BooleanOptionalAction, help="uses modulo to determine similarity")
+group.add_argument('--count', action=argparse.BooleanOptionalAction, help="counts number of files in folder")
+group.add_argument('--sizeslim', action=argparse.BooleanOptionalAction, help="uses jpg file size to determine similarity")
+
 opt = parser.parse_args()
 
 # folder path
-if opt.outdir != "":
-    dir_path_out = opt.outdir
-else:
-    dir_path_out = opt.dir
+dir_path_out = opt.outdir
 dir_path_dir = opt.dir
 count = 0
 
@@ -38,7 +37,7 @@ if opt.namenum:
             shutil.copy2(filename.path, dir_path_out)
             os.rename(dir_path_out + "\\" + filename.name, dir_path_out + "\\" + f"{int(b):06d}" + ".png")
 
-if opt.modulo:
+if opt.moduloslim:
     for filename in os.scandir(dir_path_dir): # Iterate directory
         if filename.is_file():
             a = re.findall(r'\d+.png', filename.name) #Get numbers from name
@@ -47,19 +46,11 @@ if opt.modulo:
                 shutil.copy2(filename.path, dir_path_out)
 
 
-if opt.autoslim:
-    if dir_path_out == dir_path_dir:
-        raise SystemExit('would destructively damage dir_path_dir, please specify dir_path_out')
+if opt.sizeslim:
     #remove all files in output directory
     for filename in os.scandir(dir_path_out):
         if filename.is_file():
             os.remove(filename.path)
-    
-    def reject_outliers(data, m = 2.):
-        d = np.abs(data - np.median(data))
-        mdev = np.median(d)
-        s = d/mdev if mdev else 0.
-        return data[s<m]
     
     #creates jpg of each image at out location
     for filename in os.scandir(dir_path_dir):
@@ -74,7 +65,8 @@ if opt.autoslim:
         if filename.is_file():
             f.append(filename)
     
-    #split list of file names into chunks of size 10
+    #split list of file names into chunks of size 15, a chunk of 10 is almost always included...
+    #note: i itterate by 10 so its sorta a sliding window rather than chunks
     n = 15
     chunks = [f[i:i + n] for i in range(0, len(f), 10)]
 
@@ -100,9 +92,10 @@ if opt.autoslim:
         c = a[0].replace(".jpg", "")
         shutil.copy2(dir_path_dir + "\\" + b, dir_path_out)
         os.rename(dir_path_out + "\\" + b, dir_path_out + "\\" + f"{int(c):06d}" + ".png")
-    
+
     #evaluate how well we did
     print("Evaluating results")
+    print("Likely Duplicates:")
     eval_arr = []
     names_arr = []
     for filename in os.scandir(dir_path_out):
@@ -113,15 +106,13 @@ if opt.autoslim:
     diff_arr = [{"name": eval_arr[i]["name"],"diff": abs(eval_arr[i+1]["size"]-eval_arr[i]["size"])} for i in range(len(eval_arr)-1)]
     for d in diff_arr:
         if (d["diff"] < 1000):
-            print(d["name"] + " may be a duplicate")
-    print("\nSmallest differences:")
-    print(sorted(raw_arr)[:10])
-
-    count = 0
-    for path in os.listdir(dir_path_out): # Iterate directory
-        if os.path.isfile(os.path.join(dir_path_out, path)): # check if current path is a file
-            count += 1
+            print(d["name"])
+    print("Smallest differences:")
+    count = len(eval_arr)
+    print(sorted(raw_arr)[:round(count/10)])
     print('File count:', count)
+
+
     
 
 
