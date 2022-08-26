@@ -1,11 +1,13 @@
+from itertools import pairwise
 import os
 import shutil
 import re
 import argparse
-import numpy as np
 from PIL import Image
 import statistics
 import imagehash
+import alive_progress
+import math
 
 parser = argparse.ArgumentParser(description="useful image tools")
 
@@ -17,6 +19,8 @@ group.add_argument('--namenum', action=argparse.BooleanOptionalAction, help="sho
 group.add_argument('--moduloslim', action=argparse.BooleanOptionalAction, help="uses modulo to determine similarity")
 group.add_argument('--sizeslim', action=argparse.BooleanOptionalAction, help="uses jpg file size to determine similarity")
 group.add_argument('--hashslim', action=argparse.BooleanOptionalAction, help="uses phash to determine similarity")
+group.add_argument('--evalslim', action=argparse.BooleanOptionalAction, help="evaluates similarity with hashes")
+group.add_argument('--name2d', action=argparse.BooleanOptionalAction, help="renames as the original 2d array")
 opt = parser.parse_args()
 
 #sets the folder path varibles
@@ -41,18 +45,17 @@ def delete_directory_content(directory):
 
 def get_files(directory):
     f = []
-    for filename in os.scandir(dir_path_out):
+    for filename in os.scandir(directory):
         if filename.is_file():
             f.append(filename)
     return f
 
+def count_files(directory):
+    return len(get_files(directory))
+
 #Counts the number of files in the input directory
 if opt.count:
-    count = 0
-    for path in os.listdir(dir_path_dir):
-        if os.path.isfile(os.path.join(dir_path_dir, path)):
-            count += 1
-    print('File count:', count)
+    print('File count:', count_files(dir_path_dir))
 
 #Renames all files in the directory to NUMBER.png
 if opt.namenum:
@@ -137,10 +140,105 @@ if opt.sizeslim:
     print(sorted(raw_arr)[:round(count/10)])
     print("File count (Doesn't count auto removed):", count)
 
+#Good way to quickly generate unique images
+#Uses a special kind of hash that is designed for image comparison
 if opt.hashslim:
+    #for dhash = threshold 11 GREAT
+    #for phash = threshold 15 GREAT
+    hash_func = imagehash.phash
+    threshold = 15
+    warning = 20
+
     #delete files in out directory
     delete_directory_content(dir_path_out)
+
     #generate image hash of each image
-    #generate difference array
-    #if difference is not large cull
-    #repeat untill differences are all large
+    f = get_files(dir_path_dir)
+    image_hashes = []
+
+    with alive_progress.alive_bar(len(f), title="Generating Hashes", length=100) as bar:
+        for idx, n in enumerate(f):
+            h = hash_func(Image.open(n.path))
+            image_hashes.append(h)
+            bar()
+
+    unique_hashes = list(dict.fromkeys(image_hashes))
+
+    difference_arr = [y-x for (x, y) in pairwise(unique_hashes)]
+
+    #remove similar 
+    for i in reversed(range(0, len(unique_hashes)-1)):
+        if difference_arr[i] <= threshold:
+            unique_hashes.pop(i)
+
+    #create list of images with unique hashes
+    unique_images = []
+    for h in unique_hashes:
+        i = image_hashes.index(h)
+        unique_images.append(f[i])
+
+    #move files
+    for filename in unique_images:
+        shutil.copy2(filename.path, dir_path_out)
+    
+    print("File Count: " + str(count_files(dir_path_out)))
+
+#Evaluates a given file amount slimming operation using a number of hash functions  
+if opt.evalslim:
+    a_threshold = 6
+    p_threshold = 15
+    d_threshold = 11
+
+    f = get_files(dir_path_dir)
+
+    a_hashes = []
+    p_hashes = []
+    d_hashes = []
+
+    with alive_progress.alive_bar(len(f), title="Generating Hashes", length=100) as bar:
+        for idx, n in enumerate(f):
+            img = (Image.open(n.path))
+            a = imagehash.average_hash(img)
+            p = imagehash.phash(img)
+            d = imagehash.dhash(img)
+            a_hashes.append(a)
+            p_hashes.append(p)
+            d_hashes.append(d)
+            bar()
+
+    a_difference = [y-x for (x, y) in pairwise(a_hashes)]
+    p_difference = [y-x for (x, y) in pairwise(p_hashes)]
+    d_difference = [y-x for (x, y) in pairwise(d_hashes)]
+
+    print("File Count: " + str(len(f)))
+    print("Evaluating hashes for possible duplicates: ")
+    found = False
+    for i in range(len(a_difference)):
+        s = ""
+        if a_difference[i] < a_threshold:
+            s += "index "+ f[i].name +" failed A threshold ("+ str(a_difference[i]) +" > " + str(a_threshold) +"); "
+        if p_difference[i] < p_threshold:
+            s += "index "+ f[i].name +" failed P threshold ("+ str(a_difference[i]) +" > " + str(a_threshold) +"); "
+        if d_difference[i] < d_threshold:
+            s += "index "+ f[i].name +" failed D threshold ("+ str(a_difference[i]) +" > " + str(a_threshold) +"); "
+        if (s != ""):
+            found = True
+            print(s)
+    if not found:
+        print("All values passed all thresholds")
+
+if opt.name2d:
+    c = count_files(dir_path_dir)
+    root = math.sqrt(c)
+    if root != round(root):
+        raise Exception("Invalid number of files at desination")
+    print("Root calculated as: " + str(root))
+    minimum = (root - 1) / 2
+    i = 0
+    for idx, filename in enumerate(os.scandir(dir_path_dir)): # Iterate directory
+        if filename.is_file():
+                x = idx - math.floor(idx / root) * root - minimum
+                y = math.floor(idx / root) - minimum
+                name = "(" + str(int(x)) + "x" + str(int(y)) + ")"
+                os.rename(filename.path, dir_path_dir + "\\" + f"{int(i):04d}" + name + ".png")
+                i += 1
