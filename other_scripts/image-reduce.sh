@@ -1,0 +1,2 @@
+python data_transform.py --sat_dir ".\image_folder\reduced_sat1" --drone_dir ".\image_folder\reduced_drone1" --out_dir ".\image_folder\out" --drone_stride 400 --sat_stride 200
+python data_transform.py --sat_dir ".\image_folder\reduced_sat2" --drone_dir ".\image_folder\reduced_drone2" --out_dir ".\image_folder\out" --drone_stride 400 --sat_stride 200

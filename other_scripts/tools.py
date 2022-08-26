@@ -227,6 +227,7 @@ if opt.evalslim:
     if not found:
         print("All values passed all thresholds")
 
+#names the files in the format: 000(x,y).png
 if opt.name2d:
     c = count_files(dir_path_dir)
     root = math.sqrt(c)
