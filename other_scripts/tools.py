@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description="useful image tools")
 
 parser.add_argument('--dir', default=r'.\image_folder\in', help="input directiory", type=str)
 parser.add_argument('--outdir', default=r'.\image_folder\out', help="output directory", type=str)
+
 group = parser.add_mutually_exclusive_group()
 group.add_argument('--count', action=argparse.BooleanOptionalAction, help="counts number of files in folder")
 group.add_argument('--namenum', action=argparse.BooleanOptionalAction, help="shortens name to only the associated number")
@@ -21,6 +22,7 @@ group.add_argument('--sizeslim', action=argparse.BooleanOptionalAction, help="us
 group.add_argument('--hashslim', action=argparse.BooleanOptionalAction, help="uses phash to determine similarity")
 group.add_argument('--evalslim', action=argparse.BooleanOptionalAction, help="evaluates similarity with hashes")
 group.add_argument('--name2d', action=argparse.BooleanOptionalAction, help="renames as the original 2d array")
+
 opt = parser.parse_args()
 
 #sets the folder path varibles

@@ -80,7 +80,8 @@ def CalculateOffset(lat, lon, meters):
     opt_lon.search(objective_function=objective_lon, n_iter=10000, verbosity=False)
     opt_lat.search(objective_function=objective_lat, n_iter=10000, verbosity=False)
 
-  return (opt_lat.best_para["x"], opt_lon.best_para["x"])
+  #print(opt_lat.best_para["x"], opt_lon.best_para["x"])
+  return (abs(opt_lat.best_para["x"]), abs(opt_lon.best_para["x"]))
 
 #Creates the full grid of locations centered on lat lon coordinate
 def AddGrid(lat, lon, width, height, meters, alt, precompute):
@@ -117,8 +118,7 @@ def AddGrid(lat, lon, width, height, meters, alt, precompute):
       AddPin(aLat=adjusted_lat, aLon=adjusted_lon, aName=str(w)+", "+str(h), aAlt=alt)
       if opt.debug:
         if w == width and h == height:
-          print(adjusted_lat)
-          print(adjusted_lon)
+          print(adjusted_lat, adjusted_lon)
 
 #parser is used to allow command line running
 #for automation of running this script use a bash file
