@@ -220,9 +220,9 @@ if opt.evalslim:
         if a_difference[i] < a_threshold:
             s += "index "+ f[i].name +" failed A threshold ("+ str(a_difference[i]) +" > " + str(a_threshold) +"); "
         if p_difference[i] < p_threshold:
-            s += "index "+ f[i].name +" failed P threshold ("+ str(a_difference[i]) +" > " + str(a_threshold) +"); "
+            s += "index "+ f[i].name +" failed P threshold ("+ str(a_difference[i]) +" > " + str(p_threshold) +"); "
         if d_difference[i] < d_threshold:
-            s += "index "+ f[i].name +" failed D threshold ("+ str(a_difference[i]) +" > " + str(a_threshold) +"); "
+            s += "index "+ f[i].name +" failed D threshold ("+ str(a_difference[i]) +" > " + str(d_threshold) +"); "
         if (s != ""):
             found = True
             print(s)
