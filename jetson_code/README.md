@@ -22,4 +22,4 @@ pip install pymavlink
 
 Open Mission Planner
 
-![image info](./images/image.png)
+![select simulation](./images/missionPlannerSelectSimulation.jpg)
