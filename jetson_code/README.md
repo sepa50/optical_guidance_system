@@ -20,6 +20,18 @@ pip install pymavlink
 
 ## Running SITL
 
-Open Mission Planner
+Open Mission Planner and select the simulation tab from the top menu.
 
 ![select simulation](./images/missionPlannerSelectSimulation.jpg)
+
+Select the multirotor firmware and then choose the stable option.
+
+![select multirotor](./images/missionPlannerMultirotor.jpg)
+
+Stuff and things
+
+![simulation main page](./images/missionPlannerData.jpg)
+
+More stuff and things
+
+![parameters](./images/missionPlannerPreferences.jpg)
