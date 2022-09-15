@@ -34,11 +34,11 @@ When pressing DISCONNECT the port being used and the connection type can be chan
 
 To run **GPSInject-GetReults.py** the parameter list must first be altered in Mission Planner. Press the CONFIG tab then click on the Full Parameter List. Search GPS and alter the checked favourited fields as shown in the image below.
 
-GPS_AUTO_SWITCH 2\n
-GPS_INJECT_TO 1\n
-GPS_PRIMARY 0\n
-GPS_TYPE 1\n
-GPS_TYPE2 14\n
+GPS_AUTO_SWITCH 2  
+GPS_INJECT_TO 1  
+GPS_PRIMARY 0  
+GPS_TYPE 1  
+GPS_TYPE2 14  
 SIM_GPS2_DISABLE 0
 
 ![parameters](./images/missionPlannerPreferences.jpg)
