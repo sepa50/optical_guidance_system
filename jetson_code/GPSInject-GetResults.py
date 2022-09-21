@@ -1,3 +1,6 @@
+## authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636, Alex Jennings 102117465
+## gps code injector, with CSV output
+
 from pymavlink import mavutil
 import time
 import CSVTest as csv
@@ -6,7 +9,7 @@ import CSVTest as csv
 # Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 
-connString = "tcp:127.0.0.1:5762"
+###TODO auto connection attempt
 # portOptions = ["5760", "5762", "5763"]
 
 # # attempt a connection
@@ -21,46 +24,44 @@ connString = "tcp:127.0.0.1:5762"
 #         the_connection.close()
 #         continue
 
+#data to inject
+injection = {'lat':-35.3599712, 'lon':149.1542315}
+
+
+##connection string ( change port to 5762,5760, 5763 as needed, missionplanner is fussy)
+connString = "tcp:127.0.0.1:5762"
+
 the_connection = mavutil.mavlink_connection(connString)
 print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
 
 
-
-def printResults(injectLat, injectLon): 
+#result printer to show the data in terminal
+def printResults(injection ,getRawGPS1, getcurrentGlobal): 
+    
     #get global positional data
-    getcurrentGlobal = the_connection.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
     globalLat = getcurrentGlobal.lat*10**(-7)
     globalLong = getcurrentGlobal.lon*10**(-7)
-    CurrentGlobalCoords = str(globalLat) + ", " + str(globalLong)
+   
     #get raw gps1 data
-    getRawGPS1 = the_connection.recv_match(type='GPS_RAW_INT', blocking=True)
     rawLat = getRawGPS1.lat*10**(-7)
     rawLon = getRawGPS1.lon*10**(-7)
+    
     #find error in injected data
-    injectErrorLat = round((rawLat - injectLat),7)
-    injectErrorLon = round((rawLon - injectLon),7)
-
+    injectErrorLat = round((rawLat - injection["lat"]),7)
+    injectErrorLon = round((rawLon - injection["lon"]),7)
 
     #print results
     printbar = "\n=============================================\n"
     
-    
     globalResult = "Global co ordinate = " + str(round(globalLat,7)) +", " + str(round(globalLong,7))
-    injectResult = "injected co ordinates = " + str(injectLat) +", " + str(injectLon)
+    injectResult = "injected co ordinates = " + str(injection["lat"]) +", " + str(injection["lat"])
     injectError = "Error in tracking = " + str(injectErrorLat) + ", " + str(injectErrorLon)
     rawResult = "Raw co ordinates from GPS actual = " + str(rawLat) + ", " +str(rawLon)
     print(printbar + injectError + printbar + globalResult + printbar + injectResult + printbar + rawResult)
-    csv.csvCreate(getcurrentGlobal,getRawGPS1,injectLat,injectLon)
+    
 
-
-while True:
-    #fake co ords
-    #-38.060025, 145.438805
-    #fake nmea: GPGGA,181908.00,3404.7041778,N,07044.3966270,W,4,13,1.00,495.144,M,29.200,M,0.10,0000*40
-    injectLat = -35.3599712
-    injectLon = 149.1542315
-    time.sleep(0.2)    
-    # this is where the magic happens, GPS injection, the only required lines are the lat and lon, then the sattelite count
+def injectGPS(injectLat, InjectLon):
+    ### this is where the magic happens, GPS injection, the only required lines are the lat and lon, then the sattelite count
     #TODO adjust sattelite count according to what gives reasonable accuracy.
     the_connection.mav.gps_input_send(
         0,  # Timestamp (micros since boot or Unix epoch)
@@ -86,5 +87,23 @@ while True:
         1,  # GPS vertical accuracy in m
         9   # Number of satellites visible.
     )
+
+#create CSV file for data logging
+def createCSV(getcurrentGlobal,getRawGPS1,injection):
+    csv.csvCreate(getcurrentGlobal,getRawGPS1,injection)
+
+
+#main loop to inject the GPS coordinates
+while True:
+    ### fake co ords to inject
+    #TODO change these to user inputs from the model
+    injectLat = -35.3599712
+    injectLon = 149.1542315
+    #time span between pushes
+    time.sleep(1)    
+    getcurrentGlobal = the_connection.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
+    getRawGPS1 = the_connection.recv_match(type='GPS_RAW_INT', blocking=True)
+
     #print results if they are working
-    printResults(injectLat, injectLon)
+    printResults(injection,getRawGPS1,getcurrentGlobal)
+    createCSV(getcurrentGlobal,getRawGPS1,injection)
