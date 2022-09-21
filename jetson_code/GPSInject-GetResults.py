@@ -82,4 +82,3 @@ while True:
     )
     #print results if they are working
     printResults(injectLat, injectLon)
-
