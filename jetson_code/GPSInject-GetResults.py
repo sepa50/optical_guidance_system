@@ -1,7 +1,12 @@
 from pymavlink import mavutil
 import time
+import CSVTest as csv
 
-connString = "tcp:127.0.0.1:5760"
+#if windows doesnt let you run the script properly due to permission errors, enter the following in the terminal
+# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+
+connString = "tcp:127.0.0.1:5762"
 # portOptions = ["5760", "5762", "5763"]
 
 # # attempt a connection
@@ -39,12 +44,13 @@ def printResults(injectLat, injectLon):
     #print results
     printbar = "\n=============================================\n"
     
-    injectError = "Error in tracking = " + str(injectErrorLat) + ", " + str(injectErrorLon)
+    
     globalResult = "Global co ordinate = " + str(round(globalLat,7)) +", " + str(round(globalLong,7))
     injectResult = "injected co ordinates = " + str(injectLat) +", " + str(injectLon)
+    injectError = "Error in tracking = " + str(injectErrorLat) + ", " + str(injectErrorLon)
     rawResult = "Raw co ordinates from GPS actual = " + str(rawLat) + ", " +str(rawLon)
     print(printbar + injectError + printbar + globalResult + printbar + injectResult + printbar + rawResult)
-
+    csv.csvCreate(getcurrentGlobal,getRawGPS1,injectLat,injectLon)
 
 
 while True:
