@@ -1,11 +1,22 @@
 from pymavlink import mavutil
 import time
 
-connString = "tcp:127.0.0.1:5762"
+connString = "tcp:127.0.0.1:5760"
+# portOptions = ["5760", "5762", "5763"]
+
+# # attempt a connection
+
+# for i in range(3):
+#     connStringComb = connString + portOptions[i]
+#     the_connection = mavutil.mavlink_connection(connStringComb)
+#     connHB = the_connection.recv_match(type='HEARTBEAT', blocking=False, timeout=None)
+#     if connHB is not None:
+#         break
+#     else:
+#         the_connection.close()
+#         continue
+
 the_connection = mavutil.mavlink_connection(connString)
-
-the_connection.wait_heartbeat()
-
 print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
 
 
