@@ -1,5 +1,5 @@
-## authors: Tyler Smith 100039114, Alex Jennings 102117465
-#creates a csv file to store the gathered data
+## Authors: Tyler Smith 100039114, Alex Jennings 102117465
+# Creates a csv file to store the gathered data
 
 import pandas as pd
 import os
@@ -29,7 +29,7 @@ def csvCreate(globalInt, rawInt, injection):
     }
 
     df = pd.DataFrame(data)
-    print(df)
+    #print(df)
     #TODO iterative naming convention for the file type.
     output_path='my_csv.csv'
     df.to_csv(output_path,index=False, mode='a', header=not os.path.exists(output_path))

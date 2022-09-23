@@ -1,5 +1,5 @@
-# Authors:
-# prints results to terminal for bug finding and realtime reading
+## Authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636
+# prints results to terminal for bug finding and realtime viewing of results
 
 
 def printResults(injection ,getRawGPS1, getcurrentGlobal): 
