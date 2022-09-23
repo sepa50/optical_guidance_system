@@ -14,14 +14,30 @@ injection = {'lat':-35.3599712, 'lon':149.1542315, "confidence":20}
 
 #conneciton string for mission planner connection
 #TODO add serial connection string
-connString = "tcp:127.0.0.1:5762"
+connString = "tcp:127.0.0.1:5760"
+
+### auto connection attempt
+
+connString = "tcp:127.0.0.1:"
+portOptions = ["5760", "5762", "5763"]
+
+# attempt a connection
+
+for port in portOptions:
+    connStringComb = connString + port
+    the_connection = mavutil.mavlink_connection(connStringComb)
+    connHB = the_connection.wait_heartbeat()
+    if connHB is not None:
+        print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
+        break
+    else:
+        the_connection.close()
+        continue
 
 #start mavlink connection and wait for heartbeat, then print heartbeat on success
 #prevents connection failures and ensures secure connection
-the_connection = mavutil.mavlink_connection(connString)
-print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
-
-
+#the_connection = mavutil.mavlink_connection(connString)
+#print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
 # main loop to inject the GPS coordinates, store the current GPS co ordinates of both raw onboard and injected
 # also does the Camera function calling to take and store images. 
 
@@ -44,6 +60,6 @@ while True:
     #print results if they are working
     GPSGetResults.printResults(injection,getRawGPS1,getcurrentGlobal)
     #store data to a CSV file
-    CSVDataStorage.csvCreate(getcurrentGlobal,getRawGPS1,injection)
+    #CSVDataStorage.csvCreate(getcurrentGlobal,getRawGPS1,injection)
 
 

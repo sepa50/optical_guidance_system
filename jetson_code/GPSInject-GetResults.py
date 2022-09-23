@@ -30,7 +30,7 @@ import CSVDataStorage as csv
 injection = {'lat':-35.3599712, 'lon':149.1542315}
 
 ##connection string ( change port to 5762,5760, 5763 as needed, missionplanner is fussy)
-connString = "tcp:127.0.0.1:5760"
+connString = "tcp:127.0.0.1:5762"
 
 the_connection = mavutil.mavlink_connection(connString)
 
