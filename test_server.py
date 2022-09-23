@@ -294,15 +294,16 @@ if __name__ == "__main__":
 
     # Save to Matlab for check
     # TODO: Determine what to do with matlab
-    # result = {
-    #     "gallery_f": gallery_feature.numpy(),
-    #     "gallery_label": gallery_label,
-    #     "gallery_path": gallery_path,
-    #     "query_f": query_feature.numpy(),
-    #     "query_label": query_label,
-    #     "query_path": query_path,
-    # }
-    # scipy.io.savemat("pytorch_result.mat", result)
+    # Note: Don't change this code, its needed for evaluate_gpu.py
+    result = {
+        "gallery_f": gallery_feature.numpy(),
+        "gallery_label": gallery_label,
+        "gallery_path": gallery_path,
+        "query_f": query_feature.numpy(),
+        "query_label": query_label,
+        "query_path": query_path,
+    }
+    scipy.io.savemat("pytorch_result.mat", result)
 
-    #result = "result.txt"
+    result = "result.txt"
     os.system("python evaluate_gpu.py | tee -a %s" % result)
