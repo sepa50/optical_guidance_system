@@ -1,6 +1,8 @@
 ## authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636, Alex Jennings 102117465
 ## gps code injector, with CSV output
-
+###
+### DEPRECATED USE JETSON LOOP INSTEAD
+###
 from pymavlink import mavutil
 import time
 import CSVDataStorage as csv

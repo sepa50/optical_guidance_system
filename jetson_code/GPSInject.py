@@ -1,4 +1,4 @@
-#authors: Tyler Smith, Jonothan Ridgeway, Alex Jennings
+## Authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636
 # inject GPS data using a dict structure of injection= {"lat": val, "lon": val, "confidence":6-25}
 # confidence sets the satelite count to apply a level of "accuracy" given lack of accuracy setting
 
