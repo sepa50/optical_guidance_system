@@ -14,7 +14,7 @@ injection = {'lat':-35.3599712, 'lon':149.1542315, "confidence":20}
 
 #conneciton string for mission planner connection
 #TODO add serial connection string
-connString = "tcp:127.0.0.1:5760"
+connString = "tcp:127.0.0.1:5762"
 
 #start mavlink connection and wait for heartbeat, then print heartbeat on success
 #prevents connection failures and ensures secure connection
@@ -39,11 +39,11 @@ while True:
 
     #do the inject
     #comment if needed
-    GPSInject(the_connection, injection)
+    GPSInject.injectGPS(the_connection, injection)
     
     #print results if they are working
-    GPSGetResults(injection,getRawGPS1,getcurrentGlobal)
+    GPSGetResults.printResults(injection,getRawGPS1,getcurrentGlobal)
     #store data to a CSV file
-    CSVDataStorage(getcurrentGlobal,getRawGPS1,injection)
+    CSVDataStorage.csvCreate(getcurrentGlobal,getRawGPS1,injection)
 
 
