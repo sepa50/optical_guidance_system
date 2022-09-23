@@ -136,18 +136,6 @@ for x in ["gallery_satellite"]:
         os.path.join(data_dir, x), 
         data_transforms)
 
-image_datasets_query = {
-    x: datasets.ImageFolder(os.path.join(data_dir, x), 
-    data_query_transforms)
-    for x in ["query_satellite", "query_drone"]
-}
-
-image_datasets_gallery = {
-    x: datasets.ImageFolder(os.path.join(data_dir, x), 
-    data_transforms)
-    for x in ["gallery_satellite", "gallery_drone"]
-}
-
 image_datasets = {**image_datasets_query, **image_datasets_gallery}
 
 dataloaders = {
@@ -157,7 +145,7 @@ dataloaders = {
         shuffle=False,
         num_workers=opt.num_worker,
     )
-    for x in ["gallery_satellite", "gallery_drone", "query_satellite", "query_drone"]
+    for x in ["gallery_satellite", "query_drone"]
 }
 use_gpu = torch.cuda.is_available()
 
@@ -172,19 +160,6 @@ def fliplr(img):
     inv_idx = torch.arange(img.size(3) - 1, -1, -1).long()  # N x C x H x W
     img_flip = img.index_select(3, inv_idx)
     return img_flip
-
-
-def which_view(name):
-    if "satellite" in name:
-        return 1
-    elif "street" in name:
-        return 2
-    elif "drone" in name:
-        return 3
-    else:
-        print("unknown view")
-    return -1
-
 
 def extract_feature(model, dataloaders, view_index=1):
     features = torch.FloatTensor()
@@ -260,32 +235,27 @@ if use_gpu:
 # Extract feature
 since = time.time()
 
-if opt.mode == 1:
-    query_name = "query_satellite"
-    gallery_name = "gallery_drone"
-elif opt.mode == 2:
-    query_name = "query_drone"
-    gallery_name = "gallery_satellite"
-else:
-    raise Exception("opt.mode is not required")
 
+query_name = "query_drone"
+gallery_name = "gallery_satellite"
+which_query = 0
+which_gallery = 1
 # gallery_name = 'gallery_street'
 # query_name = 'query_street'
 
-which_gallery = which_view(gallery_name)
-which_query = which_view(query_name)
 print("%d -> %d:" % (which_query, which_gallery))
 print(query_name.split("_")[-1], "->", gallery_name.split("_")[-1])
 
 gallery_path = image_datasets[gallery_name].imgs
-f = open("gallery_name.txt", "w")
-for p in gallery_path:
-    f.write(p[0] + "\n")
+# f = open("gallery_name.txt", "w")
+# for p in gallery_path:
+#     f.write(p[0] + "\n")
 query_path = image_datasets[query_name].imgs
-f = open("query_name.txt", "w")
-for p in query_path:
-    f.write(p[0] + "\n")
+# f = open("query_name.txt", "w")
+# for p in query_path:
+#     f.write(p[0] + "\n")
 
+#Label = number , Path = location
 gallery_label, gallery_path = get_id(gallery_path)
 query_label, query_path = get_id(query_path)
 
@@ -323,15 +293,16 @@ if __name__ == "__main__":
     )
 
     # Save to Matlab for check
-    result = {
-        "gallery_f": gallery_feature.numpy(),
-        "gallery_label": gallery_label,
-        "gallery_path": gallery_path,
-        "query_f": query_feature.numpy(),
-        "query_label": query_label,
-        "query_path": query_path,
-    }
-    scipy.io.savemat("pytorch_result.mat", result)
+    # TODO: Determine what to do with matlab
+    # result = {
+    #     "gallery_f": gallery_feature.numpy(),
+    #     "gallery_label": gallery_label,
+    #     "gallery_path": gallery_path,
+    #     "query_f": query_feature.numpy(),
+    #     "query_label": query_label,
+    #     "query_path": query_path,
+    # }
+    # scipy.io.savemat("pytorch_result.mat", result)
 
-    result = "result.txt"
+    #result = "result.txt"
     os.system("python evaluate_gpu.py | tee -a %s" % result)
