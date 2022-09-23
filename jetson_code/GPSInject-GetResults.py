@@ -3,7 +3,7 @@
 
 from pymavlink import mavutil
 import time
-import CSVTest as csv
+import CSVDataStorage as csv
 
 #if windows doesnt let you run the script properly due to permission errors, enter the following in the terminal
 # Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
@@ -26,7 +26,6 @@ import CSVTest as csv
 
 #data to inject
 injection = {'lat':-35.3599712, 'lon':149.1542315}
-
 
 ##connection string ( change port to 5762,5760, 5763 as needed, missionplanner is fussy)
 connString = "tcp:127.0.0.1:5760"
@@ -103,6 +102,9 @@ while True:
     time.sleep(1)    
     getcurrentGlobal = the_connection.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
     getRawGPS1 = the_connection.recv_match(type='GPS_RAW_INT', blocking=True)
+
+    #do the inject
+    injectGPS(injection["lat"], injectLon["lon"])
 
     #print results if they are working
     printResults(injection,getRawGPS1,getcurrentGlobal)
