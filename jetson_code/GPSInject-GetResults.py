@@ -108,4 +108,4 @@ while True:
 
     #print results if they are working
     printResults(injection,getRawGPS1,getcurrentGlobal)
-    createCSV(getcurrentGlobal,getRawGPS1,injection)
+    csv.csvCreate(getcurrentGlobal,getRawGPS1,injection)
