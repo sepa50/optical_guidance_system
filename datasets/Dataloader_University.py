@@ -8,7 +8,7 @@ import numpy as np
 from PIL import Image
 
 class Dataloader_University(Dataset):
-    def __init__(self,root,transforms,names=['satellite','street','drone','google']):
+    def __init__(self,root,transforms,names=['satellite','drone']):
         super(Dataloader_University).__init__()
         self.transforms_drone_street = transforms['train']
         self.transforms_satellite = transforms['satellite']
@@ -49,12 +49,12 @@ class Dataloader_University(Dataset):
         img = self.sample_from_cls("satellite",cls_nums)
         img_s = self.transforms_satellite(img)
 
-        img = self.sample_from_cls("street",cls_nums)
-        img_st = self.transforms_drone_street(img)
+        # img = self.sample_from_cls("street",cls_nums)
+        # img_st = self.transforms_drone_street(img)
 
         img = self.sample_from_cls("drone",cls_nums)
         img_d = self.transforms_drone_street(img)
-        return img_s,img_st,img_d,index
+        return img_s,img_d,index
 
 
     def __len__(self):

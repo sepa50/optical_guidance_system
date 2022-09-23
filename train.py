@@ -20,11 +20,11 @@ from losses.cal_loss import cal_kl_loss,cal_loss,cal_triplet_loss
 warnings.filterwarnings("ignore")
 version =  torch.__version__
 #fp16
-try:
-    from apex.fp16_utils import *
-    from apex import amp, optimizers
-except ImportError: # will be 3.x series
-    print('This is not an error. If you want to use low precision, i.e., fp16, please install the apex with cuda support (https://github.com/NVIDIA/apex) and update pytorch to 1.0')
+# try:
+#     from apex.fp16_utils import *
+#     from apex import amp, optimizers
+# except ImportError: # will be 3.x series
+#     print('This is not an error. If you want to use low precision, i.e., fp16, please install the apex with cuda support (https://github.com/NVIDIA/apex) and update pytorch to 1.0')
 ######################################################################
 # Options
 # --------
@@ -271,11 +271,11 @@ if __name__ == '__main__':
     optimizer_ft, exp_lr_scheduler = make_optimizer(model,opt)
 
     model = model.cuda()
-    #移动文件到指定文件夹
+
     copyfiles2checkpoints(opt)
 
-    if opt.fp16:
-        model, optimizer_ft = amp.initialize(model, optimizer_ft, opt_level="O1")
+    # if opt.fp16:
+    #     model, optimizer_ft = amp.initialize(model, optimizer_ft, opt_level="O1")
 
 
     train_model(model,opt, optimizer_ft, exp_lr_scheduler,dataloaders,dataset_sizes)
