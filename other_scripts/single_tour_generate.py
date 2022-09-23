@@ -28,6 +28,6 @@ opt = parser.parse_args()
 if opt.autoheight:
   if opt.verbose:
     print("Minimum ground distance calculated as: " + str(opt.altitude * math.tan(30.019 * (math.pi/180))) + " Altitude: " + str(opt.altitude))
-  rkml.AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.altitude * math.tan(30.019 * (math.pi/180)), opt.altitude, opt.precompute, opt.name, opt.duration, opt.verbose, opt.debug)
+  rkml.AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.altitude * math.tan(30.019 * (math.pi/180)), opt.altitude, opt.precompute, opt.name, opt.duration, opt.verbose, opt.debug, outdir=r"./image_folder/out")
 else:
- rkml.AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.distance, opt.altitude, opt.precompute, opt.name, opt.duration, opt.verbose, opt.debug)
+ rkml.AddGrid(opt.lat, opt.lon, opt.width, opt.height, opt.distance, opt.altitude, opt.precompute, opt.name, opt.duration, opt.verbose, opt.debug, outdir=r"./image_folder/out")
