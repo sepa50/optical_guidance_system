@@ -53,11 +53,11 @@ docs/_build/
 
 #Pre-trained model
 pretrain_model/vit_small_p16_224-15ec54c9.pth
-checkpoints/*/net_119.pth
-checkpoints/*/*.mat
+#checkpoints/*/net_119.pth
+#checkpoints/*/*.mat
 
 #removing checkpoints folder
-#checkpoints/*
+checkpoints/
 data/University-Release/*
 
 #data/Custom-Data/test/*
@@ -66,13 +66,17 @@ data/Custom-Data/test/gallery_satellite/*
 data/Custom-Data/test/query_drone/*
 data/Custom-Data/test/query_satellite/*
 data/Custom-Data/raw/*
-*.zip
+
 !data/Custom-Data/test/gallery_satellite/0000
 !data/Custom-Data/test/query_satellite/0000
-checkpoints/*/image_show/*
+
+#checkpoints/*/image_show/*
+
 data/Custom-Data/processed-data/gallery_drone/*
 data/Custom-Data/processed-data/gallery_satellite/*
 data/Custom-Data/processed-data/query_drone/*
 data/Custom-Data/processed-data/query_satellite/*
+
+*.zip
 *.rar
 *.png
