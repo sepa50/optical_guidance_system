@@ -78,13 +78,6 @@ def logResults(file_dict):
     log_df = pd.DataFrame(data = log_dict)
     # Save the pandas dataframe in CSV format
     log_df.to_csv("./" + logfile_name)
-    
-    
-## TODO: Need to figure out how to get location data in the right format. Will need to either change the layout of the CSV or will
-# need to do some formatting on a combined lat/lon string to get the right outputs.
-## TODO: Need to figure out how I am going to read in the data - how will the location data be associated with an image. I think
-# that satimg_loc needs to be a dictionary with the appropriate processed values, meaning that I need to write a function to process
-# the location data before I iterate over the lists in parallel.
 
 # Convert coordinates both to and from DMS and decimal degrees.
 #
@@ -197,3 +190,10 @@ def exifWrite(fmatched):
     for image, img_data in zip(imageArr, fmatched):
         with open(img_data["filename"], 'wb') as write_img:
             write_img.write(image.get_file(), )
+            
+#############################################################################
+# THINGS THAT NEED TO BE DONE:
+#
+# TODO: Create a sample CSV file and test operation of individual functions.
+# TODO: Test embedding of data into a sample image.
+# TODO: Discuss functions with team.
