@@ -3,12 +3,12 @@
 
 import pandas as pd
 import os
-from datetime import datetime
+
 import geopy.distance
 
 #create a CSV file using the variables gathered from teh GPS Inject script
-def csvCreate(globalInt, rawInt, injection):
-    currentTime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+def csvCreate(globalInt, rawInt, injection, timestamp):
+	currentTime = timestamp
     diff_err_lat = rawInt.lat*10**(-7) - injection["lat"]
     diff_err_lon = rawInt.lon*10**(-7) - injection["lon"]
     inj_latlon = (injection["lat"], injection["lon"])
