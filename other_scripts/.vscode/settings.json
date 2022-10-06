@@ -1,5 +1,16 @@
 {
     "cSpell.ignoreWords": [
         "Placemark"
+    ],
+    "cSpell.words": [
+        "argparser",
+        "batchsize",
+        "delat",
+        "delon",
+        "geopy",
+        "myplaces",
+        "outdir",
+        "precompute",
+        "rkml"
     ]
 }

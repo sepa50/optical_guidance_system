@@ -1,13 +1,12 @@
 import argparse
 import os
-
 from pykml import parser
 from pykml.factory import GX_ElementMaker as GX
 from pykml.factory import KML_ElementMaker as KML
-
 import math
-
 import res.kml_resources as rkml
+from pathlib import Path
+import res.file_manip_resources as rfm
 
 # Get the defualt location of myplaces.kml, the file that saves the current points within google earth pro
 directory = os.getenv("APPDATA") + "\..\LocalLow\Google\GoogleEarth\myplaces.kml"
@@ -28,10 +27,10 @@ argparser.add_argument(
 argparser.add_argument("--dir", default=directory, help="location of kml with points", type=str)
 argparser.add_argument("--outdir", default=r"./kml", help="output location of kml files", type=str)
 argparser.add_argument("--distance", default=400, help="distance between points", type=int)
-argparser.add_argument("--width", default=9, help="grid width", type=int)
-argparser.add_argument("--height", default=9, help="grid height", type=int)
+argparser.add_argument("--width", help="grid width", type=int, required=True)
+argparser.add_argument("--height", help="grid height", type=int, required=True)
 argparser.add_argument("--altitude", default=300, help="altitude above ground", type=int)
-argparser.add_argument("--name", default="default", help="filename", type=str)
+argparser.add_argument("--name", default="tour_path", help="filename", type=str)
 argparser.add_argument("--duration", default=10, help="time at each point", type=int)
 argparser.add_argument("--batchsize", default=10, help="size of a batch", type=int)
 argparser.add_argument("--precompute", action=argparse.BooleanOptionalAction)
@@ -40,13 +39,16 @@ argparser.add_argument("--debug", action=argparse.BooleanOptionalAction)
 
 opt = argparser.parse_args()
 
+opt.outdir = rfm.unique_name_generate(opt.outdir, opt.name)
+Path(opt.outdir).mkdir(parents=True, exist_ok=True)
+
+#TODO: Fix horrible hardcoded values
 kml_file = r"myplaces.kml"
 with open(kml_file) as f:
     doc = parser.parse(f)
     root = doc.getroot()
 
-# create core
-
+#create core
 tour_doc = KML.kml(
     KML.Document(
         GX.Tour(
@@ -60,7 +62,7 @@ tour_doc = KML.kml(
     )
 )
 
-
+print("Minimum ground distance calculated as: " + str(opt.altitude * math.tan(30.019 * (math.pi/180))) + " Altitude: " + str(opt.altitude))
 
 # loop over all points, generate a tour for every point
 i = 0

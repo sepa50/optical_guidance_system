@@ -80,3 +80,5 @@ data/Custom-Data/processed-data/query_satellite/*
 *.zip
 *.rar
 *.png
+
+!other_scripts/kml/img/*
