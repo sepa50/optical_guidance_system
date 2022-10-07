@@ -4,7 +4,6 @@
 # Reads a list of coordinates associated with an image name from a CSV file and embeds.
 
 # Uses 'exif' library for EXIF manipulation. To install, 'pip install exif'.
-from xdrlib import ConversionError
 import exif
 # Uses 'pandas' library for CSV operations. To install, 'pip install pandas'.
 import pandas as pd
@@ -55,12 +54,18 @@ def fileEnum(csv_file, root_path):
             found_fpaths.append(comb_path)
         
     # Iterate over the filename and path lists in parallel, and sort file names and paths that do/do not match values from the CSV into respective arrays
-    for fname, fpath in zip(found_fnames, found_fpaths):
-        for iname, iloc in zip(satimg_names, satimg_loc):
+    
+    for iname, iloc in zip(satimg_names, satimg_loc):
+        matchedimg = False
+        for fname, fpath in zip(found_fnames, found_fpaths):
             if fname == iname:
-                matched_files.append({"filename": fname, "filepath": fpath, "imageloc": iloc})
+                matchedimg = True
             else:
-                unmatched_files.append({"filename": fname, "filepath": fpath})
+                continue
+        if matchedimg:
+            matched_files.append({"filename": fname, "filepath": fpath, "imageloc": iloc})
+        else:
+            unmatched_files.append({"filename": iname, "imageloc": iloc})
 
     # Return a dict containing the matched and unmatched file arrays
     dict = {"matched": matched_files, "unmatched": unmatched_files}
@@ -68,14 +73,25 @@ def fileEnum(csv_file, root_path):
 
 # Log the results of the embedding operation to a CSV
 def logResults(file_dict):
-    # Merge the two dictionaries that are within file_dict. This is so that all of the data contained within the two dictionaries can be represented as a 2d data structure.
-    # The entries referred to by the keys on the following line are also dictionaries.
-    log_dict = file_dict["matched"] | file_dict["unmatched"]
+    matched = file_dict["matched"]
+    unmatched = file_dict["unmatched"]
+    delta_len = len(matched) - len(unmatched)
+    for i in range(0, abs(delta_len)):
+        if (delta_len == 0):
+            continue
+        elif (delta_len < 0):
+            matched.append("None")
+        elif (delta_len > 0):
+            unmatched.append("None")
+    # update the dictionary with the padded array
+    file_dict["matched"] = matched
+    file_dict["unmatched"] = unmatched
     # Dynamically generate logfile name from the current time
     logtime = time.localtime()
-    logfile_name = "embed_log" + logtime.tm_year + "_" + logtime.tm_mon + "_" + logtime.tm_mday + "_" + logtime.tm_sec + ".txt"
+    logfile_name = "embed_log" + str(logtime.tm_year) + "_" + str(logtime.tm_mon) + "_" + str(logtime.tm_mday) + "_" + str(logtime.tm_hour) + str(logtime.tm_min) + str(logtime.tm_sec) + ".txt"
+    print("Logfile name is: " + logfile_name)
     # Turn the dictionary into a pandas dataframe
-    log_df = pd.DataFrame(data = log_dict)
+    log_df = pd.DataFrame.from_dict(data = file_dict, orient = 'columns')
     # Save the pandas dataframe in CSV format
     log_df.to_csv("./" + logfile_name)
 
@@ -179,10 +195,11 @@ def exifWrite(fmatched):
             imageArr.append(exif.Image(img_file))
     # Iterate in parallel over the image array and the matched image array, fetching and setting EXIF field values for each respective image.       
     for image, img_data in zip(imageArr, fmatched):
-        image.set("gps_latitude", (img_data["imageloc"]["lat"]["degrees"], img_data["imageloc"]["lat"]["minutes"], img_data["imageloc"]["lat"]["seconds"]))
-        image.set("gps_latitude_ref", img_data["imageloc"]["lat"]["direction"])
-        image.set("gps_longitude", (img_data["imageloc"]["lon"]["degrees"], img_data["imageloc"]["lon"]["minutes"], img_data["imageloc"]["lon"]["seconds"]))
-        image.set("gps_longitude_ref", img_data["imageloc"]["lon"]["direction"])
+        tag_data = img_data["imageloc"]
+        image.set("gps_latitude", (tag_data["lat"]["degrees"], tag_data["lat"]["minutes"], tag_data["lat"]["seconds"]))
+        image.set("gps_latitude_ref", tag_data["lat"]["direction"])
+        image.set("gps_longitude", (tag_data["lon"]["degrees"], tag_data["lon"]["minutes"], tag_data["lon"]["seconds"]))
+        image.set("gps_longitude_ref", tag_data["lon"]["direction"])
         # Print the recently set attributes to stdout for verification
         print("Image " + img_data["filename"] + " attributes set:")
         print("Lat: " + image.get("gps_latitude") + " " + image.get("gps_latitude_ref") + " Lon: " + image.get("gps_longitude") + " " + image.get("gps_longitude_ref"))
@@ -197,3 +214,17 @@ def exifWrite(fmatched):
 # TODO: Create a sample CSV file and test operation of individual functions.
 # TODO: Test embedding of data into a sample image.
 # TODO: Discuss functions with team.
+
+def main():
+    # Enumerate images, their paths, and their associated coordinates
+    image_dict = fileEnum("sample_imagecoords.csv", ".\\test_embed_images")
+    # Log the results of the matching operation to file
+    logResults(image_dict)
+    # Get the found files from the dictionary
+    #matched_list = image_dict["matched"]
+    # Update the location coordinates in the list to be DMS instead of decimal degrees
+    #updated_list = locUpdater(matched_list)
+    # Write the new coordinates to the image files
+    #exifWrite(updated_list)
+    
+main()
