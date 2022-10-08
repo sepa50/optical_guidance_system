@@ -1,0 +1,11 @@
+,matched,unmatched
+0,"{'filename': 'dunes1.jpeg', 'filepath': '.\\test_embed_images\\dunes1.jpeg', 'imageloc': {'lat': 2.0, 'lon': 2.0}}","{'filename': '1.jpeg', 'imageloc': {'lat': -21.22238, 'lon': 69.19593}}"
+1,None,"{'filename': '2.jpeg', 'imageloc': {'lat': -46.42462, 'lon': 116.12792}}"
+2,None,"{'filename': '3.jpeg', 'imageloc': {'lat': 46.52719, 'lon': -58.71262}}"
+3,None,"{'filename': '4.jpeg', 'imageloc': {'lat': 23.345345, 'lon': -54.34534}}"
+4,None,"{'filename': '5.jpeg', 'imageloc': {'lat': 22.23423, 'lon': -12.343543}}"
+5,None,"{'filename': '6.jpeg', 'imageloc': {'lat': 72.12264456, 'lon': -3.028995732}}"
+6,None,"{'filename': '7.jpeg', 'imageloc': {'lat': 78.6323222, 'lon': -139.2408669}}"
+7,None,"{'filename': '8.jpeg', 'imageloc': {'lat': 76.76997029, 'lon': -49.82739118}}"
+8,None,"{'filename': '9.jpeg', 'imageloc': {'lat': 27.97143989, 'lon': -88.4811449}}"
+9,None,"{'filename': '10.jpeg', 'imageloc': {'lat': 1.0, 'lon': 1.0}}"

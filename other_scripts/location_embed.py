@@ -4,7 +4,7 @@
 # Reads a list of coordinates associated with an image name from a CSV file and embeds.
 
 # Uses 'exif' library for EXIF manipulation. To install, 'pip install exif'.
-import exif
+# import exif
 # Uses 'pandas' library for CSV operations. To install, 'pip install pandas'.
 import pandas as pd
 # Regular I/O and system operations
@@ -15,6 +15,12 @@ import time
 import geopy
 # Basic math functions
 import math
+# Pillow - Python Image Library
+from PIL import Image
+
+
+import sys
+import cv2
 
 # Read image file data from CSV, and evaluate if they exist or not within a directory and its subdirectories
 def fileEnum(csv_file, root_path):
@@ -30,8 +36,8 @@ def fileEnum(csv_file, root_path):
     satimg_lon = coordCSV['Longitude'].values
     satimg_loc = []
     
-    for i in satimg_lat:
-        satimg_loc.append({"lat": satimg_lat, "lon": satimg_lon})
+    for i in range(0, len(satimg_lat)):
+        satimg_loc.append({"lat": satimg_lat[i], "lon": satimg_lon[i]})
     
     # Evaluate and store the file/directory structure of the root dir and all subdirs
     dir_structure = os.walk(root_path)
@@ -57,9 +63,11 @@ def fileEnum(csv_file, root_path):
     
     for iname, iloc in zip(satimg_names, satimg_loc):
         matchedimg = False
+        
         for fname, fpath in zip(found_fnames, found_fpaths):
             if fname == iname:
                 matchedimg = True
+                break
             else:
                 continue
         if matchedimg:
@@ -73,6 +81,7 @@ def fileEnum(csv_file, root_path):
 
 # Log the results of the embedding operation to a CSV
 def logResults(file_dict):
+    copy_dict = file_dict
     matched = file_dict["matched"]
     unmatched = file_dict["unmatched"]
     delta_len = len(matched) - len(unmatched)
@@ -84,14 +93,14 @@ def logResults(file_dict):
         elif (delta_len > 0):
             unmatched.append("None")
     # update the dictionary with the padded array
-    file_dict["matched"] = matched
-    file_dict["unmatched"] = unmatched
+    copy_dict["matched"] = matched
+    copy_dict["unmatched"] = unmatched
     # Dynamically generate logfile name from the current time
     logtime = time.localtime()
     logfile_name = "embed_log" + str(logtime.tm_year) + "_" + str(logtime.tm_mon) + "_" + str(logtime.tm_mday) + "_" + str(logtime.tm_hour) + str(logtime.tm_min) + str(logtime.tm_sec) + ".txt"
     print("Logfile name is: " + logfile_name)
     # Turn the dictionary into a pandas dataframe
-    log_df = pd.DataFrame.from_dict(data = file_dict, orient = 'columns')
+    log_df = pd.DataFrame.from_dict(data = copy_dict, orient = 'columns')
     # Save the pandas dataframe in CSV format
     log_df.to_csv("./" + logfile_name)
 
@@ -118,11 +127,12 @@ def locConverter(input, type, conversion):
                         loc_dir = "E"
                     else:
                         loc_dir = "NA"
+                    input = abs(input)
                     loc_deg = math.floor(input)
                     input = (input - loc_deg)*60
                     loc_min = math.floor(input)
                     input = (input - loc_min)*60
-                    loc_sec = round(input, 5)
+                    loc_sec = input
                     return {"degrees": loc_deg, "minutes": loc_min, "seconds": loc_sec, "direction": loc_dir}
                 # If we are converting to signed decimal degrees from DMS
                 case "dec":
@@ -147,11 +157,12 @@ def locConverter(input, type, conversion):
                         loc_dir = "N"
                     else:
                         loc_dir = "NA"
+                    input = abs(input)
                     loc_deg = math.floor(input)
                     input = (input - loc_deg)*60
                     loc_min = math.floor(input)
                     input = (input - loc_min)*60
-                    loc_sec = round(input, 5)
+                    loc_sec = input
                     return {"degrees": loc_deg, "minutes": loc_min, "seconds": loc_sec, "direction": loc_dir}
                 # If we are converting to signed decimal degrees from DMS
                 case "dec":
@@ -174,6 +185,7 @@ def locUpdater(file_list):
     # for each file in the list
     for file in file_list:
         # Read the lat and lon values in decimal degrees
+        print(file)
         latitude_dec = file["imageloc"]["lat"]
         longitude_dec = file["imageloc"]["lon"]
         # Convert the values from decimal degrees to dms
@@ -181,18 +193,17 @@ def locUpdater(file_list):
         longitude_dms = locConverter(longitude_dec, "lon", "dms")
         # Update the lat and lon for the particular file with the converted DMS values
         file["imageloc"]["lat"] = latitude_dms
-        file["imageloc"]["lon"] = longitude_dms
-    # return the file list updated with the converted DMS values
-    return file_list     
+        file["imageloc"]["lon"] = longitude_dms   
 
 # Add location data to the matched files as EXIF fields
-def exifWrite(fmatched):
+def exifWriteOld(fmatched):
     # Init the image array. Stores binary image data read from file.
     imageArr = []
     # Iterate over the matched image array, opening an image and appending to the image array upon each iteration.
     for img_data in fmatched:
-        with open(img_data["filename"], "wb") as img_file:
-            imageArr.append(exif.Image(img_file))
+        with open(img_data["filepath"], "rb") as img_file:
+            current_img = exif.Image(img_file)
+            imageArr.append(current_img)
     # Iterate in parallel over the image array and the matched image array, fetching and setting EXIF field values for each respective image.       
     for image, img_data in zip(imageArr, fmatched):
         tag_data = img_data["imageloc"]
@@ -202,11 +213,35 @@ def exifWrite(fmatched):
         image.set("gps_longitude_ref", tag_data["lon"]["direction"])
         # Print the recently set attributes to stdout for verification
         print("Image " + img_data["filename"] + " attributes set:")
-        print("Lat: " + image.get("gps_latitude") + " " + image.get("gps_latitude_ref") + " Lon: " + image.get("gps_longitude") + " " + image.get("gps_longitude_ref"))
+        raw_lat = image.get("gps_latitude")
+        raw_lat_ref = image.get("gps_latitude_ref")
+        raw_lon = image.get("gps_longitude")
+        raw_lon_ref = image.get("gps_longitude_ref")
+        str_lat = str(raw_lat[0]) + " " + str(raw_lat[1]) + " " + str(raw_lat[2]) + " " + raw_lat_ref + "\n"
+        str_lon = str(raw_lon[0]) +  " " + str(raw_lon[1]) + " " + str(raw_lon[2]) + " " + raw_lon_ref + "\n"
+        print("Lat: " + str_lat)
+        print("Lon: " + str_lon)
     # Iterate over the image and matched image arrays in parallel, writing the modified image files to disk
-    for image, img_data in zip(imageArr, fmatched):
-        with open(img_data["filename"], 'wb') as write_img:
-            write_img.write(image.get_file(), )
+    counter = 1
+    for image in imageArr:
+        with open('new_file' + str(counter) + ".jpg", 'wb') as write_img:
+            write_img.write(image.get_file())
+            counter = counter + 1
+            
+def exifWrite(matched_images):
+    # Init the image array. Stores binary image data read from file.
+    imageArr = []
+    exifArr = []
+    # Iterate over the matched image array, opening an image and appending to the image array upon each iteration.
+    for img_data in matched_images:
+        with Image.open(img_data["filepath"]) as image:
+            exif = image.getexif()
+            imageArr.append(image)
+            exifArr.append(exif)
+            image.close()
+    
+        
+            
             
 #############################################################################
 # THINGS THAT NEED TO BE DONE:
@@ -215,16 +250,18 @@ def exifWrite(fmatched):
 # TODO: Test embedding of data into a sample image.
 # TODO: Discuss functions with team.
 
+# main function that runs everything we need.
 def main():
     # Enumerate images, their paths, and their associated coordinates
     image_dict = fileEnum("sample_imagecoords.csv", ".\\test_embed_images")
     # Log the results of the matching operation to file
-    logResults(image_dict)
+    #logResults(image_dict)
     # Get the found files from the dictionary
-    #matched_list = image_dict["matched"]
+    matched_list = image_dict["matched"]
     # Update the location coordinates in the list to be DMS instead of decimal degrees
-    #updated_list = locUpdater(matched_list)
+    locUpdater(matched_list)
     # Write the new coordinates to the image files
-    #exifWrite(updated_list)
-    
+    exifWrite(matched_list)
+
+##### Code to be run #####
 main()
