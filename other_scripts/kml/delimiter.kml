@@ -59,31 +59,31 @@
     <GroundOverlay>
       <name>ColorBlock</name>
       <Icon>
-        <href>C:\_UNI_Programming_folder\GitHub\optical_guidance_system\other_scripts\kml\img\red.png</href>
+        <href>C:\Users\clanc\Documents\GitHub\optical_guidance_system\other_scripts\kml\img\red.png</href>
         <viewBoundScale>0.75</viewBoundScale>
       </Icon>
       <altitude>100</altitude>
       <altitudeMode>absolute</altitudeMode>
       <LatLonBox>
-        <north>53.372718999999606</north>
-        <south>53.36044700000039</south>
-        <east>0.5558339999996103</east>
-        <west>0.5353220000003898</west>
+        <north>53.374762999999604</north>
+        <south>53.35840300000039</south>
+        <east>0.5592620000004137</east>
+        <west>0.5318939999995863</west>
       </LatLonBox>
     </GroundOverlay>
     <GroundOverlay>
       <name>ColorBlock</name>
       <Icon>
-        <href>C:\_UNI_Programming_folder\GitHub\optical_guidance_system\other_scripts\kml\img\white.png</href>
+        <href>C:\Users\clanc\Documents\GitHub\optical_guidance_system\other_scripts\kml\img\white.png</href>
         <viewBoundScale>0.75</viewBoundScale>
       </Icon>
       <altitude>2000</altitude>
       <altitudeMode>absolute</altitudeMode>
       <LatLonBox>
-        <north>53.48930299999212</north>
-        <south>53.24386300000788</south>
-        <east>0.7506979999922049</east>
-        <west>0.34045800000779514</west>
+        <north>53.530182999992164</north>
+        <south>53.20298300000783</south>
+        <east>0.819258000008274</east>
+        <west>0.27189799999172604</west>
       </LatLonBox>
     </GroundOverlay>
   </Document>
