@@ -4,7 +4,7 @@ from __future__ import print_function, division
 import argparse
 import torch
 import torch.nn as nn
-
+from tqdm import tqdm
 from torch.autograd import Variable
 from torch.cuda.amp import autocast,GradScaler
 import torch.backends.cudnn as cudnn
@@ -72,7 +72,7 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
     criterion = nn.CrossEntropyLoss()
     loss_kl = nn.KLDivLoss(reduction='batchmean')
     triplet_loss = Tripletloss(margin=opt.triplet_loss)
-
+    
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
@@ -92,29 +92,30 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
             running_corrects2 = 0.0
             running_corrects3 = 0.0
 
-            for data,data2,data3 in dataloaders:
+            for data,data3 in dataloaders:
+
                 # satallite # street # drone
                 loss = 0.0
                 # get the inputs
                 inputs, labels = data
-                inputs2, labels2 = data2
+                # inputs2, labels2 = data2
                 inputs3, labels3 = data3
                 now_batch_size, c, h, w = inputs.shape
                 if now_batch_size < opt.batchsize:  # skip the last batch
                     continue
                 if use_gpu:
                     inputs = Variable(inputs.cuda().detach())
-                    inputs2 = Variable(inputs2.cuda().detach())
+                    # inputs2 = Variable(inputs2.cuda().detach())
                     inputs3 = Variable(inputs3.cuda().detach())
                     labels = Variable(labels.cuda().detach())
-                    labels2 = Variable(labels2.cuda().detach())
+                    # labels2 = Variable(labels2.cuda().detach())
                     labels3 = Variable(labels3.cuda().detach())
                 else:
                     inputs, labels = Variable(inputs), Variable(labels)
 
                 # zero the parameter gradients
                 optimizer.zero_grad()
-
+            
                 # forward
                 if phase == 'val':
                     with torch.no_grad():
@@ -124,7 +125,7 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
                         with autocast():
                             outputs, outputs2 = model(inputs, inputs3) # satellite and drone
                     elif opt.views == 3:
-                        outputs, outputs2, outputs3 = model(inputs, inputs2, inputs3)
+                        outputs, outputs3 = model(inputs, inputs3)
                 f_triplet_loss=torch.tensor((0))
                 if opt.triplet_loss>0:
                     features = outputs[1]
@@ -147,7 +148,7 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
                 kl_loss = torch.tensor((0))
                 if opt.views == 2:
                     cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs2, labels3,criterion) # only compute the global branch
-                    #增加klLoss来做mutual learning
+                    # klLossmutual learning
                     if opt.kl_loss:
                         kl_loss = cal_kl_loss(outputs,outputs2,loss_kl)
 
@@ -156,12 +157,12 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
                         preds3 = []
                         for out3 in outputs3:
                             preds3.append(torch.max(out3.data,1)[1])
-                        cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs2, labels2,criterion) + cal_loss(outputs3, labels3,criterion)
+                        cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs3, labels3,criterion)
                         loss+=cls_loss
 
                     else:
                         _, preds3 = torch.max(outputs3.data, 1)
-                        cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs2, labels2,criterion) + cal_loss(outputs3, labels3,criterion)
+                        cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs3, labels3,criterion)
                         loss+=cls_loss
 
                 loss = kl_loss + cls_loss + f_triplet_loss
@@ -194,16 +195,20 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
 
                 if isinstance(preds,list) and isinstance(preds2,list):
                     running_corrects += sum([float(torch.sum(pred == labels.data)) for pred in preds])/len(preds)
-                    if opt.views==2:
+                    if opt.views == 2:
                         running_corrects2 += sum([float(torch.sum(pred == labels3.data)) for pred in preds2]) / len(preds2)
-                    else:
-                        running_corrects2 += sum([float(torch.sum(pred == labels2.data)) for pred in preds2])/len(preds2)
+                    # if opt.views==2:
+                    #     running_corrects2 += sum([float(torch.sum(pred == labels3.data)) for pred in preds2]) / len(preds2)
+                    # else:
+                    #     running_corrects2 += sum([float(torch.sum(pred == labels2.data)) for pred in preds2])/len(preds2)
                 else:
                     running_corrects += float(torch.sum(preds == labels.data))
                     if opt.views == 2:
                         running_corrects2 += float(torch.sum(preds2 == labels3.data))
-                    else:
-                        running_corrects2 += float(torch.sum(preds2 == labels2.data))
+                    # if opt.views == 2:
+                    #     running_corrects2 += float(torch.sum(preds2 == labels3.data))
+                    # else:
+                    #     running_corrects2 += float(torch.sum(preds2 == labels2.data))
                 if opt.views == 3:
                     if isinstance(preds,list) and isinstance(preds2,list):
                         running_corrects3 += sum([float(torch.sum(pred == labels3.data)) for pred in preds3])/len(preds3)
@@ -230,10 +235,10 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
             elif opt.views == 3:
                 epoch_acc3 = running_corrects3 / dataset_sizes['satellite']
                 print('{} Loss: {:.4f} Satellite_Acc: {:.4f}  Street_Acc: {:.4f} Drone_Acc: {:.4f}'.format(phase,
-                                                                                                           epoch_loss,
-                                                                                                           epoch_acc,
-                                                                                                           epoch_acc2,
-                                                                                                           epoch_acc3))
+                                                                                                        epoch_loss,
+                                                                                                        epoch_acc,
+                                                                                                        epoch_acc2,
+                                                                                                        epoch_acc3))
 
             # deep copy the model
             if phase == 'train':
@@ -245,6 +250,7 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
         print('Training complete in {:.0f}m {:.0f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
         print()
+    
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 parser = argparse.ArgumentParser(description='Training')
 import math
 
-parser.add_argument('--data_dir',default="C:\_UNI_Programming_folder\GitHub\optical_guidance_system\data\Custom-Data\processed-data",type=str, help='./test_data')
+parser.add_argument('--data_dir',default='C:\_UNI_Programming_folder\GitHub\optical_guidance_system\data\Custom-Data\processed-data',type=str, help='./test_data')
 parser.add_argument('--name', default='from_transreid_256_4B_small_lr005_kl', type=str, help='save model path')
 parser.add_argument('--batchsize', default=1, type=int, help='batchsize')
 parser.add_argument('--checkpoint',default="net_119.pth", help='weights' )
@@ -24,15 +24,18 @@ opt = parser.parse_args()
 config_path = 'opts.yaml'
 with open(config_path, 'r') as stream:
     config = yaml.safe_load(stream)
-opt.stride = config['stride'] #missing
+
 opt.views = config['views']
-opt.transformer = config['transformer'] #missing
-opt.pool = config['pool'] #missing
-opt.LPN = config['LPN'] #missing
 opt.block = config['block']
 opt.nclasses = config['nclasses']
-opt.droprate = config['droprate'] #missing
-opt.share = config['share']
+
+#These appear to be old code. They are not used in the project anymore
+#opt.stride = config['stride']
+#opt.transformer = config['transformer']
+#opt.pool = config['pool']
+#opt.LPN = config['LPN']
+#opt.droprate = config['droprate']
+#opt.share = config['share']
 
 if 'h' in config:
     opt.h = config['h']
@@ -70,10 +73,10 @@ def normalization(data):
 model = load_network(opt)
 
 print(opt.data_dir)
-for i in ["0009","0013","0015","0016","0018","0035","0039","0116","0130"]:
+for i in ["0000"]:
     print(i)
     imgpath = os.path.join(opt.data_dir,"gallery_drone/"+i)
-    imgpath = os.path.join(imgpath, "image-28.jpeg")
+    imgpath = os.path.join(imgpath, "raw-video-000000.png")
     print(imgpath)
     img = Image.open(imgpath)
     img = data_transforms(img)
@@ -104,11 +107,11 @@ for i in ["0009","0013","0015","0016","0018","0035","0039","0116","0130"]:
     #
     # heatmap = np.maximum(heatmap, 0)
     heatmap = normalization(heatmap)
-    img = cv2.imread(imgpath)  # Load the original image with CV2 (Translated)
-    heatmap = cv2.resize(heatmap, (img.shape[1], img.shape[0]))  # Adjust the size of the heat diagram to the same image as the original image (Translated)
-    heatmap = np.uint8(255 * heatmap)  # Convert the heat map to RGB format (Translated)
-    heatmap = cv2.applyColorMap(heatmap, 2)  # Apply the heat map to the original image model.py (Translated)
-    superimposed_img = heatmap * 0.8 + img  # The 0.4 here is the heat map strength factor (Translated)
+    img = cv2.imread(imgpath)  # 用cv2加载原始图像
+    heatmap = cv2.resize(heatmap, (img.shape[1], img.shape[0]))  # 将热力图的大小调整为与原始图像相同
+    heatmap = np.uint8(255 * heatmap)  # 将热力图转换为RGB格式
+    heatmap = cv2.applyColorMap(heatmap, 2)  # 将热力图应用于原始图像model.py
+    superimposed_img = heatmap * 0.8 + img  # 这里的0.4是热力图强度因子
     if not os.path.exists("heatout"):
         os.mkdir("./heatout")
     cv2.imwrite("./heatout/"+i+".jpg", superimposed_img)

@@ -1,6 +1,6 @@
 name="FSRA"
-data_dir="C:\_UNI_Programming_folder\GitHub\University1652-Baseline\data\University-Release\train"
-test_dir="C:\_UNI_Programming_folder\GitHub\optical_guidance_system\data\Custom-Data\processed-data"
+data_dir="C:\Users\Jack_\Desktop\newTestDataset\train"
+test_dir="C:\Users\Jack_\Desktop\newTestDataset\test"
 gpu_ids=0
 num_worker=4
 lr=0.01

@@ -4,7 +4,7 @@ from __future__ import print_function, division
 import argparse
 import torch
 import torch.nn as nn
-
+from tqdm import tqdm
 from torch.autograd import Variable
 from torch.cuda.amp import autocast,GradScaler
 import torch.backends.cudnn as cudnn
@@ -20,11 +20,11 @@ from losses.cal_loss import cal_kl_loss,cal_loss,cal_triplet_loss
 warnings.filterwarnings("ignore")
 version =  torch.__version__
 #fp16
-try:
-    from apex.fp16_utils import *
-    from apex import amp, optimizers
-except ImportError: # will be 3.x series
-    print('This is not an error. If you want to use low precision, i.e., fp16, please install the apex with cuda support (https://github.com/NVIDIA/apex) and update pytorch to 1.0')
+# try:
+#     from apex.fp16_utils import *
+#     from apex import amp, optimizers
+# except ImportError: # will be 3.x series
+#     print('This is not an error. If you want to use low precision, i.e., fp16, please install the apex with cuda support (https://github.com/NVIDIA/apex) and update pytorch to 1.0')
 ######################################################################
 # Options
 # --------
@@ -72,179 +72,185 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
     criterion = nn.CrossEntropyLoss()
     loss_kl = nn.KLDivLoss(reduction='batchmean')
     triplet_loss = Tripletloss(margin=opt.triplet_loss)
+    for i in tqdm (range (100), desc="Loading..."):
+        for epoch in range(num_epochs):
+            print('Epoch {}/{}'.format(epoch, num_epochs - 1))
+            print('-' * 10)
 
-    for epoch in range(num_epochs):
-        print('Epoch {}/{}'.format(epoch, num_epochs - 1))
-        print('-' * 10)
-
-        # Each epoch has a training and validation phase
-        for phase in ['train']:
-            if phase == 'train':
-                model.train(True)  # Set model to training mode
-            else:
-                model.train(False)  # Set model to evaluate mode
-
-            running_cls_loss = 0.0
-            running_triplet = 0.0
-            running_kl_loss = 0.0
-            running_loss = 0.0
-            running_corrects = 0.0
-            running_corrects2 = 0.0
-            running_corrects3 = 0.0
-
-            for data,data2,data3 in dataloaders:
-                # satallite # street # drone
-                loss = 0.0
-                # get the inputs
-                inputs, labels = data
-                inputs2, labels2 = data2
-                inputs3, labels3 = data3
-                now_batch_size, c, h, w = inputs.shape
-                if now_batch_size < opt.batchsize:  # skip the last batch
-                    continue
-                if use_gpu:
-                    inputs = Variable(inputs.cuda().detach())
-                    inputs2 = Variable(inputs2.cuda().detach())
-                    inputs3 = Variable(inputs3.cuda().detach())
-                    labels = Variable(labels.cuda().detach())
-                    labels2 = Variable(labels2.cuda().detach())
-                    labels3 = Variable(labels3.cuda().detach())
-                else:
-                    inputs, labels = Variable(inputs), Variable(labels)
-
-                # zero the parameter gradients
-                optimizer.zero_grad()
-
-                # forward
-                if phase == 'val':
-                    with torch.no_grad():
-                        outputs, outputs2 = model(inputs, inputs3)
-                else:
-                    if opt.views == 2:
-                        with autocast():
-                            outputs, outputs2 = model(inputs, inputs3) # satellite and drone
-                    elif opt.views == 3:
-                        outputs, outputs2, outputs3 = model(inputs, inputs2, inputs3)
-                f_triplet_loss=torch.tensor((0))
-                if opt.triplet_loss>0:
-                    features = outputs[1]
-                    features2 = outputs2[1]
-                    split_num = opt.batchsize//opt.sample_num
-                    f_triplet_loss = cal_triplet_loss(features,features2,labels,triplet_loss,split_num)
-
-                    outputs = outputs[0]
-                    outputs2 = outputs2[0]
-
-                if isinstance(outputs,list):
-                    preds = []
-                    preds2 = []
-                    for out,out2 in zip(outputs,outputs2):
-                        preds.append(torch.max(out.data,1)[1])
-                        preds2.append(torch.max(out2.data,1)[1])
-                else:
-                    _, preds = torch.max(outputs.data, 1)
-                    _, preds2 = torch.max(outputs2.data, 1)
-                kl_loss = torch.tensor((0))
-                if opt.views == 2:
-                    cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs2, labels3,criterion) # only compute the global branch
-                    #增加klLoss来做mutual learning
-                    if opt.kl_loss:
-                        kl_loss = cal_kl_loss(outputs,outputs2,loss_kl)
-
-                elif opt.views == 3:
-                    if isinstance(outputs,list):
-                        preds3 = []
-                        for out3 in outputs3:
-                            preds3.append(torch.max(out3.data,1)[1])
-                        cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs2, labels2,criterion) + cal_loss(outputs3, labels3,criterion)
-                        loss+=cls_loss
-
-                    else:
-                        _, preds3 = torch.max(outputs3.data, 1)
-                        cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs2, labels2,criterion) + cal_loss(outputs3, labels3,criterion)
-                        loss+=cls_loss
-
-                loss = kl_loss + cls_loss + f_triplet_loss
-                # backward + optimize only if in training phase
-                if epoch < opt.warm_epoch and phase == 'train':
-                    warm_up = min(1.0, warm_up + 0.9 / warm_iteration)
-                    loss *= warm_up
-
+            # Each epoch has a training and validation phase
+            for phase in ['train']:
                 if phase == 'train':
-                    if opt.autocast:
-                        scaler.scale(loss).backward()
-                        scaler.step(optimizer)
-                        scaler.update()
-                    else:
-                        loss.backward()
-                        optimizer.step()
-
-                # statistics
-                if int(version[0]) > 0 or int(version[2]) > 3:  # for the new version like 0.4.0, 0.5.0 and 1.0.0
-                    running_loss += loss.item() * now_batch_size
-                    running_cls_loss += cls_loss.item()*now_batch_size
-                    running_triplet += f_triplet_loss.item() * now_batch_size
-                    running_kl_loss += kl_loss.item() * now_batch_size
-                else:  # for the old version like 0.3.0 and 0.3.1
-                    running_loss += loss.data[0] * now_batch_size
-                    running_cls_loss += cls_loss.data[0] * now_batch_size
-                    running_triplet += f_triplet_loss.data[0] * now_batch_size
-                    running_kl_loss += kl_loss.data[0] * now_batch_size
-
-
-                if isinstance(preds,list) and isinstance(preds2,list):
-                    running_corrects += sum([float(torch.sum(pred == labels.data)) for pred in preds])/len(preds)
-                    if opt.views==2:
-                        running_corrects2 += sum([float(torch.sum(pred == labels3.data)) for pred in preds2]) / len(preds2)
-                    else:
-                        running_corrects2 += sum([float(torch.sum(pred == labels2.data)) for pred in preds2])/len(preds2)
+                    model.train(True)  # Set model to training mode
                 else:
-                    running_corrects += float(torch.sum(preds == labels.data))
+                    model.train(False)  # Set model to evaluate mode
+
+                running_cls_loss = 0.0
+                running_triplet = 0.0
+                running_kl_loss = 0.0
+                running_loss = 0.0
+                running_corrects = 0.0
+                running_corrects2 = 0.0
+                running_corrects3 = 0.0
+
+                for data,data3 in dataloaders:
+
+                    # satallite # street # drone
+                    loss = 0.0
+                    # get the inputs
+                    inputs, labels = data
+                    # inputs2, labels2 = data2
+                    inputs3, labels3 = data3
+                    now_batch_size, c, h, w = inputs.shape
+                    if now_batch_size < opt.batchsize:  # skip the last batch
+                        continue
+                    if use_gpu:
+                        inputs = Variable(inputs.cuda().detach())
+                        # inputs2 = Variable(inputs2.cuda().detach())
+                        inputs3 = Variable(inputs3.cuda().detach())
+                        labels = Variable(labels.cuda().detach())
+                        # labels2 = Variable(labels2.cuda().detach())
+                        labels3 = Variable(labels3.cuda().detach())
+                    else:
+                        inputs, labels = Variable(inputs), Variable(labels)
+
+                    # zero the parameter gradients
+                    optimizer.zero_grad()
+                
+                    # forward
+                    if phase == 'val':
+                        with torch.no_grad():
+                            outputs, outputs2 = model(inputs, inputs3)
+                    else:
+                        if opt.views == 2:
+                            with autocast():
+                                outputs, outputs2 = model(inputs, inputs3) # satellite and drone
+                        elif opt.views == 3:
+                            outputs, outputs3 = model(inputs, inputs3)
+                    f_triplet_loss=torch.tensor((0))
+                    if opt.triplet_loss>0:
+                        features = outputs[1]
+                        features2 = outputs2[1]
+                        split_num = opt.batchsize//opt.sample_num
+                        f_triplet_loss = cal_triplet_loss(features,features2,labels,triplet_loss,split_num)
+
+                        outputs = outputs[0]
+                        outputs2 = outputs2[0]
+
+                    if isinstance(outputs,list):
+                        preds = []
+                        preds2 = []
+                        for out,out2 in zip(outputs,outputs2):
+                            preds.append(torch.max(out.data,1)[1])
+                            preds2.append(torch.max(out2.data,1)[1])
+                    else:
+                        _, preds = torch.max(outputs.data, 1)
+                        _, preds2 = torch.max(outputs2.data, 1)
+                    kl_loss = torch.tensor((0))
                     if opt.views == 2:
-                        running_corrects2 += float(torch.sum(preds2 == labels3.data))
-                    else:
-                        running_corrects2 += float(torch.sum(preds2 == labels2.data))
-                if opt.views == 3:
+                        cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs2, labels3,criterion) # only compute the global branch
+                        # klLossmutual learning
+                        if opt.kl_loss:
+                            kl_loss = cal_kl_loss(outputs,outputs2,loss_kl)
+
+                    elif opt.views == 3:
+                        if isinstance(outputs,list):
+                            preds3 = []
+                            for out3 in outputs3:
+                                preds3.append(torch.max(out3.data,1)[1])
+                            cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs3, labels3,criterion)
+                            loss+=cls_loss
+
+                        else:
+                            _, preds3 = torch.max(outputs3.data, 1)
+                            cls_loss = cal_loss(outputs, labels,criterion) + cal_loss(outputs3, labels3,criterion)
+                            loss+=cls_loss
+
+                    loss = kl_loss + cls_loss + f_triplet_loss
+                    # backward + optimize only if in training phase
+                    if epoch < opt.warm_epoch and phase == 'train':
+                        warm_up = min(1.0, warm_up + 0.9 / warm_iteration)
+                        loss *= warm_up
+
+                    if phase == 'train':
+                        if opt.autocast:
+                            scaler.scale(loss).backward()
+                            scaler.step(optimizer)
+                            scaler.update()
+                        else:
+                            loss.backward()
+                            optimizer.step()
+
+                    # statistics
+                    if int(version[0]) > 0 or int(version[2]) > 3:  # for the new version like 0.4.0, 0.5.0 and 1.0.0
+                        running_loss += loss.item() * now_batch_size
+                        running_cls_loss += cls_loss.item()*now_batch_size
+                        running_triplet += f_triplet_loss.item() * now_batch_size
+                        running_kl_loss += kl_loss.item() * now_batch_size
+                    else:  # for the old version like 0.3.0 and 0.3.1
+                        running_loss += loss.data[0] * now_batch_size
+                        running_cls_loss += cls_loss.data[0] * now_batch_size
+                        running_triplet += f_triplet_loss.data[0] * now_batch_size
+                        running_kl_loss += kl_loss.data[0] * now_batch_size
+
+
                     if isinstance(preds,list) and isinstance(preds2,list):
-                        running_corrects3 += sum([float(torch.sum(pred == labels3.data)) for pred in preds3])/len(preds3)
+                        running_corrects += sum([float(torch.sum(pred == labels.data)) for pred in preds])/len(preds)
+                        if opt.views == 2:
+                            running_corrects2 += sum([float(torch.sum(pred == labels3.data)) for pred in preds2]) / len(preds2)
+                        # if opt.views==2:
+                        #     running_corrects2 += sum([float(torch.sum(pred == labels3.data)) for pred in preds2]) / len(preds2)
+                        # else:
+                        #     running_corrects2 += sum([float(torch.sum(pred == labels2.data)) for pred in preds2])/len(preds2)
                     else:
-                        running_corrects3 += float(torch.sum(preds3 == labels3.data))
+                        running_corrects += float(torch.sum(preds == labels.data))
+                        if opt.views == 2:
+                            running_corrects2 += float(torch.sum(preds2 == labels3.data))
+                        # if opt.views == 2:
+                        #     running_corrects2 += float(torch.sum(preds2 == labels3.data))
+                        # else:
+                        #     running_corrects2 += float(torch.sum(preds2 == labels2.data))
+                    if opt.views == 3:
+                        if isinstance(preds,list) and isinstance(preds2,list):
+                            running_corrects3 += sum([float(torch.sum(pred == labels3.data)) for pred in preds3])/len(preds3)
+                        else:
+                            running_corrects3 += float(torch.sum(preds3 == labels3.data))
 
 
-            epoch_cls_loss = running_cls_loss/dataset_sizes['satellite']
-            epoch_kl_loss = running_kl_loss /dataset_sizes['satellite']
-            epoch_triplet_loss = running_triplet/dataset_sizes['satellite']
-            epoch_loss = running_loss / dataset_sizes['satellite']
-            epoch_acc = running_corrects / dataset_sizes['satellite']
-            epoch_acc2 = running_corrects2 / dataset_sizes['satellite']
+                epoch_cls_loss = running_cls_loss/dataset_sizes['satellite']
+                epoch_kl_loss = running_kl_loss /dataset_sizes['satellite']
+                epoch_triplet_loss = running_triplet/dataset_sizes['satellite']
+                epoch_loss = running_loss / dataset_sizes['satellite']
+                epoch_acc = running_corrects / dataset_sizes['satellite']
+                epoch_acc2 = running_corrects2 / dataset_sizes['satellite']
 
 
-            lr_backbone = optimizer.state_dict()['param_groups'][0]['lr']
-            lr_other = optimizer.state_dict()['param_groups'][1]['lr']
-            if opt.views == 2:
-                print(
-                    '{} Loss: {:.4f} Cls_Loss:{:.4f} KL_Loss:{:.4f} Triplet_Loss {:.4f} Satellite_Acc: {:.4f}  Drone_Acc: {:.4f} lr_backbone:{:.6f} lr_other {:.6f}'
-                                                                                .format(phase, epoch_loss,epoch_cls_loss,epoch_kl_loss,
-                                                                                        epoch_triplet_loss, epoch_acc,
-                                                                                        epoch_acc2,lr_backbone,lr_other))
-            elif opt.views == 3:
-                epoch_acc3 = running_corrects3 / dataset_sizes['satellite']
-                print('{} Loss: {:.4f} Satellite_Acc: {:.4f}  Street_Acc: {:.4f} Drone_Acc: {:.4f}'.format(phase,
-                                                                                                           epoch_loss,
-                                                                                                           epoch_acc,
-                                                                                                           epoch_acc2,
-                                                                                                           epoch_acc3))
+                lr_backbone = optimizer.state_dict()['param_groups'][0]['lr']
+                lr_other = optimizer.state_dict()['param_groups'][1]['lr']
+                if opt.views == 2:
+                    print(
+                        '{} Loss: {:.4f} Cls_Loss:{:.4f} KL_Loss:{:.4f} Triplet_Loss {:.4f} Satellite_Acc: {:.4f}  Drone_Acc: {:.4f} lr_backbone:{:.6f} lr_other {:.6f}'
+                                                                                    .format(phase, epoch_loss,epoch_cls_loss,epoch_kl_loss,
+                                                                                            epoch_triplet_loss, epoch_acc,
+                                                                                            epoch_acc2,lr_backbone,lr_other))
+                elif opt.views == 3:
+                    epoch_acc3 = running_corrects3 / dataset_sizes['satellite']
+                    print('{} Loss: {:.4f} Satellite_Acc: {:.4f}  Street_Acc: {:.4f} Drone_Acc: {:.4f}'.format(phase,
+                                                                                                            epoch_loss,
+                                                                                                            epoch_acc,
+                                                                                                            epoch_acc2,
+                                                                                                            epoch_acc3))
 
-            # deep copy the model
-            if phase == 'train':
-                scheduler.step()
-            if epoch % 10 == 9 and epoch>=110:
-                save_network(model, opt.name, epoch)
+                # deep copy the model
+                if phase == 'train':
+                    scheduler.step()
+                if epoch % 10 == 9 and epoch>=110:
+                    save_network(model, opt.name, epoch)
 
-        time_elapsed = time.time() - since
-        print('Training complete in {:.0f}m {:.0f}s'.format(
-            time_elapsed // 60, time_elapsed % 60))
-        print()
+            time_elapsed = time.time() - since
+            print('Training complete in {:.0f}m {:.0f}s'.format(
+                time_elapsed // 60, time_elapsed % 60))
+            print()
+        pass
 
 
 if __name__ == '__main__':
@@ -271,11 +277,11 @@ if __name__ == '__main__':
     optimizer_ft, exp_lr_scheduler = make_optimizer(model,opt)
 
     model = model.cuda()
-    #移动文件到指定文件夹
+
     copyfiles2checkpoints(opt)
 
-    if opt.fp16:
-        model, optimizer_ft = amp.initialize(model, optimizer_ft, opt_level="O1")
+    # if opt.fp16:
+    #     model, optimizer_ft = amp.initialize(model, optimizer_ft, opt_level="O1")
 
 
     train_model(model,opt, optimizer_ft, exp_lr_scheduler,dataloaders,dataset_sizes)

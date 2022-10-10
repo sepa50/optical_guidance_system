@@ -21,13 +21,14 @@ import warnings
 warnings.filterwarnings("ignore")
 from datasets.queryDataset import Dataset_query, Query_transforms
 
-# fp16
-try:
-    from apex.fp16_utils import *
-except ImportError:  # will be 3.x series
-    print(
-        "This is not an error. If you want to use low precision, i.e., fp16, please install the apex with cuda support (https://github.com/NVIDIA/apex) and update pytorch to 1.0"
-    )
+
+# # fp16
+# try:
+#     from apex.fp16_utils import *
+# except ImportError:  # will be 3.x series
+#     print(
+#         "This is not an error. If you want to use low precision, i.e., fp16, please install the apex with cuda support (https://github.com/NVIDIA/apex) and update pytorch to 1.0"
+#     )
 ######################################################################
 # Options
 # --------
@@ -130,13 +131,13 @@ for x in ["query_drone"]:
         os.path.join(data_dir, x), 
         data_query_transforms)
 
-image_datasets_gallery = {}
-for x in ["gallery_satellite"]:
-    image_datasets_gallery[x] = datasets.ImageFolder(
-        os.path.join(data_dir, x), 
-        data_transforms)
+# image_datasets_gallery = {}
+# for x in ["gallery_satellite"]:
+#     image_datasets_gallery[x] = datasets.ImageFolder(
+#         os.path.join(data_dir, x), 
+#         data_transforms)
 
-image_datasets = {**image_datasets_query, **image_datasets_gallery}
+image_datasets = {**image_datasets_query} #**image_datasets_gallery
 
 dataloaders = {
     x: torch.utils.data.DataLoader(
@@ -145,7 +146,7 @@ dataloaders = {
         shuffle=False,
         num_workers=opt.num_worker,
     )
-    for x in ["gallery_satellite", "query_drone"]
+    for x in ["query_drone"] #"gallery_satellite", 
 }
 use_gpu = torch.cuda.is_available()
 
@@ -162,6 +163,8 @@ def fliplr(img):
     return img_flip
 
 def extract_feature(model, dataloaders, view_index=1):
+    print('view index is:')
+    print(view_index)
     features = torch.FloatTensor()
     count = 0
     for data in tqdm(dataloaders):
@@ -181,6 +184,7 @@ def extract_feature(model, dataloaders, view_index=1):
                         mode="bilinear",
                         align_corners=False,
                     )
+
                 if opt.views == 2:
                     if view_index == 1:
                         outputs, _ = model(input_img, None)
@@ -193,6 +197,7 @@ def extract_feature(model, dataloaders, view_index=1):
                         _, outputs, _ = model(None, input_img, None)
                     elif view_index == 3:
                         _, _, outputs = model(None, None, input_img)
+
                 if i == 0:
                     ff = outputs
                 else:
@@ -237,16 +242,17 @@ since = time.time()
 
 
 query_name = "query_drone"
-gallery_name = "gallery_satellite"
-which_query = 0
-which_gallery = 1
+# gallery_name = "gallery_satellite"
+which_query = 1 # 1 = satellite
+# which_gallery = 1
 # gallery_name = 'gallery_street'
 # query_name = 'query_street'
 
-print("%d -> %d:" % (which_query, which_gallery))
-print(query_name.split("_")[-1], "->", gallery_name.split("_")[-1])
 
-gallery_path = image_datasets[gallery_name].imgs
+# print("%d -> %d:" % (which_query, which_gallery))
+# print(query_name.split("_")[-1], "->", gallery_name.split("_")[-1])
+
+# gallery_path = image_datasets[gallery_name].imgs
 # f = open("gallery_name.txt", "w")
 # for p in gallery_path:
 #     f.write(p[0] + "\n")
@@ -256,15 +262,15 @@ query_path = image_datasets[query_name].imgs
 #     f.write(p[0] + "\n")
 
 #Label = number , Path = location
-gallery_label, gallery_path = get_id(gallery_path)
+# gallery_label, gallery_path = get_id(gallery_path)
 query_label, query_path = get_id(query_path)
 
 if __name__ == "__main__":
     with torch.no_grad():
         query_feature = extract_feature(model, dataloaders[query_name], which_query)
-        gallery_feature = extract_feature(
-            model, dataloaders[gallery_name], which_gallery
-        )
+        # gallery_feature = extract_feature(
+        #     model, dataloaders[gallery_name], which_gallery
+        # )
 
     # For street-view image, we use the avg feature as the final feature.
     """
@@ -296,9 +302,9 @@ if __name__ == "__main__":
     # TODO: Determine what to do with matlab
     # Note: Don't change this code, its needed for evaluate_gpu.py
     result = {
-        "gallery_f": gallery_feature.numpy(),
-        "gallery_label": gallery_label,
-        "gallery_path": gallery_path,
+        # "gallery_f": gallery_feature.numpy(),
+        # "gallery_label": gallery_label,
+        # "gallery_path": gallery_path,
         "query_f": query_feature.numpy(),
         "query_label": query_label,
         "query_path": query_path,
