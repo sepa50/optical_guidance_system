@@ -8,9 +8,13 @@
         "delat",
         "delon",
         "geopy",
+        "imagehash",
         "myplaces",
         "outdir",
+        "phash",
         "precompute",
-        "rkml"
+        "rkml",
+        "scandir",
+        "subfolders"
     ]
 }

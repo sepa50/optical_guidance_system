@@ -161,8 +161,8 @@ if __name__ ==  '__main__':
 
     if opt.verbose: print("Generating delimiter")
     #I thought about paramatising this but frankly its not needed.
-    delat = 53.366583
-    delon = 0.545578
+    delat = 53.344005 #53.366583
+    delon = 0.217581 #0.545578
     dealt1 = 300
     dealt2 = 3000
     #delat2 = 68.79228333

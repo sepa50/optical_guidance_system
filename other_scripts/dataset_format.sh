@@ -1,0 +1,5 @@
+python dataset_formatter.py --drone ".\image_folder\out\drone1" --sat ".\image_folder\out\sat1" --outdir ".\image_folder\out\formatted"
+python dataset_formatter.py --drone ".\image_folder\out\drone2" --sat ".\image_folder\out\sat2" --outdir ".\image_folder\out\formatted"
+python dataset_formatter.py --drone ".\image_folder\out\drone3" --sat ".\image_folder\out\sat3" --outdir ".\image_folder\out\formatted"
+python dataset_formatter.py --drone ".\image_folder\out\drone4" --sat ".\image_folder\out\sat4" --outdir ".\image_folder\out\formatted"
+python dataset_formatter.py --drone ".\image_folder\out\drone5" --sat ".\image_folder\out\sat5" --outdir ".\image_folder\out\formatted"

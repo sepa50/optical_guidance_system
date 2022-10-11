@@ -14,16 +14,13 @@ import res.file_manip_resources as rfm
 import re
 
 parser = argparse.ArgumentParser(description="useful image tools")
-parser.add_argument('--name', help="name of output directory", type=str)
-parser.add_argument('--dir', default=r'.\image_folder\in', help="input directiory", type=str)
+parser.add_argument('--name', help="name of output directory", default = "out", type=str)
+parser.add_argument('--dir', default=r'.\image_folder\in', help="input directory", type=str)
 parser.add_argument('--outdir', default=r'.\image_folder\out', help="output directory", type=str)
-parser.add_argument('--delimiter', default=r'.\image_folder\delimiter\del.png', help="output directory", type=str)
+parser.add_argument('--delimiterArea', default=r'.\image_folder\delimiter\del-area.png', help="output directory", type=str)
+parser.add_argument('--delimiterLoc', default=r'.\image_folder\delimiter\del-loc.png', help="output directory", type=str)
 parser.add_argument('--verbose', action=argparse.BooleanOptionalAction)
 opt = parser.parse_args()
-
-#set default value for --name
-if not opt.name:
-    opt.name = "out"
 
 #magic values
 #change at own risk
@@ -83,15 +80,21 @@ def take_closest(myList, myNumber):
     else:
         return before
 
+
+
 opt.outdir = rfm.unique_name_generate(opt.outdir, opt.name)
+
 #ensure paths exist
 Path(opt.outdir).mkdir(parents=True, exist_ok=True)
 Path(opt.dir).mkdir(parents=True, exist_ok=True)
-Path(os.path.dirname(opt.delimiter)).mkdir(parents=True, exist_ok=True)
+Path(os.path.dirname(opt.delimiterArea)).mkdir(parents=True, exist_ok=True)
+Path(os.path.dirname(opt.delimiterLoc)).mkdir(parents=True, exist_ok=True)
 
 #check delimiter exists
-if (not os.path.isfile(opt.delimiter)):
-    raise Exception("\n\nFailed to find delimiter.\n")
+if (not os.path.isfile(opt.delimiterArea)):
+    raise Exception("\n\nFailed to find capture area delimiter.\n")
+if (not os.path.isfile(opt.delimiterLoc)):
+    raise Exception("\n\nFailed to find location delimiter.\n")
 
 #check input directory has files in it
 if os.path.isdir(opt.dir) and os.path.exists(opt.dir):
@@ -102,11 +105,16 @@ if os.path.isdir(opt.dir) and os.path.exists(opt.dir):
 #sanity check, should normally be empty
 delete_directory_content(opt.outdir)
 
-#Generate hash of delimiter
+#Generate hash of delimiters
 try:
-    delimiter = imagehash.phash(Image.open(opt.delimiter))
+    delimiterArea = imagehash.phash(Image.open(opt.delimiterArea))
 except:
-    raise Exception("\n\nFailed to load and hash delimiter.\n")
+    raise Exception("\n\nFailed to load and hash capture area delimiter.\n")
+
+try:
+    delimiterLoc = imagehash.phash(Image.open(opt.delimiterLoc))
+except:
+    raise Exception("\n\nFailed to load and hash location delimiter.\n")
 
 #get files in input directory
 f = get_files(opt.dir)
@@ -132,7 +140,8 @@ unique_hashes = []
 unique_hashes_set = set()
 for key in tqdm(reversed(counter.keys()), desc="Removing Loners: ", total=len(counter.keys())):
     if counter[key] == 1: #remove values that are on their own
-        if (abs(key - delimiter) <= delimiter_threshold):
+
+        if (abs(key - delimiterArea) <= delimiter_threshold or abs(key - delimiterLoc) <= delimiter_threshold):
             continue
         
         idx = image_hashes_dict[str(key)] #get index
@@ -150,32 +159,32 @@ for key in tqdm(reversed(counter.keys()), desc="Removing Loners: ", total=len(co
             hashes_filtered.remove(key)
 
 #removes images that are exactly the same as other images
-if opt.verbose: print("Removing identicle images")
+if opt.verbose: print("Removing identical images")
 for v in tqdm(hashes_filtered, desc="Removing Duplicates: "): #remove duplicate values
-    if v not in unique_hashes_set or abs(v - delimiter) <= delimiter_threshold:
+    if v not in unique_hashes_set or abs(v - delimiterArea) <= delimiter_threshold or abs(v - delimiterLoc) <= delimiter_threshold:
         unique_hashes.append(v)
         unique_hashes_set.add(v)
 
-#remove images that are similar and positionally close to each other
-if opt.verbose: print("Evaluating neighbours")
+#evaluate how similar positionally close images are
+if opt.verbose: print("Evaluating neighbors")
 difference_arr = [abs(y-x) for (x, y) in pairwise(unique_hashes)]
 
-#remove similar 
-if opt.verbose: print("Removing similar neighbours")
+#remove similar positionally close images
+if opt.verbose: print("Removing similar neighbors")
 removed_count = 0
 for i in reversed(range(0, len(unique_hashes)-1)):
      if difference_arr[i] <= threshold:
         removed_count += 1
         unique_hashes.pop(i)
 
-#seperate images by the delimiter image
-if opt.verbose: print("Seperating by delimiter")
+#separate images by the delimiter image
+if opt.verbose: print("Separating by delimiter")
 subdivide_result = []
 subdivide_temp_arr = []
 subdivide_itr = iter(unique_hashes)
 num = 0
 for element in subdivide_itr:
-    if (abs(element-delimiter) <= delimiter_threshold):
+    if (abs(element - delimiterArea) <= delimiter_threshold):
         num += 1
 
         subdivide_result.append(subdivide_temp_arr)
@@ -203,9 +212,30 @@ for idx, hash_arr in enumerate(subdivide_result):
         os.makedirs(path)
 
     out_paths = []
-
+    i = 0
     for h in hash_arr:
-        out_paths.append(collect_images(h, image_hashes_dict, paths))
 
-    for p in out_paths:
-        save_images(p, path)
+        if (abs(h - delimiterLoc) <= delimiter_threshold):
+
+            #create path to folder
+            path_specific = path + "\\" + f'{i:04d}'
+
+            #create folder
+            if not os.path.exists(path_specific):
+                os.makedirs(path_specific)
+            
+            #Detection of abnormal numbers in folder
+            if len(out_paths) != 5 and len(out_paths) != 9:
+                print("Potential issue detected with", path_specific, len(out_paths))
+            
+            #save images in out paths
+            for p in out_paths:
+                save_images(p, path_specific)
+            
+            #increment folder number
+            i += 1
+
+            #reset out paths
+            out_paths = []
+        else:
+            out_paths.append(collect_images(h, image_hashes_dict, paths))

@@ -49,6 +49,12 @@ This dictates if the program prints actions. May spam console.
 `--debug`<br>
 This enables certain debug prints. Will spam console, not recommended.
 
+### Command Used:
+```
+python kml_generation.py --radius 4 --altitude 200 --verbose --precompute --duration 6 --delimiter --path myplaces.kml
+```
+A radius of 4 and altitude of 200 means approximately 1100 images are taken at each point.
+
 ## Generating images from KML files
 
 Once you've used `kml_generation.py` to create your KML files you need to run them through google earth pro.

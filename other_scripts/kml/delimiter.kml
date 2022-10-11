@@ -7,8 +7,8 @@
           <gx:duration>0</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>0.545578</longitude>
-            <latitude>53.366583</latitude>
+            <longitude>0.217581</longitude>
+            <latitude>53.344005</latitude>
             <altitude>300</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -23,8 +23,8 @@
           <gx:duration>0</gx:duration>
           <gx:flyToMode>bounce</gx:flyToMode>
           <LookAt>
-            <longitude>0.545578</longitude>
-            <latitude>53.366583</latitude>
+            <longitude>0.217581</longitude>
+            <latitude>53.344005</latitude>
             <altitude>3000</altitude>
             <heading>0</heading>
             <tilt>0</tilt>
@@ -44,7 +44,7 @@
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>0.545578,53.366583,300</coordinates>
+          <coordinates>0.217581,53.344005,300</coordinates>
         </Point>
       </Placemark>
       <Placemark>
@@ -52,38 +52,38 @@
         <Point>
           <extrude>1</extrude>
           <altitudeMode>relativeToGround</altitudeMode>
-          <coordinates>0.545578,53.366583,3000</coordinates>
+          <coordinates>0.217581,53.344005,3000</coordinates>
         </Point>
       </Placemark>
     </Folder>
     <GroundOverlay>
       <name>ColorBlock</name>
       <Icon>
-        <href>C:\Users\clanc\Documents\GitHub\optical_guidance_system\other_scripts\kml\img\red.png</href>
+        <href>C:\_UNI_Programming_folder\GitHub\optical_guidance_system\other_scripts\kml\img\red.png</href>
         <viewBoundScale>0.75</viewBoundScale>
       </Icon>
       <altitude>100</altitude>
       <altitudeMode>absolute</altitudeMode>
       <LatLonBox>
-        <north>53.374762999999604</north>
-        <south>53.35840300000039</south>
-        <east>0.5592620000004137</east>
-        <west>0.5318939999995863</west>
+        <north>53.35218500000041</north>
+        <south>53.335824999999595</south>
+        <east>0.23125300000041368</east>
+        <west>0.2039089999995863</west>
       </LatLonBox>
     </GroundOverlay>
     <GroundOverlay>
       <name>ColorBlock</name>
       <Icon>
-        <href>C:\Users\clanc\Documents\GitHub\optical_guidance_system\other_scripts\kml\img\white.png</href>
+        <href>C:\_UNI_Programming_folder\GitHub\optical_guidance_system\other_scripts\kml\img\white.png</href>
         <viewBoundScale>0.75</viewBoundScale>
       </Icon>
       <altitude>2000</altitude>
       <altitudeMode>absolute</altitudeMode>
       <LatLonBox>
-        <north>53.530182999992164</north>
-        <south>53.20298300000783</south>
-        <east>0.819258000008274</east>
-        <west>0.27189799999172604</west>
+        <north>53.50760500000817</north>
+        <south>53.180404999991836</south>
+        <east>0.49102100000827376</east>
+        <west>-0.055859000008273735</west>
       </LatLonBox>
     </GroundOverlay>
   </Document>
