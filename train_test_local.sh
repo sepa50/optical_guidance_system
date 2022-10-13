@@ -8,16 +8,16 @@ sample_num=1
 block=3
 batchsize=8
 triplet_loss=0.3
-num_epochs=120
+num_epochs=5
 pad=0
 views=2
 
 #Comment out training if only evaluating
-#python train.py --name $name --data_dir $data_dir --gpu_ids $gpu_ids --num_worker $num_worker --views $views --lr $lr \
-#--sample_num $sample_num --block $block --batchsize $batchsize --triplet_loss $triplet_loss --num_epochs $num_epochs \
+python train.py --name $name --data_dir $data_dir --gpu_ids $gpu_ids --num_worker $num_worker --views $views --lr $lr \
+--sample_num $sample_num --block $block --batchsize $batchsize --triplet_loss $triplet_loss --num_epochs $num_epochs \
 
 cd checkpoints/$name
-for((i=119;i<=$num_epochs;i+=10));
+for((i=4;i<=$num_epochs;i+=10));
 do
   for((p = 0;p<=$pad;p+=10));
   do

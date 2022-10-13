@@ -43,7 +43,7 @@ parser.add_argument(
     help="./test_data",
 )
 parser.add_argument(
-    "--checkpoint", default="net_119.pth", type=str, help="save model path"
+    "--checkpoint", default="net_4.pth", type=str, help="save model path"
 )
 parser.add_argument("--batchsize", default=128, type=int, help="batchsize")
 parser.add_argument("--h", default=256, type=int, help="height")
@@ -163,6 +163,7 @@ def fliplr(img):
     return img_flip
 
 def extract_feature(model, dataloaders, view_index=1):
+
     features = torch.FloatTensor()
     count = 0
     for data in tqdm(dataloaders):
@@ -182,6 +183,7 @@ def extract_feature(model, dataloaders, view_index=1):
                         mode="bilinear",
                         align_corners=False,
                     )
+
                 if opt.views == 2:
                     if view_index == 1:
                         outputs, _ = model(input_img, None)
@@ -194,6 +196,7 @@ def extract_feature(model, dataloaders, view_index=1):
                         _, outputs, _ = model(None, input_img, None)
                     elif view_index == 3:
                         _, _, outputs = model(None, None, input_img)
+
                 if i == 0:
                     ff = outputs
                 else:
@@ -239,7 +242,7 @@ since = time.time()
 
 query_name = "query_drone"
 # gallery_name = "gallery_satellite"
-which_query = 0
+which_query = 1 # 1 = satellite
 # which_gallery = 1
 # gallery_name = 'gallery_street'
 # query_name = 'query_street'
@@ -263,7 +266,7 @@ query_label, query_path = get_id(query_path)
 
 if __name__ == "__main__":
     with torch.no_grad():
-        query_feature = extract_feature(model, dataloaders[query_name], which_query)
+        query_feature = extract_feature(model, dataloaders[query_name])
         # gallery_feature = extract_feature(
         #     model, dataloaders[gallery_name], which_gallery
         # )

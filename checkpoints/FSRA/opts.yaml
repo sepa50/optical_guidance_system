@@ -13,7 +13,7 @@ lr: 0.01
 moving_avg: 1.0
 name: FSRA
 nclasses: 701
-num_epochs: 10
+num_epochs: 5
 num_worker: 4
 pad: 0
 sample_num: 1.0

@@ -68,7 +68,7 @@ def save_network(network, dirname, epoch_label):
     if not os.path.isdir('./checkpoints/'+dirname):
         os.mkdir('./checkpoints/'+dirname)
     if isinstance(epoch_label, int):
-        save_filename = 'net_%03d.pth'% epoch_label
+        save_filename = 'net_%d.pth'% epoch_label
     else:
         save_filename = 'net_%s.pth'% epoch_label
     save_path = os.path.join('./checkpoints',dirname,save_filename)
