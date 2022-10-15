@@ -20,8 +20,8 @@ def injectGPS(connection, injection):
         0,  # GPS time (milliseconds from start of GPS week)
         0,  # GPS week number
         3,  # 0-1: no fix, 2: 2D fix, 3: 3D fix. 4: 3D with DGPS. 5: 3D with RTK
-        int(injection["lat"]*10**(-7)),  # Latitude (WGS84), in degrees * 1E7
-        int(injection["lon"]*10**(-7)),  # Longitude (WGS84), in degrees * 1E7
+        int(injection["lat"]*10**(7)),  # Latitude (WGS84), in degrees * 1E7
+        int(injection["lon"]*10**(7)),  # Longitude (WGS84), in degrees * 1E7
         10,  # Altitude (AMSL, not WGS84), in m (positive for up)
         1,  # GPS HDOP horizontal dilution of position in m
         1,  # GPS VDOP vertical dilution of position in m

@@ -62,7 +62,7 @@ if video_capture.isOpened():
 				
 				### capture camera image and save it with the timestamp
 				ret_val, frame = video_capture.read()
-				cv2.imwrite("output/"+str(currentTime)+".png", frame)
+				#cv2.imwrite("output/"+str(currentTime)+".png", frame)
 				
 				###get GPS data for manipulation, used for CSVData storage
 				getcurrentGlobal = the_connection.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
@@ -75,7 +75,7 @@ if video_capture.isOpened():
 			    ###print results if they are working
 				GPSGetResults.printResults(injection,getRawGPS1,getcurrentGlobal)
     			###store data to a CSV file
-				CSVDataStorage.csvCreate(getcurrentGlobal,getRawGPS1,injection,currentTime)
+				#CSVDataStorage.csvCreate(getcurrentGlobal,getRawGPS1,injection,currentTime)
 				
 				###camera loop end if you want limited photos uncomment below lines
 				#i+=1

@@ -5,8 +5,8 @@
 def printResults(injection ,getRawGPS1, getcurrentGlobal): 
     
     #get global positional data
-    globalLat = getcurrentGlobal.lat*10**(-7)
-    globalLong = getcurrentGlobal.lon*10**(-7)
+    globalLat = getcurrentGlobal.lat*(10**(-7))
+    globalLong = getcurrentGlobal.lon*(10**(-7))
    
     #get raw gps1 data
     rawLat = getRawGPS1.lat*10**(-7)
@@ -20,7 +20,7 @@ def printResults(injection ,getRawGPS1, getcurrentGlobal):
     printbar = "\n=============================================\n"
     
     globalResult = "Global co ordinate = " + str(round(globalLat,7)) +", " + str(round(globalLong,7))
-    injectResult = "injected co ordinates = " + str(injection["lat"]) +", " + str(injection["lat"])
+    injectResult = "injected co ordinates = " + str(injection["lat"]) +", " + str(injection["lon"])
     injectError = "Error in tracking = " + str(injectErrorLat) + ", " + str(injectErrorLon)
     rawResult = "Raw co ordinates from GPS actual = " + str(rawLat) + ", " +str(rawLon)
     print(printbar + injectError + printbar + globalResult + printbar + injectResult + printbar + rawResult)
