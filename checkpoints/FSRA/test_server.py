@@ -243,15 +243,16 @@ since = time.time()
 query_name = "query_drone"
 # gallery_name = "gallery_satellite"
 which_query = 1 # 1 = satellite
-# which_gallery = 1
-# gallery_name = 'gallery_street'
-# query_name = 'query_street'
+which_gallery = 1
+
+gallery_name = 'gallery_satellite'
+query_name = 'query_drone'
 
 
 # print("%d -> %d:" % (which_query, which_gallery))
 # print(query_name.split("_")[-1], "->", gallery_name.split("_")[-1])
 
-# gallery_path = image_datasets[gallery_name].imgs
+gallery_path = image_datasets[gallery_name].imgs
 # f = open("gallery_name.txt", "w")
 # for p in gallery_path:
 #     f.write(p[0] + "\n")
@@ -261,15 +262,15 @@ query_path = image_datasets[query_name].imgs
 #     f.write(p[0] + "\n")
 
 #Label = number , Path = location
-# gallery_label, gallery_path = get_id(gallery_path)
+gallery_label, gallery_path = get_id(gallery_path)
 query_label, query_path = get_id(query_path)
 
 if __name__ == "__main__":
     with torch.no_grad():
         query_feature = extract_feature(model, dataloaders[query_name])
-        # gallery_feature = extract_feature(
-        #     model, dataloaders[gallery_name], which_gallery
-        # )
+        gallery_feature = extract_feature(
+            model, dataloaders[gallery_name], which_gallery
+        )
 
     # For street-view image, we use the avg feature as the final feature.
     """
@@ -301,9 +302,9 @@ if __name__ == "__main__":
     # TODO: Determine what to do with matlab
     # Note: Don't change this code, its needed for evaluate_gpu.py
     result = {
-        # "gallery_f": gallery_feature.numpy(),
-        # "gallery_label": gallery_label,
-        # "gallery_path": gallery_path,
+        "gallery_f": gallery_feature.numpy(),
+        "gallery_label": gallery_label,
+        "gallery_path": gallery_path,
         "query_f": query_feature.numpy(),
         "query_label": query_label,
         "query_path": query_path,
@@ -311,4 +312,4 @@ if __name__ == "__main__":
     scipy.io.savemat("pytorch_result.mat", result)
 
     result = "result.txt"
-    os.system("python evaluate_gpu.py | tee -a %s" % result)
+    # os.system("python evaluate_gpu.py | tee -a %s" % result)

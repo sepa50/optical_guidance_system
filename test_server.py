@@ -244,8 +244,9 @@ query_name = "query_drone"
 # gallery_name = "gallery_satellite"
 which_query = 1 # 1 = satellite
 which_gallery = 1
-gallery_name = 'gallery_street'
-query_name = 'query_street'
+
+gallery_name = 'gallery_satellite'
+query_name = 'query_drone'
 
 
 # print("%d -> %d:" % (which_query, which_gallery))
@@ -311,4 +312,4 @@ if __name__ == "__main__":
     scipy.io.savemat("pytorch_result.mat", result)
 
     result = "result.txt"
-    os.system("python evaluate_gpu.py | tee -a %s" % result)
+    # os.system("python evaluate_gpu.py | tee -a %s" % result)
