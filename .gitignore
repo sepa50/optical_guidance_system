@@ -82,3 +82,4 @@ data/Custom-Data/processed-data/query_satellite/*
 *.png
 
 !other_scripts/kml/img/*
+!other_scripts/image_folder/delimiter/*

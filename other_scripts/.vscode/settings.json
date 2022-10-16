@@ -15,6 +15,7 @@
         "precompute",
         "rkml",
         "scandir",
-        "subfolders"
+        "subfolders",
+        "traindir"
     ]
 }

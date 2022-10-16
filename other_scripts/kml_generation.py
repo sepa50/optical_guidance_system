@@ -8,6 +8,7 @@ if __name__ ==  '__main__':
     import res.file_manip_resources as rfm
     import numpy as np
     import geopy.distance
+from distutils.log import error
 import enum
 import res.kml_resources as rkml
 
@@ -256,6 +257,7 @@ if __name__ ==  '__main__':
     #Collect locations from an input file and ensure there is no overlap
     if opt.verbose: print("Loading and checking coordinates")
     locations = []
+    errors = []
     for i, coordinate_str in enumerate(doc.findall(".//{*}coordinates")):
         coordinate_array = str(coordinate_str).split(",")
         lat = coordinate_array[1]
@@ -268,10 +270,18 @@ if __name__ ==  '__main__':
             safe_distance = math.sqrt(((s_radius * s_width - s_width*0.5)**2)*2)
 
             if geopy.distance.distance(l, data_point).m <= safe_distance:
-                raise Exception("Point " + str(i) + " is within safe distance of another point")
+                errors.append("Point " + str(i) + " is within safe distance of another point:" + str(geopy.distance.distance(l, data_point).m) + "(safe distance: " + str(safe_distance) + ")")
+                #raise Exception("Point " + str(i) + " is within safe distance of another point:" + str(geopy.distance.distance(l, data_point).m) + "(safe distance: " + str(safe_distance) + ")")
 
         locations.append(data_point)
     
+    if len(errors) > 0:
+        for i in errors:
+            print(i)
+        raise Exception("Points outside safe distance")
+
+    
+        
     if opt.verbose: print("Performing capture area generation")
     for i, loc in enumerate(locations):
         #perform capture area batching
@@ -293,9 +303,12 @@ if __name__ ==  '__main__':
         CaptureArea(lat, lon)
 
     if opt.verbose:
+        print("---------------------------------------------------")
+        print("Expected Total Image Count: " + str(len(locations) * (opt.radius*2+1)**2 * 14))
         print("Generated " + str(len(locations)) + " Capture Areas")
         print("Drone Expected Images: " + str((opt.radius*2+1)**2 * len(d_views)))
         print("Sat Expected Images: " + str((s_radius*2+1)**2))
+        print("---------------------------------------------------")
 
     #Save the kml
     if opt.verbose: print("Saving KML")
