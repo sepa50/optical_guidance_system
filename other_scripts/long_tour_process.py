@@ -225,7 +225,7 @@ for idx, hash_arr in enumerate(subdivide_result):
                 os.makedirs(path_specific)
             
             #Detection of abnormal numbers in folder
-            if len(out_paths) != 5 and len(out_paths) != 9:
+            if len(out_paths) != 5 and len(out_paths) != 9 and len(out_paths) != 25:
                 print("Potential issue detected with", path_specific, len(out_paths))
             
             #save images in out paths

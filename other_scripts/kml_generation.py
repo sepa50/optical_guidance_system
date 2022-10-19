@@ -10,6 +10,7 @@ if __name__ ==  '__main__':
     import geopy.distance
 from distutils.log import error
 import enum
+from re import X
 import res.kml_resources as rkml
 
 # Get the defualt location of myplaces.kml, the file that saves the current points within google earth pro
@@ -30,11 +31,11 @@ if __name__ ==  '__main__':
     argparser.add_argument("--duration", default=10, help="time at each point", type=int)
     argparser.add_argument("--batchsize", default=5, help="kml batch size", type=int)
 
-    argparser.add_argument("--delimiter", action=argparse.BooleanOptionalAction)
-
     argparser.add_argument("--precompute", action=argparse.BooleanOptionalAction)
+    argparser.add_argument("--delimiter", action=argparse.BooleanOptionalAction)
     argparser.add_argument("--verbose", action=argparse.BooleanOptionalAction)
     argparser.add_argument("--debug", action=argparse.BooleanOptionalAction)
+    argparser.add_argument("--pins", action=argparse.BooleanOptionalAction)
 
     opt = argparser.parse_args()
 
@@ -145,6 +146,19 @@ if __name__ ==  '__main__':
         data = datax + datay
         return data
 
+
+    # Generates satellite views for a specific satellite location
+    def GenerateSatViews(lat, lon, radius, offsetx, offsety):
+
+        locs = []
+
+        for x in range(-radius, radius+1):
+            for y in range(-radius, radius+1):
+                locs.append({"lat":lat + x * offsetx, "lon":lon + y * offsety})
+
+        return locs
+
+
     #widths of sat and drone images
     fudge_factor = -min_dist / 70 #min_dist is slightly too much, fudge_factor corrects
     s_width = min_dist + fudge_factor
@@ -189,8 +203,9 @@ if __name__ ==  '__main__':
         rkml.AddLocation(lat=delat, lon=delon, alt=dealt2, etree=delim_tour, duration=10)
 
         #add pins for easy visualization
-        rkml.AddPin(lat=delat, lon=delon, name="delim1", alt=dealt1, etree=delim_tour)
-        rkml.AddPin(lat=delat, lon=delon, name="delim2", alt=dealt2, etree=delim_tour)
+        if opt.pins: 
+            rkml.AddPin(lat=delat, lon=delon, name="delim1", alt=dealt1, etree=delim_tour)
+            rkml.AddPin(lat=delat, lon=delon, name="delim2", alt=dealt2, etree=delim_tour)
 
         #add overlays of colors to allow for perfect delimiters
         rkml.AddGroundOverlays(lat=delat, lon=delon, alt=dealt1-200, image_path=r".\kml\img\red.png", radius=s_width, tree=delim_tour, verbose=opt.verbose)
@@ -213,33 +228,50 @@ if __name__ ==  '__main__':
 
         #generate lat lon locations
         if opt.verbose: print("Calculating grid locations")
-        s_grid_locs = rkml.GetGridLocations(lat=lat, lon=lon, radius=s_radius, meters=s_width, precompute=opt.precompute, verbose=opt.verbose, debug=opt.debug)
-        d_grid_locs = rkml.GetGridLocations(lat=lat, lon=lon, radius=opt.radius, meters=d_offset, precompute=opt.precompute, verbose=opt.verbose, debug=opt.debug)
+        grid_locs = rkml.GetGridLocations(lat=lat, lon=lon, radius=opt.radius, meters=d_offset, precompute=opt.precompute, verbose=opt.verbose, debug=opt.debug)
 
         #for each location within the generated locations
         if opt.verbose: print("Generating tour locations at each grid location")
-        for g in d_grid_locs:
+        for g in grid_locs:
             for v in d_views:
                 rkml.AddLocationComplex(lat=g["lat"]+v["deltaLat"]*lat1, lon=g["lon"]+v["deltaLon"]*lon1, angle=v["direction"]+90, tilt=v["tilt"], distance=0, alt=v["alt"], etree=drone_tour, duration=opt.duration)
-            rkml.AddPin(lat=g["lat"], lon=g["lon"], name="D:"+str(g["x"]) + "," + str(g["y"]), alt=opt.altitude, etree=drone_tour)
+            if opt.pins: 
+                rkml.AddPin(lat=g["lat"], lon=g["lon"], name="D:"+str(g["x"]) + "," + str(g["y"]), alt=opt.altitude, etree=drone_tour)
+            
             AddLocationDelimiter(drone_tour)
 
-        cols = int(math.sqrt(len(s_grid_locs)))
-        s_grid_locs_2d = np.reshape(np.array(s_grid_locs), (cols, cols))
 
-        #this generation method allows for better grouping of images
-        for i, x in enumerate(s_grid_locs_2d):
-            for j, y in enumerate(x):
-                if (i % 3 == 0 and j % 3 == 0):
-                    for oi in range(0,3):
-                        for oj in range(0,3):
+        #generates a grid at every grid location
+        for g in grid_locs:
+            offsetx, offsety = rkml.OffsetComputation(lat=lat, lon=lon, meters=s_width/2, precompute=opt.precompute, verbose=opt.verbose)
+            s_views = GenerateSatViews(g["lat"], g["lon"], 2, offsetx, offsety)
 
-                            ele = s_grid_locs_2d[i+oi][j+oj]
+            for v in s_views:
+                rkml.AddLocation(lat=v["lat"], lon=v["lon"], alt=opt.altitude, etree=sat_tour, duration=opt.duration)
+                if opt.pins: 
+                    rkml.AddPin(lat=v["lat"], lon=v["lon"], name="", alt=opt.altitude, etree=sat_tour)
+            
+            AddLocationDelimiter(sat_tour)
 
-                            rkml.AddLocation(lat=ele["lat"], lon=ele["lon"], alt=opt.altitude, etree=sat_tour, duration=opt.duration)
-                            rkml.AddPin(lat=ele["lat"], lon=ele["lon"], name="S:" + str(ele["x"]) + "," + str(ele["y"]), alt=opt.altitude, etree=sat_tour)
 
-                    AddLocationDelimiter(sat_tour)
+        #this generation method allows for better grouping of images, however doesn't allow for overlapping images
+        #s_grid_locs = rkml.GetGridLocations(lat=lat, lon=lon, radius=s_radius, meters=s_width, precompute=opt.precompute, verbose=opt.verbose, debug=opt.debug)
+
+        #cols = int(math.sqrt(len(s_grid_locs)))
+        #s_grid_locs_2d = np.reshape(np.array(s_grid_locs), (cols, cols))
+
+        # for i, x in enumerate(s_grid_locs_2d):
+        #     for j, y in enumerate(x):
+        #         if (i % 3 == 0 and j % 3 == 0):
+        #             for oi in range(0,3):
+        #                 for oj in range(0,3):
+
+        #                     ele = s_grid_locs_2d[i+oi][j+oj]
+
+        #                     rkml.AddLocation(lat=ele["lat"], lon=ele["lon"], alt=opt.altitude, etree=sat_tour, duration=opt.duration)
+        #                     rkml.AddPin(lat=ele["lat"], lon=ele["lon"], name="S:" + str(ele["x"]) + "," + str(ele["y"]), alt=opt.altitude, etree=sat_tour)
+
+        #             AddLocationDelimiter(sat_tour)
 
         #simple non-delimited sat generation loop
         # for s in s_grid_locs:
@@ -267,7 +299,9 @@ if __name__ ==  '__main__':
 
         for l in locations:
             #diagonal distance to furthest point in capture area
-            safe_distance = math.sqrt(((s_radius * s_width - s_width*0.5)**2)*2)
+            #C = root(A^2 + B^2)
+
+            safe_distance = math.sqrt(((s_radius * s_width + s_width*0.5)**2)*2) * 2
 
             if geopy.distance.distance(l, data_point).m <= safe_distance:
                 errors.append("Point " + str(i) + " is within safe distance of another point:" + str(geopy.distance.distance(l, data_point).m) + "(safe distance: " + str(safe_distance) + ")")
@@ -276,6 +310,7 @@ if __name__ ==  '__main__':
         locations.append(data_point)
     
     if len(errors) > 0:
+        print("Total size: " + str(len(locations)))
         for i in errors:
             print(i)
         raise Exception("Points outside safe distance")
@@ -306,8 +341,8 @@ if __name__ ==  '__main__':
         print("---------------------------------------------------")
         print("Expected Total Image Count: " + str(len(locations) * (opt.radius*2+1)**2 * 14))
         print("Generated " + str(len(locations)) + " Capture Areas")
-        print("Drone Expected Images: " + str((opt.radius*2+1)**2 * len(d_views)))
-        print("Sat Expected Images: " + str((s_radius*2+1)**2))
+        print("Drone Expected Images @ Capture Area: " + str((opt.radius*2+1)**2 * len(d_views)))
+        print("Sat Expected Images @ Capture Area: " + str((s_radius*2+1)**2))
         print("---------------------------------------------------")
 
     #Save the kml

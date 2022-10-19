@@ -264,6 +264,24 @@ def GetGridLocations(lat, lon, radius, meters, precompute, verbose, debug):
 
     return data
 
+def GetOverlappingGridLocations(lat, lon, radius, inner_radius, inner_meters, meters, precompute, verbose, debug):
+    offsetlat, offsetlon = OffsetComputation(lat=lat, lon=lon, meters=meters, precompute=precompute, verbose=verbose)
+
+    data = []
+    for w in range(-radius, radius + 1):
+        for h in range(-radius, radius + 1):
+            adjusted_lat = w * offsetlat + float(lat)
+            adjusted_lon = h * offsetlon + float(lon)
+            d = {"lat": adjusted_lat, "lon": adjusted_lon, "x": w, "y": h}
+            data.append(d)
+            # AddLocation(lat=adjusted_lat, lon=adjusted_lon, alt=alt, etree=kml, duration=duration)
+            # AddPin(lat=adjusted_lat, lon=adjusted_lon, name=str(w) + ", " + str(h), alt=alt, etree=kml)
+            if debug:
+                if w == radius and h == radius:
+                    print(adjusted_lat, adjusted_lon)
+
+    return data
+
 
 def AddGridPoints(kml, lat, lon, width, height, meters, alt, precompute, duration, verbose, debug):
 
