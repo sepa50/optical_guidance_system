@@ -1,11 +1,9 @@
 ## authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636, Alex Jennings 102117465
 ## gps code injector, with CSV output
-###
-### DEPRECATED USE JETSON LOOP INSTEAD
-###
+
 from pymavlink import mavutil
 import time
-import CSVDataStorage as csv
+import CSVTest as csv
 
 #if windows doesnt let you run the script properly due to permission errors, enter the following in the terminal
 # Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
@@ -29,13 +27,11 @@ import CSVDataStorage as csv
 #data to inject
 injection = {'lat':-35.3599712, 'lon':149.1542315}
 
+
 ##connection string ( change port to 5762,5760, 5763 as needed, missionplanner is fussy)
-connString = "tcp:127.0.0.1:5762"
+connString = "tcp:127.0.0.1:5760"
 
 the_connection = mavutil.mavlink_connection(connString)
-
-the_connection.wait_heartbeat()
-
 print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
 
 
@@ -108,9 +104,6 @@ while True:
     getcurrentGlobal = the_connection.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
     getRawGPS1 = the_connection.recv_match(type='GPS_RAW_INT', blocking=True)
 
-    #do the inject
-    injectGPS(injection["lat"], injectLon["lon"])
-
     #print results if they are working
     printResults(injection,getRawGPS1,getcurrentGlobal)
-    csv.csvCreate(getcurrentGlobal,getRawGPS1,injection)
+    createCSV(getcurrentGlobal,getRawGPS1,injection)

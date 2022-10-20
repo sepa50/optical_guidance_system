@@ -1,1 +1,0 @@
-# For generating the map to determine drone position in practice
