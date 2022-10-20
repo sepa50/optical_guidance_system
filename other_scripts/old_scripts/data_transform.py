@@ -1,9 +1,3 @@
-#TODO:
-# Make TODO List
-# Take Drone Folder
-# Take Sat Folder
-# Take Output Folder
-# Drone and Sat Stride
 import argparse
 import math
 import os
