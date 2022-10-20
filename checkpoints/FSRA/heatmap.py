@@ -73,10 +73,10 @@ def normalization(data):
 model = load_network(opt)
 
 print(opt.data_dir)
-for i in ["0000"]:
+for i in ["0186"]:
     print(i)
-    imgpath = os.path.join(opt.data_dir,"gallery_drone/"+i)
-    imgpath = os.path.join(imgpath, "raw-video-000000.png")
+    imgpath = os.path.join(opt.data_dir,"train/drone/"+i)
+    imgpath = os.path.join(imgpath, "drone-006725.png")
     print(imgpath)
     img = Image.open(imgpath)
     img = data_transforms(img)

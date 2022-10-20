@@ -1,0 +1,44 @@
+torch.Size([701, 2048])
+torch.Size([51355, 2048])
+514
+Recall@1:87.59 Recall@5:92.15 Recall@10:93.30 Recall@top1:98.57 AP:81.11
+torch.Size([37855, 2048])
+torch.Size([951, 2048])
+10
+Recall@1:82.25 Recall@5:93.59 Recall@10:95.69 Recall@top1:95.92 AP:84.80
+torch.Size([701, 2048])
+torch.Size([51355, 2048])
+514
+Recall@1:87.59 Recall@5:92.15 Recall@10:93.30 Recall@top1:98.57 AP:81.11
+torch.Size([37855, 2048])
+torch.Size([951, 2048])
+10
+Recall@1:82.25 Recall@5:93.59 Recall@10:95.69 Recall@top1:95.92 AP:84.80
+torch.Size([1, 2048])
+torch.Size([7, 2048])
+0
+torch.Size([7, 2048])
+torch.Size([1, 2048])
+0
+torch.Size([1, 2048])
+torch.Size([7, 2048])
+0
+torch.Size([37807, 2048])
+torch.Size([951, 2048])
+10
+Recall@1:82.22 Recall@5:93.58 Recall@10:95.69 Recall@top1:95.92 AP:84.77
+torch.Size([1, 2048])
+torch.Size([1, 2048])
+0
+torch.Size([1207, 2048])
+torch.Size([1207, 2048])
+12
+Recall@1:29.08 Recall@5:66.53 Recall@10:76.47 Recall@top1:79.29 AP:37.47
+torch.Size([505, 2048])
+torch.Size([909, 2048])
+9
+Recall@1:50.30 Recall@5:75.84 Recall@10:85.35 Recall@top1:85.35 AP:21.92
+torch.Size([505, 2048])
+torch.Size([909, 2048])
+9
+Recall@1:50.30 Recall@5:75.84 Recall@10:85.35 Recall@top1:85.35 AP:21.92

@@ -12,7 +12,7 @@ from shutil import copyfile
 # Evaluate
 parser = argparse.ArgumentParser(description='Demo')
 parser.add_argument('--query_index', default=0, type=int, help='test_image_index')
-parser.add_argument('--test_dir',default='C:\_UNI_Programming_folder\GitHub\optical_guidance_system\data\Custom-Data\processed-data',type=str, help='./test_data')
+parser.add_argument('--test_dir',default='C:\\Users\\Jack_\\Desktop\\newTestDataset\\test',type=str, help='./test_data')
 opts = parser.parse_args()
 
 
