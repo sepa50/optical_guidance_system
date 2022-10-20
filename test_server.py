@@ -125,19 +125,15 @@ data_query_transforms = transforms.Compose(
 
 data_dir = test_dir
 
-image_datasets_query = {}
-for x in ["query_drone"]:
-    image_datasets_query[x] = datasets.ImageFolder(
-        os.path.join(data_dir, x), 
-        data_query_transforms)
+image_datasets = {}
 
-# image_datasets_gallery = {}
-# for x in ["gallery_satellite"]:
-#     image_datasets_gallery[x] = datasets.ImageFolder(
-#         os.path.join(data_dir, x), 
-#         data_transforms)
+image_datasets["query_drone"] = datasets.ImageFolder(
+    os.path.join(data_dir, "query_drone"), 
+    data_query_transforms)
 
-image_datasets = {**image_datasets_query} #**image_datasets_gallery
+image_datasets["gallery_satellite"] = datasets.ImageFolder(
+    os.path.join(data_dir, "gallery_satellite"), 
+    data_transforms)
 
 dataloaders = {
     x: torch.utils.data.DataLoader(
@@ -148,6 +144,7 @@ dataloaders = {
     )
     for x in ["query_drone"] #"gallery_satellite", 
 }
+
 use_gpu = torch.cuda.is_available()
 
 ######################################################################
