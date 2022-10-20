@@ -1,2 +1,0 @@
-python multi_tour_generate.py --distance 400 --width 4 --height 4 --altitude 300 --precompute --verbose --name drone 
-python multi_tour_generate.py --distance 200 --width 9 --height 9 --altitude 300 --precompute --verbose --name sat
