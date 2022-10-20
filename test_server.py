@@ -142,7 +142,7 @@ dataloaders = {
         shuffle=False,
         num_workers=opt.num_worker,
     )
-    for x in ["query_drone"] #"gallery_satellite", 
+    for x in ["query_drone","gallery_satellite"]
 }
 
 use_gpu = torch.cuda.is_available()
@@ -309,4 +309,4 @@ if __name__ == "__main__":
     scipy.io.savemat("pytorch_result.mat", result)
 
     result = "result.txt"
-    # os.system("python evaluate_gpu.py | tee -a %s" % result)
+    os.system("python evaluate_gpu.py | tee -a %s" % result)

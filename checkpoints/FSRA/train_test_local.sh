@@ -13,8 +13,8 @@ pad=0
 views=2
 
 #Comment out training if only evaluating
-python train.py --name $name --data_dir $data_dir --gpu_ids $gpu_ids --num_worker $num_worker --views $views --lr $lr \
---sample_num $sample_num --block $block --batchsize $batchsize --triplet_loss $triplet_loss --num_epochs $num_epochs \
+# python train.py --name $name --data_dir $data_dir --gpu_ids $gpu_ids --num_worker $num_worker --views $views --lr $lr \
+# --sample_num $sample_num --block $block --batchsize $batchsize --triplet_loss $triplet_loss --num_epochs $num_epochs \
 
 cd checkpoints/$name
 for((i=119;i<=$num_epochs;i+=10));

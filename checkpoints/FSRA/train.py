@@ -246,9 +246,9 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
             if epoch % 10 == 9 and epoch>=110:
                 save_network(model, opt.name, epoch)
                 
-            if(saveFlag == False):
-                save_network(model, opt.name, epoch)
-                #saveFlag = True
+            # if(saveFlag == False):
+            #     save_network(model, opt.name, epoch)
+            #     #saveFlag = True
 
         time_elapsed = time.time() - since
         print('Training complete in {:.0f}m {:.0f}s'.format(

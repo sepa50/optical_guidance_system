@@ -72,7 +72,7 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
     criterion = nn.CrossEntropyLoss()
     loss_kl = nn.KLDivLoss(reduction='batchmean')
     triplet_loss = Tripletloss(margin=opt.triplet_loss)
-    saveFlag = False
+   
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
@@ -246,9 +246,6 @@ def train_model(model,opt, optimizer, scheduler, dataloaders,dataset_sizes):
             if epoch % 10 == 9 and epoch>=110:
                 save_network(model, opt.name, epoch)
                 
-            if(saveFlag == False):
-                save_network(model, opt.name, epoch)
-                #saveFlag = True
 
         time_elapsed = time.time() - since
         print('Training complete in {:.0f}m {:.0f}s'.format(
