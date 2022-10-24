@@ -36,8 +36,7 @@ When pressing DISCONNECT the port being used and the connection type can be chan
 
 To run **GPSInject-GetReults.py** the parameter list must first be altered in Mission Planner. Press the CONFIG tab then click on the Full Parameter List. Search GPS and alter the checked favourited fields as shown in the image below.
 
-  
-
+```bash
 GPS_AUTO_SWITCH 2
 
 GPS_INJECT_TO 1
@@ -49,7 +48,7 @@ GPS_TYPE 1
 GPS_TYPE2 14
 
 SIM_GPS2_DISABLE 0
-
+```
   
 
 ![parameters](./images/missionPlannerPreferences.jpg)
@@ -138,7 +137,7 @@ wbmode changes the white balance color correction of the camera depending on env
 The main point of the loop is to provide a continuous loop to run each script as required. The loop initiallizes a few key components as it starts, as noted in the comments for the loop.
 The loop starts by setting up the connection to the drone or simulator, either by serial or a tcp connection. Comment out the section for serial if needed or the tcp section as noted, do not attempt to use both.
 After conneciton, the code will hold on no connection, and attempt to request messages to be sent at a 10hz update rate this can be increased if required. From here, the loop will set up the camera, and begin the actual loop. 
-The main loop process will
+The main loop process will:
 - Take a photo
 - Get Global and GPS co-ordinates
 - Inject Co-ordinates
@@ -147,4 +146,5 @@ The main loop process will
 - Increment the the loop if a limited loop is set
 - sleep for 1 second
 - check the loop break and restart
+
 On exit of the loop, the camera will capture release to free up the Gstreamer pipeline.
