@@ -1,4 +1,5 @@
 # Contents
+ - [Pre Requirements](#prereq)
  - [SITL install](#sitlInstall)
 	 - [Installing Mission planner](#installMP)
 	 - [Running SITL](#runSITL)
@@ -9,6 +10,19 @@
  - [Jetson Loop](#jetsonloop)
 	 - [What each script does](#whatscript)
 	 - [What the loop does](#whatloop)
+
+# Pre Requirements <a id="prereq"></a>
+
+In order to follow this project you will need:
+
+- [Jetson Nano 2GB](https://www.nvidia.com/en-au/autonomous-machines/embedded-systems/jetson-nano/education-projects/)
+- A suitable drone running ArduPilot
+- Micro usb b cable and a Type C cable
+- USB power supply capable 2-3A, 3A preferable
+- Monitor, keyboard and mouse for using the Jetson
+- A Linux computer
+- The model in the main Git set up and running
+- Plenty of time and patience
 
 # SITL Simulation on desktop <a id="sitlInstall"></a>
 Software in the Loop (SITL) can be used to simulate Ardupilot. it can be used for a variety of simulation purposes to demonstrate code function between a companion computer such as the Nvidia Jetson Nano (as used in this project) and a flight controller on board a drone.
@@ -63,10 +77,10 @@ The Jetson is our companion computer for this project, it communicates to the fl
 You'll need:
  - a SD card reader
  - preferably a Linux computer of sorts (though it can be done with windows too) 
- - a decent 2A minimum usb power supply and type c cable to suit
+ - a decent 2A (3A prefered) minimum usb power supply and type c cable to suit
  - a micro usb type b cable
 
-The Jetson requires an older OS than that of the guide on the Nvidia website as the most current OS version as of August 2022 is corrupt. Follow the guide [here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-2gb-devkit) to install the operating system to the Jeston 2Gb, be sure to get an older version of the operating system if Nvidia hasnt released a new version since August 2022.
+The Jetson requires an older OS than that of the guide on the Nvidia website as the most current OS version as of August 2022 is corrupt. Follow the guide [here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-2gb-devkit) to install the operating system to the Jeston 2GB, be sure to get an older version of the operating system if Nvidia hasnt released a new version since August 2022.
 
 ## Connecting to Ardupilot through PyMavlink <a id="PymavlinkArdu"></a>
 
@@ -78,6 +92,7 @@ sudo apt-get install libxml2-dev libxslt-dev python-dev
 ```bash
 pip3 install pymavlink
 ```
+
 ### Testing the Connection
 The basic tests to check if the Jetson is connected to the drone through PyMavlink among various other useful tests are found in [this folder](testFiles). Specifically a good start is [the GPS test](testFiles/gps.py) that gets the GLOBAL_POSITION_INT data from the drone using the serial port and prints it as it goes.
 From here one can test if the position data recieved matches, the current GPS co-ordinates of the drone, and that of the controller connected to the drone. 
@@ -87,16 +102,17 @@ Changing the connection port in the gps.py code in line 6 may also help if you a
 Always check that Tx and Rx are the right way round.
 
 # Camera Setup <a id="cameraSetup"></a>
-lol what do we write for this?
+Install the driver for the camera [here](https://github.com/VC-MIPI-modules/vc_mipi_nvidia) if using the same IMX412 as in this project. This is where a micro-usb and linux computer will come in handy to ssh into the Jeston to run.
+Install opencv following the guide found [here](https://automaticaddison.com/how-to-install-opencv-4-5-on-nvidia-jetson-nano/), and correct for an error in the bash script found [here](https://forums.developer.nvidia.com/t/problems-with-opencv/173981/26) 
+BE WARNED THE OPENCV INSTALL WILL TAKE A LONG TIME TO INSTALL, POTENTIALLY 8 HOURS. 
 
 
 ## Taking photos
-- test doc
-- explain loop quick
-
+Taking photos can be started by using the test file, [saveimage](testFiles/saveimage.py), where images will be sent to the output folder.
+The camera script runs by entering the settings for the camera and opening a gstreamer pipeline to take images as required. It will take images till the limit is reached, whereby it will stop. In the Jetson loop as noted below, it will hold the pipeline open till the script is closed/ended.
 
 # Jetson Loop <a id="jetsonloop"></a>
-
+To run the loop, use either the [bash file](runLoop.sh) or run the loop in console. the bash file may need to be edited to handle the password for sudo correctly, and if running in console, you would need to run the loop using python2 and using sudo for serial port access. 
 
 ## What each script does <a id="whatscript"></a>
 ### - [GPSGetResults](GPSGetResults.py)
@@ -136,7 +152,8 @@ wbmode changes the white balance color correction of the camera depending on env
 ## What the loop does <a id="whatloop"></a>
 The main point of the loop is to provide a continuous loop to run each script as required. The loop initiallizes a few key components as it starts, as noted in the comments for the loop.
 The loop starts by setting up the connection to the drone or simulator, either by serial or a tcp connection. Comment out the section for serial if needed or the tcp section as noted, do not attempt to use both.
-After conneciton, the code will hold on no connection, and attempt to request messages to be sent at a 10hz update rate this can be increased if required. From here, the loop will set up the camera, and begin the actual loop. 
+After conneciton, the code will hold on no connection, and attempt to request messages to be sent at a 10hz update rate this can be increased if required. From here, the loop will set up the camera, and begin the actual loop.
+
 The main loop process will:
 - Take a photo
 - Get Global and GPS co-ordinates
