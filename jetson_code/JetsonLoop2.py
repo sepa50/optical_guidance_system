@@ -40,6 +40,7 @@ portOptions = ["5760", "5762", "5763"]
 the_connection = mavutil.mavlink_connection("/dev/ttyTHS1", 115200)
 print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
 
+### message requester to set values to request from the drone
 def request_message_interval(master, message_input, frequency_hz):
 
 	message_name = "MAVLINK_MSG_ID_" + message_input
@@ -59,7 +60,7 @@ def request_message_interval(master, message_input, frequency_hz):
 
 		0, 0, 0, 0)
 	print("Requested the message successfully.")
-
+### request both the Global position int and Gps raw values from the drone at a 10hz rate
 request_message_interval(the_connection, "GLOBAL_POSITION_INT",10.0)
 request_message_interval(the_connection, "GPS_RAW_INT",10.0)
 

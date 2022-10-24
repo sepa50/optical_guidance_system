@@ -31,5 +31,6 @@ def csvCreate(globalInt, rawInt, injection, timestamp):
 	df = pd.DataFrame(data)
 	#print(df)
 	#TODO iterative naming convention for the file type.
-	output_path='my_csv.csv'
+	
+	output_path='launchday.csv'
 	df.to_csv(output_path,index=False, mode='a', header=not os.path.exists(output_path))
