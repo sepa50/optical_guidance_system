@@ -1,6 +1,6 @@
+### Authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636
+### gstreamer options for camera setup
 
-
-###gstreamer options for camera
 def gstreamer_pipeline(
     sensor_id=0,
     wbmode=1,

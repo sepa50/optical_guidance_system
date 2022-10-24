@@ -1,7 +1,8 @@
-## Authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636
-# main loop for the jetson
-
-
+### Authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636
+### main loop for the jetson
+###
+###	DEPRECATED
+###
 import pymavlink, CSVDataStorage, GPSGetResults, GPSInject, CamSettings
 import time
 import cv2

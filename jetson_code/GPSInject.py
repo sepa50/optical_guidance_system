@@ -1,6 +1,6 @@
-## Authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636
-# inject GPS data using a dict structure of injection= {"lat": val, "lon": val, "confidence":6-25}
-# confidence sets the satelite count to apply a level of "accuracy" given lack of accuracy setting
+### Authors: Tyler Smith 100039114, Jonothan Ridgeway 102119636
+### inject GPS data using a dict structure of injection= {"lat": val, "lon": val, "confidence":6-25}
+### confidence sets the satelite count to apply a level of "accuracy" given lack of accuracy setting
 
 import pymavlink
 from pymavlink import mavutil
@@ -8,7 +8,6 @@ from pymavlink import mavutil
 
 def injectGPS(connection, injection):
     ### this is where the magic happens, GPS injection, the only required lines are the lat and lon, then the sattelite count
-    #TODO adjust sattelite count according to what gives reasonable accuracy.
     connection.mav.gps_input_send(
         0,  # Timestamp (micros since boot or Unix epoch)
         2,  # ID of the GPS for multiple GPS inputs
