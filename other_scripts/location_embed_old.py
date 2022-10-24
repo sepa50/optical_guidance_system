@@ -20,11 +20,6 @@ from PIL import Image
 from PIL.ExifTags import GPSTAGS
 # PathLib - handle file paths properly
 from pathlib import Path, PurePath, PurePosixPath, PureWindowsPath, WindowsPath
-# Tyf - handle EXIF
-import Tyf
-
-
-
 
 
 import sys
@@ -206,47 +201,46 @@ def locUpdater(file_list):
         file["imageloc"]["lon"] = longitude_dms   
 
 # Add location data to the matched files as EXIF fields
-# def exifWriteOld(fmatched):
-#     # Init the image array. Stores binary image data read from file.
-#     imageArr = []
-#     # Iterate over the matched image array, opening an image and appending to the image array upon each iteration.
-#     for img_data in fmatched:
-#         with open(img_data["filepath"], "rb") as img_file:
-#             current_img = exif.Image(img_file)
-#             imageArr.append(current_img)
-#     # Iterate in parallel over the image array and the matched image array, fetching and setting EXIF field values for each respective image.       
-#     for image, img_data in zip(imageArr, fmatched):
-#         tag_data = img_data["imageloc"]
-#         image.set("gps_latitude", (tag_data["lat"]["degrees"], tag_data["lat"]["minutes"], tag_data["lat"]["seconds"]))
-#         image.set("gps_latitude_ref", tag_data["lat"]["direction"])
-#         image.set("gps_longitude", (tag_data["lon"]["degrees"], tag_data["lon"]["minutes"], tag_data["lon"]["seconds"]))
-#         image.set("gps_longitude_ref", tag_data["lon"]["direction"])
-#         # Print the recently set attributes to stdout for verification
-#         print("Image " + img_data["filename"] + " attributes set:")
-#         raw_lat = image.get("gps_latitude")
-#         raw_lat_ref = image.get("gps_latitude_ref")
-#         raw_lon = image.get("gps_longitude")
-#         raw_lon_ref = image.get("gps_longitude_ref")
-#         str_lat = str(raw_lat[0]) + " " + str(raw_lat[1]) + " " + str(raw_lat[2]) + " " + raw_lat_ref + "\n"
-#         str_lon = str(raw_lon[0]) +  " " + str(raw_lon[1]) + " " + str(raw_lon[2]) + " " + raw_lon_ref + "\n"
-#         print("Lat: " + str_lat)
-#         print("Lon: " + str_lon)
-#     # Iterate over the image and matched image arrays in parallel, writing the modified image files to disk
-#     counter = 1
-#     for image in imageArr:
-#         with open('new_file' + str(counter) + ".jpg", 'wb') as write_img:
-#             write_img.write(image.get_file())
-#             counter = counter + 1
+def exifWriteOld(fmatched):
+    # Init the image array. Stores binary image data read from file.
+    imageArr = []
+    # Iterate over the matched image array, opening an image and appending to the image array upon each iteration.
+    for img_data in fmatched:
+        with open(img_data["filepath"], "rb") as img_file:
+            current_img = exif.Image(img_file)
+            imageArr.append(current_img)
+    # Iterate in parallel over the image array and the matched image array, fetching and setting EXIF field values for each respective image.       
+    for image, img_data in zip(imageArr, fmatched):
+        tag_data = img_data["imageloc"]
+        image.set("gps_latitude", (tag_data["lat"]["degrees"], tag_data["lat"]["minutes"], tag_data["lat"]["seconds"]))
+        image.set("gps_latitude_ref", tag_data["lat"]["direction"])
+        image.set("gps_longitude", (tag_data["lon"]["degrees"], tag_data["lon"]["minutes"], tag_data["lon"]["seconds"]))
+        image.set("gps_longitude_ref", tag_data["lon"]["direction"])
+        # Print the recently set attributes to stdout for verification
+        print("Image " + img_data["filename"] + " attributes set:")
+        raw_lat = image.get("gps_latitude")
+        raw_lat_ref = image.get("gps_latitude_ref")
+        raw_lon = image.get("gps_longitude")
+        raw_lon_ref = image.get("gps_longitude_ref")
+        str_lat = str(raw_lat[0]) + " " + str(raw_lat[1]) + " " + str(raw_lat[2]) + " " + raw_lat_ref + "\n"
+        str_lon = str(raw_lon[0]) +  " " + str(raw_lon[1]) + " " + str(raw_lon[2]) + " " + raw_lon_ref + "\n"
+        print("Lat: " + str_lat)
+        print("Lon: " + str_lon)
+    # Iterate over the image and matched image arrays in parallel, writing the modified image files to disk
+    counter = 1
+    for image in imageArr:
+        with open('new_file' + str(counter) + ".jpg", 'wb') as write_img:
+            write_img.write(image.get_file())
+            counter = counter + 1
             
 def exifWrite(matched_images):
     # Init the image array. Stores binary image data read from file.
-    
-    # imageArr = []
-    # exifArr = []
-    # valueArr = []
-    
+    imageArr = []
+    exifArr = []
+    valueArr = []
     # EXIF GPS Tags that we want to edit
     gps_tags = [
+        "GPSVersionID",
         "GPSLatitudeRef",   # GPS Latitude Cardinal Dir
         "GPSLatitude",      # GPS Latitude Values DMS
         "GPSLongitudeRef",  # GPS Longitude Cardinal Dir
@@ -257,134 +251,67 @@ def exifWrite(matched_images):
         lat_tags = img_data["imageloc"]["lat"]
         lon_tags = img_data["imageloc"]["lon"]
         # Open an image, fetch the pixel and exif data and append them to their respective arrays.
-        
-        print(img_data["filepath"])
-        current_image = Tyf.open(img_data["filepath"])
-                    
-        # valueVar = {
-        #     "GPSLatitudeRef": lat_tags["direction"],
-        #     "GPSLatitude"   : (
-        #         float(lat_tags["degrees"]),
-        #         float(lat_tags["minutes"]),
-        #         float(lat_tags["seconds"])
-        #     ),
-        #     "GPSLongitudeRef": lon_tags["direction"],
-        #     "GPSLongitude"   : (
-        #         float(lon_tags["degrees"]),
-        #         float(lon_tags["minutes"]),
-        #         float(lon_tags["seconds"])
-        #     )
-        # }
-        
-        print(lon_tags)
-        print(lat_tags)
-        print(current_image.ifd0)
-                
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        
-        for i in gps_tags:
-            print(current_image[i])
-        
-        #for exif_tags in current_image.ifd0.tags(): print(exif_tags)
-        
-        #current_image.ifd0.get_location()
-        
-        #Tyf.ifd.dump_mapbox_location(current_image.ifd0, "test_output.jpeg")
-        
-        
-        
-        # for gpstag in gps_tags:
-        #     print("GPS Tag: " + gpstag + "\n") # output the gps tag that we are updating
-        #     # for i in range(0, len(GPSTAGS)):
-        #     #     if gpstag == GPSTAGS[i]:
-        #     #         tag_index = int(i)
-            
-        #     current_image.ifd0[gpstag] = valueVar[gpstag]
-        #     print(type(current_image[gpstag]))
-        #     # Check if the exif tag contents is an instance of a tuple
-        #     if isinstance(current_image[gpstag], tuple):
-        #         print(current_image[gpstag])
-        #         print("Tag value updated to:\n" +
-        #             "Deg: " + str(current_image[gpstag][0]) + "\n" +
-        #             "Min: " + str(current_image[gpstag][1]) + "\n" +
-        #             "Sec: " + str(current_image[gpstag][2]) + "\n"
-        #         )
-        #     else:
-        #         print("Tag value updated to: " + str(current_image[gpstag]) + "\n") # output the newly changed value of the tag
-        
-        # Save the updated image to file.
-        print(img_data["filepath"])
-        current_image.save(str(img_data["filepath"]))
-                    
-            
-            
-        
-        # with Image.open(img_data["filepath"]) as image:
-        #     exif = image.getexif()
-        #     imageArr.append(
-        #         {
-        #             "image": image,
-        #             "path" : img_data["filepath"]
-        #         })
-        #     exifArr.append(exif)
-        #     print(exif)
-        #     image.close()
-        
-        
+        with Image.open(img_data["filepath"]) as image:
+            exif = image.getexif()
+            imageArr.append(
+                {
+                    "image": image,
+                    "path" : img_data["filepath"]
+                })
+            exifArr.append(exif)
+            print(exif)
+            image.close()
         # Make an array of GPS tags for the current image.
         # Tags stored in a dict with same names as the tags to which they will be equated. Lets us use less variables in the iterator.
         # Lat and lon values are 3 floats, they are stored in the dict as a 3-tuple.
-        # valueArr.append(
-            # {
-            #     "GPSVersionID"  : '2 0 0 0',
-            #     "GPSLatitudeRef": lat_tags["direction"],
-            #     "GPSLatitude"   : (
-            #         float(lat_tags["degrees"]),
-            #         float(lat_tags["minutes"]),
-            #         float(lat_tags["seconds"])
-            #     ),
-            #     "GPSLongitudeRef": lon_tags["direction"],
-            #     "GPSLongitude"   : (
-            #         float(lon_tags["degrees"]),
-            #         float(lon_tags["minutes"]),
-            #         float(lon_tags["seconds"])
-            #     )
-            # }
-            # )
+        valueArr.append(
+            {
+                "GPSVersionID"  : '2 0 0 0',
+                "GPSLatitudeRef": lat_tags["direction"],
+                "GPSLatitude"   : (
+                    float(lat_tags["degrees"]),
+                    float(lat_tags["minutes"]),
+                    float(lat_tags["seconds"])
+                ),
+                "GPSLongitudeRef": lon_tags["direction"],
+                "GPSLongitude"   : (
+                    float(lon_tags["degrees"]),
+                    float(lon_tags["minutes"]),
+                    float(lon_tags["seconds"])
+                )
+            }
+            )
         
-    # for img_instance, exif_instance, value_instance in zip(imageArr, exifArr, valueArr):
-    #     # Update the gps tag values with the new location values
-    #     for gpstag in gps_tags:
-    #         print("GPS Tag: " + gpstag + "\n") # output the gps tag that we are updating
-    #         for i in range(0, len(GPSTAGS)):
-    #             if gpstag == GPSTAGS[i]:
-    #                 tag_index = int(i)
+    for img_instance, exif_instance, value_instance in zip(imageArr, exifArr, valueArr):
+        # Update the gps tag values with the new location values
+        for gpstag in gps_tags:
+            print("GPS Tag: " + gpstag + "\n") # output the gps tag that we are updating
+            for i in range(0, len(GPSTAGS)):
+                if gpstag == GPSTAGS[i]:
+                    tag_index = int(i)
             
-    #         exif_instance[tag_index] = value_instance[gpstag]
-    #         print(type(exif_instance[tag_index]))
-    #         # Check if the exif tag contents is an instance of a tuple
-    #         if isinstance(exif_instance[tag_index], tuple):
-    #             print(exif_instance[tag_index])
-    #             print("Tag value updated to:\n" +
-    #                   "Deg: " + str(exif_instance[tag_index][0]) + "\n" +
-    #                   "Min: " + str(exif_instance[tag_index][1]) + "\n" +
-    #                   "Sec: " + str(exif_instance[tag_index][2]) + "\n"
-    #             )
-    #         else:
-    #             print("Tag value updated to: " + str(exif_instance[tag_index]) + "\n") # output the newly changed value of the tag
+            exif_instance[tag_index] = value_instance[gpstag]
+            print(type(exif_instance[tag_index]))
+            # Check if the exif tag contents is an instance of a tuple
+            if isinstance(exif_instance[tag_index], tuple):
+                print(exif_instance[tag_index])
+                print("Tag value updated to:\n" +
+                      "Deg: " + str(exif_instance[tag_index][0]) + "\n" +
+                      "Min: " + str(exif_instance[tag_index][1]) + "\n" +
+                      "Sec: " + str(exif_instance[tag_index][2]) + "\n"
+                )
+            else:
+                print("Tag value updated to: " + str(exif_instance[tag_index]) + "\n") # output the newly changed value of the tag
                 
-        # # Write the image data to file at the same path as it was read from, with the new EXIF data
-        # loaded_image = img_instance["image"]
-        # print(loaded_image) # test to verify that we have the image loaded
-        # output_path = img_instance["path"].replace(os.altsep, os.sep)
-        # print(output_path) # test to verify that the output path is loaded
-        # print(exif_instance)
-        # with Image.open(output_path) as saveImage:
-        #     saveImage.save(fp = output_path, exif = exif_instance)
-        #     saveImage.close()
+        # Write the image data to file at the same path as it was read from, with the new EXIF data
+        loaded_image = img_instance["image"]
+        print(loaded_image) # test to verify that we have the image loaded
+        output_path = img_instance["path"].replace(os.altsep, os.sep)
+        print(output_path) # test to verify that the output path is loaded
+        print(exif_instance)
+        with Image.open(output_path) as saveImage:
+            saveImage.save(fp = output_path, exif = exif_instance)
+            saveImage.close()
 
 # main function that runs everything we need.
 def main():
@@ -395,7 +322,7 @@ def main():
     # Get the found files from the dictionary
     matched_list = image_dict["matched"]
     # Update the location coordinates in the list to be DMS instead of decimal degrees
-    # locUpdater(matched_list)
+    locUpdater(matched_list)
     # Write the new coordinates to the image files
     exifWrite(matched_list)
 
