@@ -7,8 +7,8 @@
 	 - [Connecting to Ardupilot through PyMavlink](#PymavlinkArdu)
  - [Camera set up](#cameraSetup)
  - [Jetson Loop](#jetsonloop)
-	 - [What the loop does](#whatloop)
 	 - [What each script does](#whatscript)
+	 - [What the loop does](#whatloop)
 
 # SITL Simulation on desktop <a id="sitlInstall"></a>
 Software in the Loop (SITL) can be used to simulate Ardupilot. it can be used for a variety of simulation purposes to demonstrate code function between a companion computer such as the Nvidia Jetson Nano (as used in this project) and a flight controller on board a drone.
@@ -87,7 +87,7 @@ The serial port may need to be changed if there is no connection, on either the 
 Changing the connection port in the gps.py code in line 6 may also help if you are plugged into the wrong serial port on the Jetson. 
 Always check that Tx and Rx are the right way round.
 
-# Camera Setup<a id="cameraSetup"></a>
+# Camera Setup <a id="cameraSetup"></a>
 lol what do we write for this?
 
 
@@ -98,10 +98,8 @@ lol what do we write for this?
 
 # Jetson Loop <a id="jetsonloop"></a>
 
-<a id="whatloop"></a>
-## What the loop does
-<a id="whatscript"></a>
-## What each script does
+
+## What each script does <a id="whatscript"></a>
 ### - [GPSGetResults](GPSGetResults.py)
 This script is mainly for test purposes and mainly just receives all the dictionaries of all the different parameters and prints them to console in a legible format for verification that the code runs smoothly, the line running this script in the loop can be commented out so as to increase optimization and runtime.
 
@@ -121,4 +119,32 @@ Once a flight is complete, one can graph the relative error between actual GPS C
 This file simply holds the settings for the camera to function as it currently does, main changes that can and may need to be adjusted depending on environment are the wbmode and the aelock.
 aelock can be set to 0 or 1, to change the auto exposure lock on the camera to prevent flickering in dark environments or extremely bright environments.
 
-wbmode changes the white balance color correction of the camera depending on environment, this is 0-9 ADD LIST OF WHITE BALANCES
+wbmode changes the white balance color correction of the camera depending on environment, this is 0-9 
+```bash
+- wbMode" Default: 1, "auto"
+    - (0): off
+    - (1): auto
+    - (2): incandescent
+    - (3): fluorescent
+    - (4): warm-fluorescent
+    - (5): daylight
+    - (6): cloudy-daylight
+    - (7): twilight
+    - (8): shade
+    - (9): manual
+```
+
+## What the loop does <a id="whatloop"></a>
+The main point of the loop is to provide a continuous loop to run each script as required. The loop initiallizes a few key components as it starts, as noted in the comments for the loop.
+The loop starts by setting up the connection to the drone or simulator, either by serial or a tcp connection. Comment out the section for serial if needed or the tcp section as noted, do not attempt to use both.
+After conneciton, the code will hold on no connection, and attempt to request messages to be sent at a 10hz update rate this can be increased if required. From here, the loop will set up the camera, and begin the actual loop. 
+The main loop process will
+- Take a photo
+- Get Global and GPS co-ordinates
+- Inject Co-ordinates
+- Print the data if needed
+- Add the data to the CSV
+- Increment the the loop if a limited loop is set
+- sleep for 1 second
+- check the loop break and restart
+On exit of the loop, the camera will capture release to free up the Gstreamer pipeline.
