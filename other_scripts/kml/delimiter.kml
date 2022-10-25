@@ -19,55 +19,32 @@
         <gx:Wait>
           <gx:duration>10</gx:duration>
         </gx:Wait>
-        <gx:FlyTo>
-          <gx:duration>0</gx:duration>
-          <gx:flyToMode>bounce</gx:flyToMode>
-          <LookAt>
-            <longitude>0.217581</longitude>
-            <latitude>53.344005</latitude>
-            <altitude>3000</altitude>
-            <heading>0</heading>
-            <tilt>0</tilt>
-            <range>0</range>
-            <altitudeMode>relativeToGround</altitudeMode>
-          </LookAt>
-        </gx:FlyTo>
-        <gx:Wait>
-          <gx:duration>10</gx:duration>
-        </gx:Wait>
       </gx:Playlist>
     </gx:Tour>
     <Folder id="features">
       <name>delimiter Points</name>
+      <Placemark>
+        <name>delim1</name>
+        <Point>
+          <extrude>1</extrude>
+          <altitudeMode>relativeToGround</altitudeMode>
+          <coordinates>0.217581,53.344005,300</coordinates>
+        </Point>
+      </Placemark>
     </Folder>
     <GroundOverlay>
       <name>ColorBlock</name>
       <Icon>
-        <href>C:\_UNI_Programming_folder\GitHub\optical_guidance_system\other_scripts\kml\img\red.png</href>
+        <href>C:\Users\clanc\Documents\GitHub\optical_guidance_system\other_scripts\kml\img\red.png</href>
         <viewBoundScale>0.75</viewBoundScale>
       </Icon>
       <altitude>100</altitude>
       <altitudeMode>absolute</altitudeMode>
       <LatLonBox>
-        <north>53.35218500000041</north>
-        <south>53.335824999999595</south>
-        <east>0.23125300000041368</east>
-        <west>0.2039089999995863</west>
-      </LatLonBox>
-    </GroundOverlay>
-    <GroundOverlay>
-      <name>ColorBlock</name>
-      <Icon>
-        <href>C:\_UNI_Programming_folder\GitHub\optical_guidance_system\other_scripts\kml\img\white.png</href>
-        <viewBoundScale>0.75</viewBoundScale>
-      </Icon>
-      <altitude>2000</altitude>
-      <altitudeMode>absolute</altitudeMode>
-      <LatLonBox>
-        <north>53.50760500000817</north>
-        <south>53.180404999991836</south>
-        <east>0.49102100000827376</east>
-        <west>-0.055859000008273735</west>
+        <north>53.348093000000404</north>
+        <south>53.3399169999996</south>
+        <east>0.22441699999960682</east>
+        <west>0.21074500000039317</west>
       </LatLonBox>
     </GroundOverlay>
   </Document>
