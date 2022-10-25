@@ -1,6 +1,4 @@
-from cmath import sqrt
 from itertools import pairwise
-from pydoc import pathdirs
 import shutil
 import argparse
 from PIL import Image
@@ -10,17 +8,14 @@ from collections import Counter
 import multiprocessing
 from joblib import Parallel, delayed
 from tqdm import tqdm
-from bisect import bisect_left
 from pathlib import Path
 import res.file_manip_resources as rfm
-import re
 import math
 
 parser = argparse.ArgumentParser(description="useful image tools")
 parser.add_argument('--name', help="name of output directory", default = "out", type=str)
 parser.add_argument('--dir', default=r'.\image_folder\in', help="input directory", type=str)
 parser.add_argument('--outdir', default=r'.\image_folder\out', help="output directory", type=str)
-parser.add_argument('--delimiterArea', default=r'.\image_folder\delimiter\del-area.png', help="output directory", type=str)
 parser.add_argument('--verbose', action=argparse.BooleanOptionalAction)
 opt = parser.parse_args()
 
@@ -30,17 +25,6 @@ threshold = 15
 delimiter_threshold = 10
 odd_threshold = 5
 warning = 20
-
-def shorten_names(directory, out_directory):
-    for filename in os.scandir(directory): # Iterate directory
-        if filename.is_file():
-            a = re.findall(r'\d+.png', filename.name) #Get numbers from name
-            b = a[0].replace(".png", "")
-            if directory == out_directory:
-                 os.rename(directory + "\\" + filename.name, directory + "\\" + f"{int(b):06d}" + ".png")
-            else:
-                shutil.copy2(filename.path, out_directory)
-                os.rename(out_directory + "\\" + filename.name, out_directory + "\\" + f"{int(b):06d}" + ".png")
 
 def delete_directory_content(directory):
     for filename in os.listdir(directory):
@@ -60,27 +44,6 @@ def get_files(directory):
             filename.name
             f.append(filename)
     return f
-
-def count_files(directory):
-    return len(get_files(directory))
-
-def take_closest(myList, myNumber):
-    """
-    Assumes myList is sorted. Returns closest value to myNumber.
-
-    If two numbers are equally close, return the smallest number.
-    """
-    pos = bisect_left(myList, myNumber)
-    if pos == 0:
-        return myList[0]
-    if pos == len(myList):
-        return myList[-1]
-    before = myList[pos - 1]
-    after = myList[pos]
-    if after - myNumber < myNumber - before:
-        return after
-    else:
-        return before
 
 opt.outdir = rfm.unique_name_generate(opt.outdir, opt.name)
 
@@ -129,7 +92,7 @@ for key in tqdm(reversed(counter.keys()), desc="Removing Loners: ", total=len(co
                 close.append(image_hashes[val])
 
         has_close = False
-        for val in close: #if values within winow around index are within range
+        for val in close: #if values within window around index are within range
             if abs(val - key) <= odd_threshold:
                 has_close = True
 
