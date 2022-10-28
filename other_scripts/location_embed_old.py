@@ -11,12 +11,19 @@ import pandas as pd
 import os
 # Let us get the time (self explanatory!)
 import time
+# Library to manipulate geospatial information
+import geopy
 # Basic math functions
 import math
+# Pillow - Python Image Library
+from PIL import Image
+from PIL.ExifTags import GPSTAGS
 # PathLib - handle file paths properly
 from pathlib import Path, PurePath, PurePosixPath, PureWindowsPath, WindowsPath
-# Tyf - handle EXIF
-import Tyf
+
+
+import sys
+import cv2
 
 # Read image file data from CSV, and evaluate if they exist or not within a directory and its subdirectories
 def fileEnum(csv_file, root_path):
@@ -80,12 +87,10 @@ def fileEnum(csv_file, root_path):
 
 # Log the results of the embedding operation to a CSV
 def logResults(file_dict):
-    # need to create a copy of the file dictionary as the object is passed by reference as default
     copy_dict = file_dict
     matched = file_dict["matched"]
     unmatched = file_dict["unmatched"]
     delta_len = len(matched) - len(unmatched)
-    # need to pad the data for it to be handled by pandas
     for i in range(0, abs(delta_len)):
         if (delta_len == 0):
             continue
@@ -123,14 +128,11 @@ def locConverter(input, type, conversion):
                 # If we are converting to DMS from signed decimal degrees
                 case "dms":
                     if input < 0:
-                        # -ve dms lat indicates west
                         loc_dir = "W"
                     elif input > 0:
-                        # +ve dms lat indicates east
                         loc_dir = "E"
                     else:
                         loc_dir = "NA"
-                    # DMS magnitude calculations, iterative
                     input = abs(input)
                     loc_deg = math.floor(input)
                     input = (input - loc_deg)*60
@@ -140,12 +142,10 @@ def locConverter(input, type, conversion):
                     return {"degrees": loc_deg, "minutes": loc_min, "seconds": loc_sec, "direction": loc_dir}
                 # If we are converting to signed decimal degrees from DMS
                 case "dec":
-                    # determine dms sign from direction
                     if input["direction"] == "E":
                         mult = -1
                     else:
                         mult = 1
-                    # convert d, m, s into consistent unit base
                     loc_dec_deg = input["degrees"]
                     loc_dec_min = input["minutes"] / 60
                     loc_dec_sec = input["seconds"] / 360
@@ -158,14 +158,11 @@ def locConverter(input, type, conversion):
                 # If we are converting to DMS from signed decimal degrees
                 case "dms":
                     if input < 0:
-                        # -ve dms lon indicates south
                         loc_dir = "S"
                     elif input > 0:
-                        # +ve dms lon indicates north
                         loc_dir = "N"
                     else:
                         loc_dir = "NA"
-                    # DMS magnitude calculations, iterative
                     input = abs(input)
                     loc_deg = math.floor(input)
                     input = (input - loc_deg)*60
@@ -183,10 +180,8 @@ def locConverter(input, type, conversion):
                     loc_dec_min = input["minutes"] / 60
                     loc_dec_sec = input["seconds"] / 360
                     return (mult*(loc_dec_deg + loc_dec_min + loc_dec_sec))
-                # provision for graceful error handling
                 case _:
                     raise Exception
-        # provision for graceful error handling
         case _:
             raise Exception
                 
@@ -204,40 +199,130 @@ def locUpdater(file_list):
         # Update the lat and lon for the particular file with the converted DMS values
         file["imageloc"]["lat"] = latitude_dms
         file["imageloc"]["lon"] = longitude_dms   
+
+# Add location data to the matched files as EXIF fields
+def exifWriteOld(fmatched):
+    # Init the image array. Stores binary image data read from file.
+    imageArr = []
+    # Iterate over the matched image array, opening an image and appending to the image array upon each iteration.
+    for img_data in fmatched:
+        with open(img_data["filepath"], "rb") as img_file:
+            current_img = exif.Image(img_file)
+            imageArr.append(current_img)
+    # Iterate in parallel over the image array and the matched image array, fetching and setting EXIF field values for each respective image.       
+    for image, img_data in zip(imageArr, fmatched):
+        tag_data = img_data["imageloc"]
+        image.set("gps_latitude", (tag_data["lat"]["degrees"], tag_data["lat"]["minutes"], tag_data["lat"]["seconds"]))
+        image.set("gps_latitude_ref", tag_data["lat"]["direction"])
+        image.set("gps_longitude", (tag_data["lon"]["degrees"], tag_data["lon"]["minutes"], tag_data["lon"]["seconds"]))
+        image.set("gps_longitude_ref", tag_data["lon"]["direction"])
+        # Print the recently set attributes to stdout for verification
+        print("Image " + img_data["filename"] + " attributes set:")
+        raw_lat = image.get("gps_latitude")
+        raw_lat_ref = image.get("gps_latitude_ref")
+        raw_lon = image.get("gps_longitude")
+        raw_lon_ref = image.get("gps_longitude_ref")
+        str_lat = str(raw_lat[0]) + " " + str(raw_lat[1]) + " " + str(raw_lat[2]) + " " + raw_lat_ref + "\n"
+        str_lon = str(raw_lon[0]) +  " " + str(raw_lon[1]) + " " + str(raw_lon[2]) + " " + raw_lon_ref + "\n"
+        print("Lat: " + str_lat)
+        print("Lon: " + str_lon)
+    # Iterate over the image and matched image arrays in parallel, writing the modified image files to disk
+    counter = 1
+    for image in imageArr:
+        with open('new_file' + str(counter) + ".jpg", 'wb') as write_img:
+            write_img.write(image.get_file())
+            counter = counter + 1
             
 def exifWrite(matched_images):
-        
+    # Init the image array. Stores binary image data read from file.
+    imageArr = []
+    exifArr = []
+    valueArr = []
+    # EXIF GPS Tags that we want to edit
+    gps_tags = [
+        "GPSVersionID",
+        "GPSLatitudeRef",   # GPS Latitude Cardinal Dir
+        "GPSLatitude",      # GPS Latitude Values DMS
+        "GPSLongitudeRef",  # GPS Longitude Cardinal Dir
+        "GPSLongitude"      # GPS Longitude Values DMS
+    ]
     # Iterate over the matched image array.
     for img_data in matched_images:
         lat_tags = img_data["imageloc"]["lat"]
         lon_tags = img_data["imageloc"]["lon"]
+        # Open an image, fetch the pixel and exif data and append them to their respective arrays.
+        with Image.open(img_data["filepath"]) as image:
+            exif = image.getexif()
+            imageArr.append(
+                {
+                    "image": image,
+                    "path" : img_data["filepath"]
+                })
+            exifArr.append(exif)
+            print(exif)
+            image.close()
+        # Make an array of GPS tags for the current image.
+        # Tags stored in a dict with same names as the tags to which they will be equated. Lets us use less variables in the iterator.
+        # Lat and lon values are 3 floats, they are stored in the dict as a 3-tuple.
+        valueArr.append(
+            {
+                "GPSVersionID"  : '2 0 0 0',
+                "GPSLatitudeRef": lat_tags["direction"],
+                "GPSLatitude"   : (
+                    float(lat_tags["degrees"]),
+                    float(lat_tags["minutes"]),
+                    float(lat_tags["seconds"])
+                ),
+                "GPSLongitudeRef": lon_tags["direction"],
+                "GPSLongitude"   : (
+                    float(lon_tags["degrees"]),
+                    float(lon_tags["minutes"]),
+                    float(lon_tags["seconds"])
+                )
+            }
+            )
         
-        # Open image and store in current variable
-        current_image = Tyf.open(img_data["filepath"])
-        
-        # Update the location. Due to a bug in the Tyf library, need to set multiple times
-        # Source of significant frustration until identified!
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
-        
-        # Save the updated image to file.
-        print(img_data["filepath"])
-        current_image.save(str(img_data["filepath"]))
-                    
+    for img_instance, exif_instance, value_instance in zip(imageArr, exifArr, valueArr):
+        # Update the gps tag values with the new location values
+        for gpstag in gps_tags:
+            print("GPS Tag: " + gpstag + "\n") # output the gps tag that we are updating
+            for i in range(0, len(GPSTAGS)):
+                if gpstag == GPSTAGS[i]:
+                    tag_index = int(i)
+            
+            exif_instance[tag_index] = value_instance[gpstag]
+            print(type(exif_instance[tag_index]))
+            # Check if the exif tag contents is an instance of a tuple
+            if isinstance(exif_instance[tag_index], tuple):
+                print(exif_instance[tag_index])
+                print("Tag value updated to:\n" +
+                      "Deg: " + str(exif_instance[tag_index][0]) + "\n" +
+                      "Min: " + str(exif_instance[tag_index][1]) + "\n" +
+                      "Sec: " + str(exif_instance[tag_index][2]) + "\n"
+                )
+            else:
+                print("Tag value updated to: " + str(exif_instance[tag_index]) + "\n") # output the newly changed value of the tag
+                
+        # Write the image data to file at the same path as it was read from, with the new EXIF data
+        loaded_image = img_instance["image"]
+        print(loaded_image) # test to verify that we have the image loaded
+        output_path = img_instance["path"].replace(os.altsep, os.sep)
+        print(output_path) # test to verify that the output path is loaded
+        print(exif_instance)
+        with Image.open(output_path) as saveImage:
+            saveImage.save(fp = output_path, exif = exif_instance)
+            saveImage.close()
+
 # main function that runs everything we need.
 def main():
     # Enumerate images, their paths, and their associated coordinates
     image_dict = fileEnum("sample_imagecoords.csv", ".\\test_embed_images")
     # Log the results of the matching operation to file
-    logResults(image_dict)
+    #logResults(image_dict)
     # Get the found files from the dictionary
     matched_list = image_dict["matched"]
     # Update the location coordinates in the list to be DMS instead of decimal degrees
-    # Required for libraries performing direct EXIF modifications. Due to errors within these Python libraries,
-    # the requirement for location updates to occur is temporarily disabled until a library fix is issued.
-    # locUpdater(matched_list)
+    locUpdater(matched_list)
     # Write the new coordinates to the image files
     exifWrite(matched_list)
 
