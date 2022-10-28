@@ -80,10 +80,12 @@ def fileEnum(csv_file, root_path):
 
 # Log the results of the embedding operation to a CSV
 def logResults(file_dict):
+    # need to create a copy of the file dictionary as the object is passed by reference as default
     copy_dict = file_dict
     matched = file_dict["matched"]
     unmatched = file_dict["unmatched"]
     delta_len = len(matched) - len(unmatched)
+    # need to pad the data for it to be handled by pandas
     for i in range(0, abs(delta_len)):
         if (delta_len == 0):
             continue
@@ -121,11 +123,14 @@ def locConverter(input, type, conversion):
                 # If we are converting to DMS from signed decimal degrees
                 case "dms":
                     if input < 0:
+                        # -ve dms lat indicates west
                         loc_dir = "W"
                     elif input > 0:
+                        # +ve dms lat indicates east
                         loc_dir = "E"
                     else:
                         loc_dir = "NA"
+                    # DMS magnitude calculations, iterative
                     input = abs(input)
                     loc_deg = math.floor(input)
                     input = (input - loc_deg)*60
@@ -135,10 +140,12 @@ def locConverter(input, type, conversion):
                     return {"degrees": loc_deg, "minutes": loc_min, "seconds": loc_sec, "direction": loc_dir}
                 # If we are converting to signed decimal degrees from DMS
                 case "dec":
+                    # determine dms sign from direction
                     if input["direction"] == "E":
                         mult = -1
                     else:
                         mult = 1
+                    # convert d, m, s into consistent unit base
                     loc_dec_deg = input["degrees"]
                     loc_dec_min = input["minutes"] / 60
                     loc_dec_sec = input["seconds"] / 360
@@ -151,11 +158,14 @@ def locConverter(input, type, conversion):
                 # If we are converting to DMS from signed decimal degrees
                 case "dms":
                     if input < 0:
+                        # -ve dms lon indicates south
                         loc_dir = "S"
                     elif input > 0:
+                        # +ve dms lon indicates north
                         loc_dir = "N"
                     else:
                         loc_dir = "NA"
+                    # DMS magnitude calculations, iterative
                     input = abs(input)
                     loc_deg = math.floor(input)
                     input = (input - loc_deg)*60
@@ -173,8 +183,10 @@ def locConverter(input, type, conversion):
                     loc_dec_min = input["minutes"] / 60
                     loc_dec_sec = input["seconds"] / 360
                     return (mult*(loc_dec_deg + loc_dec_min + loc_dec_sec))
+                # provision for graceful error handling
                 case _:
                     raise Exception
+        # provision for graceful error handling
         case _:
             raise Exception
                 
@@ -203,7 +215,8 @@ def exifWrite(matched_images):
         # Open image and store in current variable
         current_image = Tyf.open(img_data["filepath"])
         
-        # Update the location. Due to a bug in the Tyf library, need to set multiple times 
+        # Update the location. Due to a bug in the Tyf library, need to set multiple times
+        # Source of significant frustration until identified!
         current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
         current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
         current_image.ifd0.set_location(float(lon_tags), float(lat_tags), 0.0)
@@ -218,10 +231,12 @@ def main():
     # Enumerate images, their paths, and their associated coordinates
     image_dict = fileEnum("sample_imagecoords.csv", ".\\test_embed_images")
     # Log the results of the matching operation to file
-    #logResults(image_dict)
+    logResults(image_dict)
     # Get the found files from the dictionary
     matched_list = image_dict["matched"]
     # Update the location coordinates in the list to be DMS instead of decimal degrees
+    # Required for libraries performing direct EXIF modifications. Due to errors within these Python libraries,
+    # the requirement for location updates to occur is temporarily disabled until a library fix is issued.
     # locUpdater(matched_list)
     # Write the new coordinates to the image files
     exifWrite(matched_list)
