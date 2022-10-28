@@ -2,6 +2,8 @@
 This is how tested is performed for dataset generation. Due to the difficulty performing automatic validation manual validation is used to verify the functionality of each major script within the dataset generation pipeline.
 
 ## KML Generation script - Passed
+This script verifies the KML generation script generates repeatable and accurate tours. Testing is predominantly done by comparing pins placed at each camera position.
+
 1. Run test_generation.sh
 2. Open google earth pro
 3. Open the KML files within `test_kml_output`
