@@ -24,7 +24,6 @@ if __name__ ==  '__main__':
 
     argparser.add_argument("--outdir", default=r"./kml", help="output location of kml files", type=str)
 
-
     argparser.add_argument("--radius", required=True, help="radius of image grid", type=int)
     argparser.add_argument("--altitude", required=True, help="height looking directly down", type=int)
 

@@ -23,6 +23,8 @@ if __name__ ==  '__main__':
     argparser.add_argument("--path", default=directory, help="location of kml with points", type=str)
     argparser.add_argument("--outdir", default=r"./kml", help="output location of kml files", type=str)
 
+    argparser.add_argument("--delimgpath", default=r"./kml\img", help="location of images used to generating delimiter color blocks", type=str)
+
     argparser.add_argument("--radius", required=True, help="radius of image grid", type=int)
     argparser.add_argument("--altitude", required=True, help="height looking directly down", type=int)
 
@@ -38,6 +40,8 @@ if __name__ ==  '__main__':
     argparser.add_argument("--pins", action=argparse.BooleanOptionalAction)
 
     opt = argparser.parse_args()
+
+    if opt.verbose: print("Performing KML generation on " + opt.path)
 
     min_dist = opt.altitude * math.tan(30 * (math.pi/180))*2 #distance is in radius so *2 to get width
     if opt.verbose: print("Minimum ground distance calculated as: " + str(min_dist) + " Altitude: " + str(opt.altitude))
@@ -208,8 +212,8 @@ if __name__ ==  '__main__':
             rkml.AddPin(lat=delat, lon=delon, name="delim2", alt=dealt2, etree=delim_tour)
 
         #add overlays of colors to allow for perfect delimiters
-        rkml.AddGroundOverlays(lat=delat, lon=delon, alt=dealt1-200, image_path=r".\kml\img\red.png", radius=s_width, tree=delim_tour, verbose=opt.verbose)
-        rkml.AddGroundOverlays(lat=delat, lon=delon, alt=dealt2-1000, image_path=r".\kml\img\white.png", radius=s_width, tree=delim_tour, verbose=opt.verbose)
+        rkml.AddGroundOverlays(lat=delat, lon=delon, alt=dealt1-200, image_path=opt.delimgpath + "\\red.png", radius=s_width, tree=delim_tour, verbose=opt.verbose)
+        rkml.AddGroundOverlays(lat=delat, lon=delon, alt=dealt2-1000, image_path=opt.delimgpath+ "\\white.png", radius=s_width, tree=delim_tour, verbose=opt.verbose)
 
         #save delimiter tour
         rkml.SaveGrid(kml=delim_tour, title="delimiter", debug=opt.debug, outdir=opt.outdir)
@@ -342,7 +346,7 @@ if __name__ ==  '__main__':
         print("Expected Total Image Count: " + str(len(locations) * (opt.radius*2+1)**2 * 14))
         print("Generated " + str(len(locations)) + " Capture Areas")
         print("Drone Expected Images @ Capture Area: " + str((opt.radius*2+1)**2 * len(d_views)))
-        print("Sat Expected Images @ Capture Area: " + str((s_radius*2+1)**2))
+        print("Sat Expected Images @ Capture Area: " + str((s_radius*2+1)**2 * 25))
         print("---------------------------------------------------")
 
     #Save the kml

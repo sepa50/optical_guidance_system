@@ -1,0 +1,1 @@
+python "..\kml_generation.py" --path ".\TestingLocationPinBad.kml" --outdir ".\test_output_kml" --delimgpath ".\kml_gen_images" --radius 1 --altitude 200 --name "test_generation" --duration 6 --precompute --delimiter --verbose --pins
