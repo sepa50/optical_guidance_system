@@ -22,15 +22,15 @@ The repository consists of:
 
 ## Documentation
 
-[Model documentation](model/README.md)
+[Model documentation](model/)
 
-[Jetson code documentation](jetson_code/README.md)
+[Jetson code documentation](jetson_code/)
 
-[Dataset generation documentation](dataset_generation/README.md)
+[Dataset generation documentation](dataset_generation/)
 
-[Dataset generation testing documentation](dataset_generation/testing_model_generation/README.md)
+[Dataset generation testing documentation](dataset_generation/testing_model_generation/)
 
-[Location embedding documentation](location_embedding/README.md)
+[Location embedding documentation](location_embedding/)
 
 ## Quick Start Guide
 
