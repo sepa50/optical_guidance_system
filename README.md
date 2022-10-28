@@ -22,15 +22,15 @@ The repository consists of:
 
 ## Documentation
 
-[Model documentation](model/)
+[Model documentation](model/) ([direct-link](model/README.md))
 
-[Jetson code documentation](jetson_code/)
+[Jetson code documentation](jetson_code/) ([direct-link](jetson_code/README.md))
 
-[Dataset generation documentation](dataset_generation/)
+[Dataset generation documentation](dataset_generation/) ([direct-link](dataset_generation/README.md))
 
-[Dataset generation testing documentation](dataset_generation/testing_model_generation/)
+[Dataset generation testing documentation](dataset_generation/testing_model_generation/) ([direct-link](dataset_generation/testing_model_generation/README.md))
 
-[Location embedding documentation](location_embedding/)
+[Location embedding documentation](location_embedding/) ([direct-link](location_embedding/README.md))
 
 ## Quick Start Guide
 
@@ -55,3 +55,5 @@ Connect the Jetson Nano with the camera attached to the drone and power it with 
 Setup the parameters on the drone as specified [here](jetson_code/README.md).
 
 Launch the drone with the system attached.
+
+![](img/4.gif)
